@@ -1,0 +1,18 @@
+.home{
+    display: flex;
+    height: 100vh;
+}
+.sidebar{
+    background-color: aqua;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.tab__content{
+    background-color: blueviolet;
+    width: 85%;
+}
+.dashboard__tab{
+    
+}
