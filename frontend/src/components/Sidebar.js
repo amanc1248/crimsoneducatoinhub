@@ -10,7 +10,7 @@ export const Sidebar = ()=>{
     return(
         <div className='sidebar'>
             <CompanyTitle companyName="Crimson Education Hub"/>
-            <LoggedInUser name="Aman Chaudhary"/>
+            <LoggedInUser image={'https://res.cloudinary.com/proudposhak-com/image/upload/v1634636733/products/41/1_mxidw1.png'} name="Aman Chaudhary" title="CEO"/>
             <DashboardTabsList/>
             <Logout/>
         </div>
