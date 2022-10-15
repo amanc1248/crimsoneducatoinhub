@@ -12,7 +12,7 @@ export const DashboardContainer = ()=>{
                 <DashboardSection1/>
                 <DashboardSection2/>
             </div>
-            <div className="dashboard__lower__section">
+            <div className="dashboard__lower__section row g-0">
                 <DashboardSection3/>
             </div>
         </div>

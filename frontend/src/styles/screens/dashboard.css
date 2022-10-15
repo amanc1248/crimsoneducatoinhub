@@ -1,19 +1,24 @@
-.dashboard__section1, .dashboard__section2{
+.dashboard__section1__content, .dashboard__section2__content{
+    height: 300px;
     }
-.dashboard__section2{
+.dashboard__section3{
+    padding: 0 30px;
 }
 
 .dashboard__section1__content,
-.dashboard__section2__content{
+.dashboard__section2__content,
+.dashboard__section3__content{
+    padding: 20px;
     border-radius: 15px;
 }
 .dashboard__section1__content{
-    padding: 20px;
     background-color: #0F1322;
 }
 .dashboard__section2__content{
-    padding: 20px;
     background-color: #95CFD9;
+}
+.dashboard__section3__content{
+    background-color: #DABDA9;
 }
 .section__1__title{
     color: white;
@@ -40,4 +45,51 @@
 }
 .checklist__text__1{
     font-weight: bold;
+}
+.dashboard__lower__section{
+    margin-top: 10px;
+}
+.dashboard__upper__section{
+}
+.dashboard__section3__content{
+    height: 100%;
+}
+.section3__title{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+.section3__description{
+    font-size: 13px;
+}
+.section3__card{
+   padding: 10px;
+}
+.section3__card__content{
+    background-color: white;
+    /* margin: 0 10px; */
+    padding: 10px 10px 10px 30px;
+    border-radius: 20px;
+    text-align: left;
+    position: relative;
+}
+.card__icon{
+    position: absolute;
+    top: -15%;
+    left: 15%;
+    color: white;
+    padding: 5px 10px;
+    background-color: #FD4C24;
+    border-radius: 12px;
+}
+.card__title{
+    font-size: 13px;
+    font-weight: 700;
+    margin: 20px 0 10px 0;
+}
+.card__number{
+    font-size: 21px;
+    font-weight: 600;
 }
