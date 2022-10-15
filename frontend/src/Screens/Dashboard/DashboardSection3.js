@@ -21,7 +21,7 @@ export const DashboardSection3 =()=>{
       <div className="dashboard__section3 col-12">
         <div className="dashboard__section3__content row g-0">
           <div className="section3__title col-3">
-            <h5>Engagement</h5>
+            <h5 style={{fontWeight:600}}>Engagement</h5>
             <div className="section3__description">
               General static of user engagement process
             </div>
