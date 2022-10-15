@@ -1,18 +1,72 @@
 .home{
     display: flex;
     height: 100vh;
+    padding: 40px;
+    background-color: #0F1322;
 }
 .sidebar{
-    background-color: aqua;
-    width: 15%;
+    background-color: white;
+    width: 20%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    border-radius: 30px 0 0 30px;
+    height: 90%;
 }
 .tab__content{
-    background-color: blueviolet;
-    width: 85%;
+    width: 80%;
+    background-color: white;
+    border-radius: 0 30px 30px 0;
+    height: 90%;
+
 }
+.tab__content__inside{
+    background-color: #F3F1EF;
+    border-radius: 30px;
+    height: 100%;
+}
+.user__name{
+    font-size: 14px;
+    font-weight: 700;
+    margin: 7px 0;
+}
+.user__title{
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.4);
+}
+
 .dashboard__tab{
-    
+    display: flex;
+    gap: 20px;
+    padding: 10px 30px;
+    margin: 7px 0;
+    cursor: pointer;
+    border-radius: 12px;
+}
+.dashboard__tab:hover{
+    background-color: #F3F1EF;
+}
+.dashboard__tab__icon{
+    color: #0A033A;
+}
+.dashboard__tab__title{
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: #56575B;
+}
+.logout{
+    color: gray;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.logout:hover{
+    cursor: pointer;
+    color: blue;
 }
