@@ -1,0 +1,43 @@
+.dashboard__section1, .dashboard__section2{
+    }
+.dashboard__section2{
+}
+
+.dashboard__section1__content,
+.dashboard__section2__content{
+    border-radius: 15px;
+}
+.dashboard__section1__content{
+    padding: 20px;
+    background-color: #0F1322;
+}
+.dashboard__section2__content{
+    padding: 20px;
+    background-color: #95CFD9;
+}
+.section__1__title{
+    color: white;
+}
+.performance__text{
+    font-size: small;
+    color: #777B8A;
+}
+.perfomance__list{
+    display: flex;
+    justify-content: space-around;
+}
+.checklist__single{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.checklist__text__1,
+.checklist__text__2{
+    font-size: small;
+    color: white;
+}
+.checklist__text__1{
+    font-weight: bold;
+}
