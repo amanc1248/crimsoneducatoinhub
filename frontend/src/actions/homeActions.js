@@ -41,7 +41,8 @@ export function insertData(data) {
       .post(
         url,
         {
-          collectionName: data.collectionName, doc: data.doc
+          collectionName: data.collectionName,
+          doc: data.doc,
         },
         config
       )
