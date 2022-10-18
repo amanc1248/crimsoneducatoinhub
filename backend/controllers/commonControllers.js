@@ -8,7 +8,7 @@ const { Student } = require("../database/schemas/Students");
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
   const { collectionName} = req.body;
   try {
-    const result = await db.collection(collectionName).find().sort({ createdAt: 'desc' }).toArray();
+    const result = await db.collection(collectionName).find().sort({ date: 'desc' }).toArray();
     return res.json(result);
   } catch (error) {
     return callback(error);

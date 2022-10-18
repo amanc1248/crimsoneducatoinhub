@@ -178,3 +178,18 @@
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
   }
+  .loader{
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .loader__content{
+    margin-top: 20%;
+  }
+  .button__size{
+    height: 22px;
+    font-size: smaller;
+  }

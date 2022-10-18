@@ -1,41 +1,51 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
-import "../../styles/screens/home.css"
+import "../../styles/screens/home.css";
 import { Pagination } from "../../components/Pagination";
 import { AddStudent } from "./AddStudent";
 import { getAllData } from "../../actions/homeActions";
+import { IndividualStudent } from "./IndividualStudent";
 
 export const StudentsContainer = () => {
-
   // data
 
   // use states
-  const [students, setStudents] = useState();
-  const [show, setShow] = useState(false);
+  const [students, setStudents]                   = useState();
+  const [show, setShow]                           = useState(false);
+  const [fetchAllDataAgain, setFetchAllDataAgain] = useState(false);
 
-
-
-
+  // USE EFFECTS
   useEffect(() => {
-    getAllData({url:"/api/commonRoute/getData", collectionName:"students"}).then((result)=>{
-      setStudents(result)
-    }).catch((e)=>{console.log(e)})
-  }, []);
+    getAllData({ url: "/api/commonRoute/getData", collectionName: "students" })
+      .then((result) => {
+        setStudents(result);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [fetchAllDataAgain]);
 
   return (
     <div className="students">
       <AddStudent
         show={show}
         setShow={setShow}
-        students={students}
-        setStudents ={setStudents}
+        setStudents={setStudents}
+        setFetchAllDataAgain={setFetchAllDataAgain}
       />
       <div className="action__buttons">
-        <Button variant="primary" size="sm" onClick={()=>{setShow(true)}}>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => {
+            setShow(true);
+            setFetchAllDataAgain(false)
+          }}
+        >
           Add Student
         </Button>
         <Pagination
@@ -58,21 +68,14 @@ export const StudentsContainer = () => {
               <th>Start Date</th>
               <th>End Date</th>
               <th>Fee Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {students &&
               students.map((student, index) => {
                 return (
-                  <tr key={index}>
-                    <td>{index}</td>
-                    <td>{student.name}</td>
-                    <td>{student.course}</td>
-                    <td>{student.qualification}</td>
-                    <td>{student.startDate}</td>
-                    <td>{student.endDate}</td>
-                    <td>{student.feeStatus}</td>
-                  </tr>
+                 <IndividualStudent student={student} index={index}/>
                 );
               })}
           </tbody>
@@ -81,4 +84,3 @@ export const StudentsContainer = () => {
     </div>
   );
 };
-

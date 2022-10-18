@@ -1,70 +1,107 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
-import { insertData } from '../../actions/homeActions';
+import { insertData } from "../../actions/homeActions";
+import Spinner from "react-bootstrap/Spinner";
+import { Loader } from "../../components/Loader";
 
+export function AddStudent({
+  student,
+  type,
+  show,
+  setShow,
+  setFetchAllDataAgain,
+}) {
+  // data
+  const coursesList = [
+    {
+      label: "IELTS Class",
+      value: "IELTS",
+    },
+    {
+      label: "PTE Class",
+      value: "PTE",
+    },
+    {
+      label: "JAPNESE Class",
+      value: "JAPNENSE",
+    },
+    {
+      label: "KOREAN Class",
+      value: "KOREAN",
+    },
+    {
+      label: "COMPUTER Class",
+      value: "COMPUTER",
+    },
+  ];
 
-export function AddStudent({show, setShow, students, setStudents}) {
+  const qualificationList = [
+    { label: "SLC", value: "slc" },
+    { label: "+2", value: "+2" },
+    { label: "Bachelors", value: "bachelors" },
+  ];
+  const feeStatusList = [
+    { label: "paid", value: "paid" },
+    { label: "Unpaid", value: "unpaid" },
+    { label: "Partially Paid", value: "partially paid" },
+  ];
 
-    // data
-    const courseList = [
-      {
-        label: "IELTS Class",
-        value: "IELTS",
-      },
-      {
-        label: "PTE Class",
-        value: "PTE",
-      },
-      {
-        label: "JAPNESE Class",
-        value: "JAPNENSE",
-      },
-      {
-        label: "KOREAN Class",
-        value: "KOREAN",
-      },
-      {
-        label: "COMPUTER Class",
-        value: "COMPUTER",
-      }
-    ];
+  //   usestates
+  // USESTATES
+  const [name, setName] = useState(student && student.name);
+  const [email, setEmail] = useState(student && student.email);
+  const [courses, setCourses] = useState(student && student.courses);
+  const [qualification, setQualification] = useState(
+    student && student.qualification
+  );
+  const [startDate, setStartDate] = useState(student && student.startDate);
+  const [endDate, setEndDate] = useState(student && student.endDate);
+  const [feeStatus, setFeeStatus] = useState();
+  const [loader, setLoader] = useState(false);
 
-    const qualificationList =[{label:"SLC",value:"slc"},{label:"+2",value:"+2"},{label:"Bachelors",value:"bachelors"}]
-    const feeStatusList =[{ label: "paid", value: "paid" },{ label: "Unpaid", value: "unpaid" },{ label: "Partially Paid", value: "partially paid" }];
-
-
-//   usestates
-    // USESTATES
-    const [name,  setName]                  = useState()
-    const [email, setEmail]                 = useState();
-    const [course, setCourse]               = useState();
-    const [qualification, setQualification] = useState();
-    const [startDate, setStartDate]         = useState();
-    const [endDate, setEndDate]             = useState();
-    const [feeStatus, setFeeStatus]         = useState(); 
-    const [loader, setLoader]               = useState(false);
-
-    // functions
-    const handleOnClickSubmit = ()=>{
-      const doc ={name, email, course, qualification, startDate, endDate, feeStatus};
-      if(name && email && course && qualification && startDate && endDate && feeStatus){
-        let list  = students
-        setLoader(true);
-        insertData({url:"/api/commonRoute/insertData", collectionName:"students", doc}).then((result)=>{
-          list.unshift(doc);
-          setStudents(list)
-          setLoader(false)
-          handleClose()
-        }).catch((e)=>{console.log(e)})
-      }
+  // functions
+  const handleOnClickSubmit = () => {
+    const doc = {
+      name,
+      email,
+      courses,
+      qualification,
+      startDate,
+      endDate,
+      feeStatus,
+    };
+    if (
+      name &&
+      email &&
+      courses &&
+      qualification &&
+      startDate &&
+      endDate &&
+      feeStatus
+    ) {
+      setLoader(true);
+      insertData({
+        url: "/api/commonRoute/insertData",
+        collectionName: "students",
+        doc,
+      })
+        .then((result) => {
+          setLoader(false);
+          setFetchAllDataAgain(true);
+          handleClose();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
+  };
   const handleClose = () => setShow(false);
-
 
   return (
     <>
+      {loader && <Loader />}
       <Modal
         show={show}
         onHide={handleClose}
@@ -117,9 +154,13 @@ export function AddStudent({show, setShow, students, setStudents}) {
               <Select
                 placeholder="Select Course"
                 className="select__learning__module"
-                options={courseList}
-                onChange={(e) => {
-                  setCourse(e.label);
+                options={coursesList}
+                value={
+                  courses &&
+                  coursesList.filter((ug) => courses.includes(ug.value))
+                }
+                onChange={(course) => {
+                  setCourses(course.map((u) => u.value));
                 }}
                 defaultValue
               />
@@ -130,9 +171,13 @@ export function AddStudent({show, setShow, students, setStudents}) {
               <Select
                 placeholder="Select qualification"
                 className="select__learning__module"
-                options={qualificationList}
-                onChange={(e) => {
-                  setQualification(e.label);
+                options={coursesList}
+                value={
+                  courses &&
+                  coursesList.filter((ug) => courses.includes(ug.value))
+                }
+                onChange={(course) => {
+                  setCourses(course.map((u) => u.value));
                 }}
               />
             </div>
@@ -191,12 +236,18 @@ export function AddStudent({show, setShow, students, setStudents}) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-close" onClick={() => {setShow(false)}}>
+          <Button variant="danger" size="sm" onClick={handleClose}>
             Cancel
-          </button>
-          <button className="btn btn-primary" onClick={handleOnClickSubmit}>
+          </Button>
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => {
+              handleOnClickSubmit();
+            }}
+          >
             Submit
-          </button>
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
