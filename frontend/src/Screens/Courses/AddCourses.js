@@ -47,6 +47,7 @@ export function AddCourses({ show, setShow, courses, setCourses }) {
   const [time, setTime] = useState();
   const [fee, setFee] = useState();
   const [teacher, setTeacher] = useState();
+  const [courseDetails, setCourseDetails] = useState();
   const [loader, setLoader] = useState(false);
 
   // functions
@@ -56,8 +57,9 @@ export function AddCourses({ show, setShow, courses, setCourses }) {
       time,
       fee,
       teacher,
+      courseDetails,
     };
-    if (courseName && time && fee && teacher) {
+    if (courseName && time && fee && teacher && courseDetails) {
       let list = courses;
       setLoader(true);
       insertData({
@@ -128,23 +130,6 @@ export function AddCourses({ show, setShow, courses, setCourses }) {
 
             {/* Courses */}
 
-            {/* <div className="learning__form__group">
-              <label for="course">Teacher</label>
-              <Select
-                placeholder="Select Course"
-                className="select__learning__module"
-                options={teacher}
-                value={
-                  courses &&
-                  teacherList.filter((ug) => courses.includes(ug.value))
-                }
-                onChange={(course) => {
-                  setCourses(course.map((u) => u.value));
-                }}
-                defaultValue
-                isMulti
-              />
-            </div> */}
             <div class="learning__form__group">
               <label for="name">Fee</label>
               <input
@@ -172,6 +157,21 @@ export function AddCourses({ show, setShow, courses, setCourses }) {
                 value={teacher}
                 onChange={(e) => {
                   setTeacher(e.target.value);
+                }}
+              ></input>
+            </div>
+            <div class="learning__form__group">
+              <label for="name">Course Details</label>
+              <input
+                class="form-control"
+                id="name"
+                name="name"
+                rows="4"
+                cols="50"
+                placeholder="Enter Course Details"
+                value={courseDetails}
+                onChange={(e) => {
+                  setCourseDetails(e.target.value);
                 }}
               ></input>
             </div>
