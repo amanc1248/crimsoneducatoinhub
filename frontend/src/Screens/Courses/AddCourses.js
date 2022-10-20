@@ -56,10 +56,9 @@ export function AddCourses({ show, setShow, courses, setCourses }) {
       courseName,
       time,
       fee,
-      teacher,
       courseDetails,
     };
-    if (courseName && time && fee && teacher && courseDetails) {
+    if (courseName && time && fee && courseDetails) {
       let list = courses;
       setLoader(true);
       insertData({
@@ -145,21 +144,7 @@ export function AddCourses({ show, setShow, courses, setCourses }) {
                 }}
               ></input>
             </div>
-            <div class="learning__form__group">
-              <label for="name">Teacher</label>
-              <input
-                class="form-control"
-                id="name"
-                name="name"
-                rows="4"
-                cols="50"
-                placeholder="Enter Teacher Name"
-                value={teacher}
-                onChange={(e) => {
-                  setTeacher(e.target.value);
-                }}
-              ></input>
-            </div>
+
             <div class="learning__form__group">
               <label for="name">Course Details</label>
               <input

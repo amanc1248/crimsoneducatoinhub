@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
-import { insertData } from "../../actions/homeActions";
+import { getCourseData, insertData } from "../../actions/homeActions";
 
 export function AddTutor({ show, setShow, tutors, setTutors }) {
   // data
@@ -51,6 +51,8 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
   const [startDate, setStartDate] = useState();
   const [salary, setSalary] = useState();
   const [loader, setLoader] = useState(false);
+
+  const [courseData, setCourseData] = useState();
 
   // functions
   const handleOnClickSubmit = () => {

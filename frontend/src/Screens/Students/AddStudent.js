@@ -1,67 +1,114 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
-import { insertData } from '../../actions/homeActions';
+import { getCourseData, insertData } from "../../actions/homeActions";
 
+export function AddStudent({ show, setShow, students, setStudents }) {
+  useEffect(() => {
+    getCourseData({
+      url: "/api/commonRoute/getData",
+      collectionName: "courses",
+    })
+      .then((result) => {
+        let list = [];
 
-export function AddStudent({show, setShow, students, setStudents}) {
+        result.map((course) => {
+          list.push({ label: course.courseName, value: course.courseName });
+          setCourseList(list);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
-    // data
-    const courseList = [
-      {
-        label: "IELTS Class",
-        value: "IELTS",
-      },
-      {
-        label: "PTE Class",
-        value: "PTE",
-      },
-      {
-        label: "JAPNESE Class",
-        value: "JAPNENSE",
-      },
-      {
-        label: "KOREAN Class",
-        value: "KOREAN",
-      },
-      {
-        label: "COMPUTER Class",
-        value: "COMPUTER",
-      }
-    ];
+  // data
+  // const courseList = [
+  //   {
+  //     label: "IELTS Class",
+  //     value: "IELTS",
+  //   },
+  //   {
+  //     label: "PTE Class",
+  //     value: "PTE",
+  //   },
+  //   {
+  //     label: "JAPNESE Class",
+  //     value: "JAPNENSE",
+  //   },
+  //   {
+  //     label: "KOREAN Class",
+  //     value: "KOREAN",
+  //   },
+  //   {
+  //     label: "COMPUTER Class",
+  //     value: "COMPUTER",
+  //   },
+  // ];
 
-    const qualificationList =[{label:"SLC",value:"slc"},{label:"+2",value:"+2"},{label:"Bachelors",value:"bachelors"}]
-    const feeStatusList =[{ label: "paid", value: "paid" },{ label: "Unpaid", value: "unpaid" },{ label: "Partially Paid", value: "partially paid" }];
+  const qualificationList = [
+    { label: "SLC", value: "slc" },
+    { label: "+2", value: "+2" },
+    { label: "Bachelors", value: "bachelors" },
+  ];
+  const feeStatusList = [
+    { label: "paid", value: "paid" },
+    { label: "Unpaid", value: "unpaid" },
+    { label: "Partially Paid", value: "partially paid" },
+  ];
 
+  //   usestates
+  // USESTATES
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [course, setCourse] = useState();
+  const [qualification, setQualification] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [feeStatus, setFeeStatus] = useState();
+  const [loader, setLoader] = useState(false);
+  const [courseList, setCourseList] = useState();
 
-//   usestates
-    // USESTATES
-    const [name,  setName]                  = useState()
-    const [email, setEmail]                 = useState();
-    const [course, setCourse]               = useState();
-    const [qualification, setQualification] = useState();
-    const [startDate, setStartDate]         = useState();
-    const [endDate, setEndDate]             = useState();
-    const [feeStatus, setFeeStatus]         = useState(); 
-    const [loader, setLoader]               = useState(false);
-
-    // functions
-    const handleOnClickSubmit = ()=>{
-      const doc ={name, email, course, qualification, startDate, endDate, feeStatus};
-      if(name && email && course && qualification && startDate && endDate && feeStatus){
-        let list  = students
-        setLoader(true);
-        insertData({url:"/api/commonRoute/insertData", collectionName:"students", doc}).then((result)=>{
+  // functions
+  const handleOnClickSubmit = () => {
+    const doc = {
+      name,
+      email,
+      course,
+      qualification,
+      startDate,
+      endDate,
+      feeStatus,
+    };
+    if (
+      name &&
+      email &&
+      course &&
+      qualification &&
+      startDate &&
+      endDate &&
+      feeStatus
+    ) {
+      let list = students;
+      setLoader(true);
+      insertData({
+        url: "/api/commonRoute/insertData",
+        collectionName: "students",
+        doc,
+      })
+        .then((result) => {
           list.unshift(doc);
-          setStudents(list)
-          setLoader(false)
-          handleClose()
-        }).catch((e)=>{console.log(e)})
-      }
+          setStudents(list);
+          setLoader(false);
+          handleClose();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
+  };
   const handleClose = () => setShow(false);
-
 
   return (
     <>
@@ -191,7 +238,12 @@ export function AddStudent({show, setShow, students, setStudents}) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-close" onClick={() => {setShow(false)}}>
+          <button
+            className="btn btn-close"
+            onClick={() => {
+              setShow(false);
+            }}
+          >
             Cancel
           </button>
           <button className="btn btn-primary" onClick={handleOnClickSubmit}>

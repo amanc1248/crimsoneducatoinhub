@@ -56,7 +56,7 @@ export const CoursesContainer = () => {
               <th>Course Name</th>
               <th>Time</th>
               <th>Fee</th>
-              <th>Teacher</th>
+              <th>Course Details</th>
             </tr>
           </thead>
           <tbody>
@@ -70,7 +70,10 @@ export const CoursesContainer = () => {
 
                     <td>{course.fee}</td>
 
-                    <td>{course.teacher}</td>
+                    <td style={{ width: "300px", textAlign: "left" }}>
+                      {" "}
+                      {course.courseDetails}
+                    </td>
                   </tr>
                 );
               })}

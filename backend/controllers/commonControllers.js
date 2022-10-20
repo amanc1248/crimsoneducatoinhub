@@ -1,14 +1,18 @@
-
 const asyncHandler = require("express-async-handler");
 const { ObjectId } = require("mongodb");
+const { Promise } = require("mongoose");
 const { db } = require("../database");
 const { Student } = require("../database/schemas/Students");
 
 // get all documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName} = req.body;
+  const { collectionName } = req.body;
   try {
-    const result = await db.collection(collectionName).find().sort({ createdAt: 'desc' }).toArray();
+    const result = await db
+      .collection(collectionName)
+      .find()
+      .sort({ createdAt: "desc" })
+      .toArray();
     return res.json(result);
   } catch (error) {
     return callback(error);
@@ -17,9 +21,11 @@ const getCommonDataController = asyncHandler(async (req, res, callback) => {
 
 // get one document common data controller
 const getOneDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName,id} = req.body;
+  const { collectionName, id } = req.body;
   try {
-    const result = await db.collection(collectionName).findOne({_id:ObjectId(id)});
+    const result = await db
+      .collection(collectionName)
+      .findOne({ _id: ObjectId(id) });
     return res.json(result);
   } catch (error) {
     return callback(error);
@@ -28,7 +34,7 @@ const getOneDataController = asyncHandler(async (req, res, callback) => {
 
 // insert one document common data controller
 const insertOneDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName,doc} = req.body;
+  const { collectionName, doc } = req.body;
   try {
     const result = await db.collection(collectionName).insertOne(doc);
     return res.json(result);
@@ -38,35 +44,33 @@ const insertOneDataController = asyncHandler(async (req, res, callback) => {
 });
 
 // update one document common data controller
-const updateCommonDataController = asyncHandler(async(req,res,callback)=>{
-  const {collectionName, id, updateTo} =req.body;
-  console.log(req.body)
+const updateCommonDataController = asyncHandler(async (req, res, callback) => {
+  const { collectionName, id, updateTo } = req.body;
+  console.log(req.body);
   try {
-        const filter = { _id: ObjectId(id) };
-        const updateDoc = {
-          $set: updateTo
-        };
-    
+    const filter = { _id: ObjectId(id) };
+    const updateDoc = {
+      $set: updateTo,
+    };
+
     const result = await db
       .collection(collectionName)
       .updateOne(filter, updateDoc);
     return res.json(result);
   } catch (error) {
-    return callback(error)
+    return callback(error);
   }
-})
-
+});
 
 // delete one document common data controller
-const deleteCommonDataController = asyncHandler(async(req,res,callback)=>{
-  const {collectionName, id} =req.body;
-  console.log(req.body)
+const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
+  const { collectionName, id } = req.body;
+  console.log(req.body);
   try {
-    
-    const query = {_id:ObjectId(id)};
+    const query = { _id: ObjectId(id) };
     const result = await db.collection(collectionName).deleteOne(query);
     if (result.deletedCount === 1) {
-      res.json(result)
+      res.json(result);
       console.log("Successfully deleted one document.");
     } else {
       console.log("No documents matched the query. Deleted 0 documents.");
@@ -74,13 +78,33 @@ const deleteCommonDataController = asyncHandler(async(req,res,callback)=>{
   } finally {
     // await ;
   }
-})
-  
-  module.exports = {
-    getCommonDataController,
-    updateCommonDataController,
-    deleteCommonDataController,
-    getOneDataController,
-    insertOneDataController
-  };
-  
+});
+
+const getTotalCountDataController = asyncHandler(async (req, res) => {
+  await Promise.all(
+    req.body.collectionNames.map((collectionName) => {
+      return db.collection(collectionName).countDocuments();
+    })
+  )
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+});
+
+const calulateDateDataController = asyncHandler(async (req, res) => {
+  const date = new Date();
+  // console.log(date);
+});
+
+module.exports = {
+  getCommonDataController,
+  updateCommonDataController,
+  deleteCommonDataController,
+  getOneDataController,
+  insertOneDataController,
+  getTotalCountDataController,
+  calulateDateDataController,
+};
