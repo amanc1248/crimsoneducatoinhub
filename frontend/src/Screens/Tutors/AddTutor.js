@@ -5,29 +5,47 @@ import Select from "react-select";
 import { getCourseData, insertData } from "../../actions/homeActions";
 
 export function AddTutor({ show, setShow, tutors, setTutors }) {
+  useEffect(() => {
+    getCourseData({
+      url: "/api/commonRoute/getData",
+      collectionName: "courses",
+    })
+      .then((result) => {
+        let list = [];
+
+        result.map((course) => {
+          list.push({ label: course.courseName, value: course.courseName });
+          setCourseList(list);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   // data
-  const courseList = [
-    {
-      label: "IELTS Class",
-      value: "IELTS",
-    },
-    {
-      label: "PTE Class",
-      value: "PTE",
-    },
-    {
-      label: "JAPNESE Class",
-      value: "JAPNENSE",
-    },
-    {
-      label: "KOREAN Class",
-      value: "KOREAN",
-    },
-    {
-      label: "COMPUTER Class",
-      value: "COMPUTER",
-    },
-  ];
+  // const courseList = [
+  //   {
+  //     label: "IELTS Class",
+  //     value: "IELTS",
+  //   },
+  //   {
+  //     label: "PTE Class",
+  //     value: "PTE",
+  //   },
+  //   {
+  //     label: "JAPNESE Class",
+  //     value: "JAPNENSE",
+  //   },
+  //   {
+  //     label: "KOREAN Class",
+  //     value: "KOREAN",
+  //   },
+  //   {
+  //     label: "COMPUTER Class",
+  //     value: "COMPUTER",
+  //   },
+  // ];
 
   const qualificationList = [
     { label: "Experience 1", value: "exp1" },
@@ -52,7 +70,7 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
   const [salary, setSalary] = useState();
   const [loader, setLoader] = useState(false);
 
-  const [courseData, setCourseData] = useState();
+  const [courseList, setCourseList] = useState();
 
   // functions
   const handleOnClickSubmit = () => {

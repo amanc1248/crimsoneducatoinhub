@@ -53,7 +53,7 @@ export function AddStudent({ show, setShow, students, setStudents }) {
     { label: "Bachelors", value: "bachelors" },
   ];
   const feeStatusList = [
-    { label: "paid", value: "paid" },
+    { label: "Paid", value: "paid" },
     { label: "Unpaid", value: "unpaid" },
     { label: "Partially Paid", value: "partially paid" },
   ];
