@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -17,6 +16,7 @@ export const StudentsContainer = () => {
   const [students, setStudents]                   = useState();
   const [show, setShow]                           = useState(false);
   const [fetchAllDataAgain, setFetchAllDataAgain] = useState(false);
+  const [studentModalType, setStudentModalType] = useState()
 
   // USE EFFECTS
   useEffect(() => {
@@ -32,10 +32,10 @@ export const StudentsContainer = () => {
   return (
     <div className="students">
       <AddStudent
-        show={show}
-        setShow={setShow}
-        setStudents={setStudents}
+        shouldShow={show}
+        setShouldShow={setShow}
         setFetchAllDataAgain={setFetchAllDataAgain}
+        type={studentModalType}
       />
       <div className="action__buttons">
         <Button
@@ -44,6 +44,7 @@ export const StudentsContainer = () => {
           onClick={() => {
             setShow(true);
             setFetchAllDataAgain(false)
+            setStudentModalType('add')
           }}
         >
           Add Student
@@ -63,6 +64,7 @@ export const StudentsContainer = () => {
             <tr>
               <th>#</th>
               <th>Name</th>
+              <th>Email</th>
               <th>Course</th>
               <th>Qualification</th>
               <th>Start Date</th>
@@ -75,7 +77,10 @@ export const StudentsContainer = () => {
             {students &&
               students.map((student, index) => {
                 return (
-                 <IndividualStudent student={student} index={index}/>
+                  <IndividualStudent
+                    student={student}
+                    index={index}
+                  />
                 );
               })}
           </tbody>

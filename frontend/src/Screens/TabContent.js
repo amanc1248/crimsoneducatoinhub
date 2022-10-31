@@ -9,7 +9,7 @@ import { TutorsContainer } from './Tutors/TutorsContainer';
 export const TabContent =({tabIndex})=>{
     // data
     // 1. tabs
-    const tabs =[<DashboardContainer/>, <StudentsContainer/>, <TutorsContainer/>, <CoursesContainer/>];
+    const tabs =[<DashboardContainer/>, <CoursesContainer/>,<TutorsContainer/>,  <StudentsContainer/>];
     return(
         <div className="tab__content">
             <div className="tab__content__inside">

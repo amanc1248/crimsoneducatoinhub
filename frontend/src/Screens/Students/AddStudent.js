@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 import { insertData } from "../../actions/homeActions";
-import Spinner from "react-bootstrap/Spinner";
 import { Loader } from "../../components/Loader";
 
 export function AddStudent({
   student,
   type,
-  show,
-  setShow,
+  shouldShow,
   setFetchAllDataAgain,
+  setShouldShow
 }) {
   // data
   const coursesList = [
@@ -53,16 +55,16 @@ export function AddStudent({
   const [name, setName] = useState(student && student.name);
   const [email, setEmail] = useState(student && student.email);
   const [courses, setCourses] = useState(student && student.courses);
-  const [qualification, setQualification] = useState(
-    student && student.qualification
-  );
+  const [qualification, setQualification] = useState(student && student.qualification);
   const [startDate, setStartDate] = useState(student && student.startDate);
   const [endDate, setEndDate] = useState(student && student.endDate);
   const [feeStatus, setFeeStatus] = useState();
   const [loader, setLoader] = useState(false);
+  const [show, setShow] = useState(shouldShow);
 
   // functions
-  const handleOnClickSubmit = () => {
+  const handleOnClickAdd = () => {
+    const date = new Date();
     const doc = {
       name,
       email,
@@ -71,7 +73,10 @@ export function AddStudent({
       startDate,
       endDate,
       feeStatus,
+      date
     };
+    console.log(doc)
+
     if (
       name &&
       email &&
@@ -95,21 +100,50 @@ export function AddStudent({
         .catch((e) => {
           console.log(e);
         });
+    }else{
+      toast.error('Fill the required fields', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
-  const handleClose = () => setShow(false);
+
+  const handelOnClickUpdate = ()=>{}
+  const handleOnClickDelete = ()=>{}
+
+  const handleClose = () => {
+    setShouldShow(false);
+    setName('');
+    setCourses('');
+    setEmail('');
+    setEndDate('');
+    setFeeStatus('');
+    setStartDate('');
+    setQualification('');
+  };
 
   return (
     <>
       {loader && <Loader />}
+      <ToastContainer />
       <Modal
-        show={show}
+        show={shouldShow}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header>
-          <Modal.Title>Add Student</Modal.Title>
+          <Modal.Title>
+            {type === "add" && "Add Student"}
+            {type === "update" && "Update Student"}
+            {type === "delete" && "Delete Student"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="new__feature__request__form">
@@ -162,7 +196,8 @@ export function AddStudent({
                 onChange={(course) => {
                   setCourses(course.map((u) => u.value));
                 }}
-                defaultValue
+                // defaultValue={coursesList[0]}
+                isMulti
               />
             </div>
 
@@ -171,13 +206,10 @@ export function AddStudent({
               <Select
                 placeholder="Select qualification"
                 className="select__learning__module"
-                options={coursesList}
-                value={
-                  courses &&
-                  coursesList.filter((ug) => courses.includes(ug.value))
-                }
-                onChange={(course) => {
-                  setCourses(course.map((u) => u.value));
+                options={qualificationList}
+                // defaultValue={qualificationList[0]}
+                onChange={(e) => {
+                  setQualification(e.value);
                 }}
               />
             </div>
@@ -228,9 +260,11 @@ export function AddStudent({
                 placeholder="Fee Status"
                 className="select__learning__module"
                 options={feeStatusList}
+                // defaultValue={feeStatusList[0]}
                 onChange={(e) => {
-                  setFeeStatus(e.label);
+                  setFeeStatus(e.value);
                 }}
+                // value={feeStatusList[0].value}
               />
             </div>
           </div>
@@ -243,7 +277,7 @@ export function AddStudent({
             variant="success"
             size="sm"
             onClick={() => {
-              handleOnClickSubmit();
+              handleOnClickAdd();
             }}
           >
             Submit
