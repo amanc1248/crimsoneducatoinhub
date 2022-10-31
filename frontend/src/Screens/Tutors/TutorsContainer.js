@@ -55,6 +55,7 @@ export const TutorsContainer = () => {
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Phone Number</th>
               <th>Courses</th>
               <th>Age</th>
               <th>Qualification</th>
@@ -70,6 +71,7 @@ export const TutorsContainer = () => {
                     <td>{index}</td>
                     <td>{tutor.name}</td>
                     <td>{tutor.email}</td>
+                    <td>{tutor.phoneNumber}</td>
                     <td>
                       {tutor.courses}
 
