@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import { getCourseData, insertData } from "../../actions/homeActions";
 
-export function AddStudent({ show, setShow, students, setStudents }) {
+export function AddTutor({ show, setShow, tutors, setTutors }) {
   useEffect(() => {
     getCourseData({
       url: "/api/commonRoute/getData",
@@ -48,58 +48,63 @@ export function AddStudent({ show, setShow, students, setStudents }) {
   // ];
 
   const qualificationList = [
-    { label: "SLC", value: "slc" },
-    { label: "+2", value: "+2" },
-    { label: "Bachelors", value: "bachelors" },
-  ];
-  const feeStatusList = [
-    { label: "Paid", value: "paid" },
-    { label: "Unpaid", value: "unpaid" },
-    { label: "Partially Paid", value: "partially paid" },
+    { label: "Experience 1", value: "exp1" },
+    { label: "Experience 2", value: "exp2" },
+    { label: "Experience 3", value: "exp3" },
+    { label: "Experience 4", value: "exp4" },
+    { label: "Experience 5", value: "exp5" },
+    { label: "Experience 6", value: "exp6" },
+    { label: "Experience 7", value: "exp7" },
+    { label: "Experience 8", value: "exp8" },
+    { label: "Experience 9", value: "exp9" },
   ];
 
   //   usestates
   // USESTATES
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [course, setCourse] = useState();
+  const [courses, setCourses] = useState();
+  const [age, setAge] = useState();
   const [qualification, setQualification] = useState();
   const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [feeStatus, setFeeStatus] = useState();
+  const [salary, setSalary] = useState();
   const [loader, setLoader] = useState(false);
+
   const [courseList, setCourseList] = useState();
 
   // functions
   const handleOnClickSubmit = () => {
+    const date = new Date();
     const doc = {
       name,
       email,
-      course,
+      courses,
+      age,
       qualification,
       startDate,
-      endDate,
-      feeStatus,
+      salary,
+      date,
     };
+    console.log(courses);
     if (
       name &&
       email &&
-      course &&
+      courses &&
+      age &&
       qualification &&
       startDate &&
-      endDate &&
-      feeStatus
+      salary
     ) {
-      let list = students;
+      let list = tutors;
       setLoader(true);
       insertData({
         url: "/api/commonRoute/insertData",
-        collectionName: "students",
+        collectionName: "tutors",
         doc,
       })
         .then((result) => {
           list.unshift(doc);
-          setStudents(list);
+          setTutors(list);
           setLoader(false);
           handleClose();
         })
@@ -119,7 +124,7 @@ export function AddStudent({ show, setShow, students, setStudents }) {
         keyboard={false}
       >
         <Modal.Header>
-          <Modal.Title>Add Student</Modal.Title>
+          <Modal.Title>Add Tutor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="new__feature__request__form">
@@ -159,17 +164,39 @@ export function AddStudent({ show, setShow, students, setStudents }) {
               </div>
             </div>
 
+            {/* Courses */}
+
             <div className="learning__form__group">
               <label for="course">Course</label>
               <Select
                 placeholder="Select Course"
                 className="select__learning__module"
                 options={courseList}
-                onChange={(e) => {
-                  setCourse(e.label);
+                value={
+                  courses &&
+                  courseList.filter((ug) => courses.includes(ug.value))
+                }
+                onChange={(course) => {
+                  setCourses(course.map((u) => u.value));
                 }}
                 defaultValue
+                isMulti
               />
+            </div>
+            <div class="learning__form__group">
+              <label for="name">Age</label>
+              <input
+                class="form-control"
+                id="name"
+                name="name"
+                rows="4"
+                cols="50"
+                placeholder="Enter Your Age"
+                value={age}
+                onChange={(e) => {
+                  setAge(e.target.value);
+                }}
+              ></input>
             </div>
 
             <div className="learning__form__group">
@@ -203,37 +230,20 @@ export function AddStudent({ show, setShow, students, setStudents }) {
                 ></input>
               </div>
             </div>
-
-            <div className="learning__form__group row">
-              {/* 3. End Date  */}
-              <div class="learning__form__group col-lg-12 col-12">
-                <label for="endDate">End Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="endDate"
-                  name="endDate"
-                  rows="4"
-                  cols="50"
-                  placeholder="Select ending date"
-                  value={endDate}
-                  onChange={(e) => {
-                    setEndDate(e.target.value);
-                  }}
-                ></input>
-              </div>
-            </div>
-
-            <div className="learning__form__group">
-              <label for="feeStatus">Fee Status</label>
-              <Select
-                placeholder="Fee Status"
-                className="select__learning__module"
-                options={feeStatusList}
+            <div class="learning__form__group">
+              <label for="name">Salary</label>
+              <input
+                class="form-control"
+                id="name"
+                name="name"
+                rows="4"
+                cols="50"
+                placeholder="Enter Salary"
+                value={salary}
                 onChange={(e) => {
-                  setFeeStatus(e.label);
+                  setSalary(e.target.value);
                 }}
-              />
+              ></input>
             </div>
           </div>
         </Modal.Body>
