@@ -6,12 +6,13 @@ import "../../styles/screens/home.css";
 import { Pagination } from "../../components/Pagination";
 import { getAllData } from "../../actions/homeActions";
 import { CourseModal } from "./CourseModal";
+import { IndividualCourse } from "./IndividualCourse";
 
 export const CoursesContainer = () => {
 
   // use states
-  const [courses, setCourses]          = useState();
-  const [show, setShow]                = useState(false);
+  const [courses, setCourses]                    = useState();
+  const [show, setShow]                          = useState(false);
 
   // use effect
   useEffect(() => {
@@ -70,18 +71,7 @@ export const CoursesContainer = () => {
             {courses &&
               courses.map((course, index) => {
                 return (
-                  <tr key={index}>
-                    <td>{index}</td>
-                    <td>{course.courseName}</td>
-                    <td>{course.time}</td>
-
-                    <td>{course.fee}</td>
-
-                    <td style={{ width: "300px", textAlign: "left" }}>
-                      {" "}
-                      {course.courseDetails}
-                    </td>
-                  </tr>
+                  <IndividualCourse course={course} index={index} key={index} />
                 );
               })}
           </tbody>

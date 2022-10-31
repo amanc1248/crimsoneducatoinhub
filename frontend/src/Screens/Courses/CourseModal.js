@@ -1,56 +1,20 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, {useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import Select from "react-select";
 import { insertData } from "../../actions/homeActions";
 
-export function CourseModal({ show, setShow, courses, setCourses }) {
-  // data
-  //   const courseList = [
-  //     {
-  //       label: "IELTS Class",
-  //       value: "IELTS",
-  //     },
-  //     {
-  //       label: "PTE Class",
-  //       value: "PTE",
-  //     },
-  //     {
-  //       label: "JAPNESE Class",
-  //       value: "JAPNENSE",
-  //     },
-  //     {
-  //       label: "KOREAN Class",
-  //       value: "KOREAN",
-  //     },
-  //     {
-  //       label: "COMPUTER Class",
-  //       value: "COMPUTER",
-  //     },
-  //   ];
+export function CourseModal({ show, setShow, courses, setCourses,individualCourse }) {
 
-  //   const qualificationList = [
-  //     { label: "Experience 1", value: "exp1" },
-  //     { label: "Experience 2", value: "exp2" },
-  //     { label: "Experience 3", value: "exp3" },
-  //     { label: "Experience 4", value: "exp4" },
-  //     { label: "Experience 5", value: "exp5" },
-  //     { label: "Experience 6", value: "exp6" },
-  //     { label: "Experience 7", value: "exp7" },
-  //     { label: "Experience 8", value: "exp8" },
-  //     { label: "Experience 9", value: "exp9" },
-  //   ];
-
-  //   usestates
   // USESTATES
-  const [courseName, setCourseName] = useState();
-  const [time, setTime] = useState();
-  const [fee, setFee] = useState();
-  const [teacher, setTeacher] = useState();
-  const [courseDetails, setCourseDetails] = useState();
-  const [loader, setLoader] = useState(false);
+  const [courseName, setCourseName]                = useState(individualCourse && individualCourse.courseName);
+  const [time, setTime]                            = useState(individualCourse && individualCourse.time);
+  const [fee, setFee]                              = useState(individualCourse && individualCourse.fee);
+  const [courseDetails, setCourseDetails]          = useState(individualCourse && individualCourse.courseDetails);
+  const [loader, setLoader]                        = useState(false);
+
+ 
 
   // functions
+  // 1. on adding course
   const handleOnClickSubmit = () => {
     const doc = {
       courseName,
@@ -77,8 +41,11 @@ export function CourseModal({ show, setShow, courses, setCourses }) {
         });
     }
   };
+
+  // 2. closing course modal
   const handleClose = () => setShow(false);
 
+  console.log("Individual course", individualCourse)
   return (
     <>
       <Modal
@@ -109,10 +76,9 @@ export function CourseModal({ show, setShow, courses, setCourses }) {
               ></input>
             </div>
 
-            {/* 2. Time  */}
-
+            {/* 2. course duration  */}
             <div class="learning__form__group ">
-              <label for="email">Time Period</label>
+              <label for="email">Course Duration (Months)</label>
               <input
                 class="form-control"
                 id="email"
@@ -124,17 +90,17 @@ export function CourseModal({ show, setShow, courses, setCourses }) {
                 onChange={(e) => {
                   setTime(e.target.value);
                 }}
+                type="number"
               ></input>
             </div>
 
-            {/* Courses */}
-
+            {/* Course fee */}
             <div class="learning__form__group">
-              <label for="name">Fee</label>
+              <label for="fee">Fee (Rs.)</label>
               <input
                 class="form-control"
-                id="name"
-                name="name"
+                id="fee"
+                name="fee"
                 rows="4"
                 cols="50"
                 placeholder="Enter Course Fee"
@@ -142,23 +108,24 @@ export function CourseModal({ show, setShow, courses, setCourses }) {
                 onChange={(e) => {
                   setFee(e.target.value);
                 }}
+                type="number"
               ></input>
             </div>
 
             <div class="learning__form__group">
-              <label for="name">Course Details</label>
-              <input
+              <label for="coursedetails">Course Details</label>
+              <textarea
                 class="form-control"
-                id="name"
-                name="name"
-                rows="4"
+                id="coursedetails"
+                name="coursedetails"
+                rows="6"
                 cols="50"
                 placeholder="Enter Course Details"
                 value={courseDetails}
                 onChange={(e) => {
                   setCourseDetails(e.target.value);
                 }}
-              ></input>
+              ></textarea>
             </div>
           </div>
         </Modal.Body>
