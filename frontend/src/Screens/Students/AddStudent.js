@@ -69,6 +69,7 @@ export function AddStudent({ show, setShow, students, setStudents }) {
   const [feeStatus, setFeeStatus] = useState();
   const [loader, setLoader] = useState(false);
   const [courseList, setCourseList] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
 
   // functions
   const handleOnClickSubmit = () => {
@@ -80,6 +81,7 @@ export function AddStudent({ show, setShow, students, setStudents }) {
       startDate,
       endDate,
       feeStatus,
+      phoneNumber,
     };
     if (
       name &&
@@ -88,7 +90,8 @@ export function AddStudent({ show, setShow, students, setStudents }) {
       qualification &&
       startDate &&
       endDate &&
-      feeStatus
+      feeStatus &&
+      phoneNumber
     ) {
       let list = students;
       setLoader(true);
@@ -157,6 +160,19 @@ export function AddStudent({ show, setShow, students, setStudents }) {
                   }}
                 ></input>
               </div>
+            </div>
+            <div className="learning__form__group">
+              <label for="email">Phone Number</label>
+              <input
+                class="form-control"
+                id="phnNumber"
+                name="phnNumber"
+                placeholder="Enter your phone number"
+                value={phoneNumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+              ></input>
             </div>
 
             <div className="learning__form__group">

@@ -65,6 +65,7 @@ export const StudentsContainer = () => {
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Phone Number</th>
               <th>Course</th>
               <th>Qualification</th>
               <th>Start Date</th>

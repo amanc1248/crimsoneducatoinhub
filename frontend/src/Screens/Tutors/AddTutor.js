@@ -69,6 +69,7 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
   const [startDate, setStartDate] = useState();
   const [salary, setSalary] = useState();
   const [loader, setLoader] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState();
 
   const [courseList, setCourseList] = useState();
 
@@ -84,6 +85,7 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
       startDate,
       salary,
       date,
+      phoneNumber,
     };
     console.log(courses);
     if (
@@ -93,7 +95,8 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
       age &&
       qualification &&
       startDate &&
-      salary
+      salary &&
+      phoneNumber
     ) {
       let list = tutors;
       setLoader(true);
@@ -166,6 +169,19 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
 
             {/* Courses */}
 
+            <div className="learning__form__group">
+              <label for="course">Phone Number</label>
+              <input
+                class="form-control"
+                id="phnNumber"
+                name="phnNumber"
+                placeholder="Enter your phone number"
+                value={phoneNumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+              ></input>
+            </div>
             <div className="learning__form__group">
               <label for="course">Course</label>
               <Select
