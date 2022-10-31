@@ -11,9 +11,9 @@ export const TabContent = ({ tabIndex }) => {
   // 1. tabs
   const tabs = [
     <DashboardContainer />,
-    <StudentsContainer />,
     <CoursesContainer />,
     <TutorsContainer />,
+    <StudentsContainer />,
   ];
   return (
     <div className="tab__content">

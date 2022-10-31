@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 
 import "../../styles/screens/home.css";
 import { Pagination } from "../../components/Pagination";
-import { AddCourses } from "./AddCourses";
 import { getAllData } from "../../actions/homeActions";
+import { CourseModal } from "./CourseModal";
 
 export const CoursesContainer = () => {
-  const [courses, setCourses] = useState();
-  const [show, setShow] = useState(false);
 
+  // use states
+  const [courses, setCourses]          = useState();
+  const [show, setShow]                = useState(false);
+
+  // use effect
   useEffect(() => {
     getAllData({ url: "/api/commonRoute/getData", collectionName: "courses" })
       .then((result) => {
@@ -21,14 +23,19 @@ export const CoursesContainer = () => {
         console.log(e);
       });
   }, []);
+
   return (
     <div className="courses">
-      <AddCourses
+
+      {/* course modal */}
+      <CourseModal
         show={show}
         setShow={setShow}
         courses={courses}
         setCourses={setCourses}
       />
+
+      {/* action buttons */}
       <div className="action__buttons">
         <Button
           variant="primary"
@@ -44,7 +51,6 @@ export const CoursesContainer = () => {
           nextButtonName="Next"
           prevButtonName="Prev"
           currentPage={1}
-          // setCurrentPage=
         />
       </div>
       <br />
@@ -57,6 +63,7 @@ export const CoursesContainer = () => {
               <th>Time</th>
               <th>Fee</th>
               <th>Course Details</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

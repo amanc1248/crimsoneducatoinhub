@@ -10,9 +10,9 @@ export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
   // DATA
   const tabsList = [
     { label: "Dashboard", icon: <HomeIcon sx={{ fontSize: 18 }} /> },
-    { label: "Students", icon: <PersonIcon sx={{ fontSize: 18 }} /> },
     { label: "Courses", icon: <MenuBookIcon sx={{ fontSize: 18 }} /> },
     { label: "Tutors", icon: <SchoolIcon sx={{ fontSize: 18 }} /> },
+    { label: "Students", icon: <PersonIcon sx={{ fontSize: 18 }} /> },
   ];
 
   // usestate
