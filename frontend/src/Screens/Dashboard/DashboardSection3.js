@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import axios from "axios";
 import { getTotalCount } from "../../actions/homeActions";
 export const DashboardSection3 = () => {
   // data
@@ -28,7 +25,7 @@ export const DashboardSection3 = () => {
 
   useEffect(() => {
     getTotalCount({
-      url: "/api/commonRoute/getTotalCount",
+      url: "/api/commonRoute/getTotalDocument",
       collectionNames: ["students", "tutors", "courses"],
     })
       .then((result) => {

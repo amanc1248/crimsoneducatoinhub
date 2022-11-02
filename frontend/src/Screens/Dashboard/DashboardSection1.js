@@ -32,19 +32,19 @@ export const DashboardSection1 = () => {
     },
   ];
 
-  useEffect(() => {
-    calculateDate({
-      url: "/api/commonRoute/calculateDate",
-      collectionNames: ["students"],
-    })
-      .then((result) => {
-        // setTotalNumbers(result);
-        console.log(result);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
+  // useEffect(() => {
+  //   calculateDate({
+  //     url: "/api/commonRoute/calculateDate",
+  //     collectionNames: ["students"],
+  //   })
+  //     .then((result) => {
+  //       // setTotalNumbers(result);
+  //       console.log(result);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, []);
 
   return (
     <div className="dashboard__section1 col-5">

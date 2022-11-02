@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 
 import "../../styles/screens/home.css";
 import { Pagination } from "../../components/Pagination";
-import { getAllData } from "../../actions/homeActions";
+import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { CourseModal } from "./CourseModal";
 import { IndividualCourse } from "./IndividualCourse";
 
@@ -12,29 +12,52 @@ export const CoursesContainer = () => {
 
   // use states
   const [courses, setCourses]                    = useState();
-  const [show, setShow]                          = useState(false);
+  const [showModal, setShowModal]                = useState(false);
+  const [refresh, setRefresh]                    = useState(true);
+  const [totalPages, setTotalPages]              = useState();
+  const  [currentPage, setCurrentPage]           = useState(1);
 
   // use effect
+  useEffect(()=>{
+    getOneModalTotalCount({url:"/api/commonRoute/getOneModalTotalCount", collectionName:"courses"}).then((result)=>{
+      console.log("total documents: ", result)
+      setTotalPages(Math.floor(result/3)+1)
+    }).catch((e)=>console.log(e));
+  },[])
+
   useEffect(() => {
-    getAllData({ url: "/api/commonRoute/getData", collectionName: "courses" })
+    refresh && getAllData({ url: "/api/commonRoute/getData", collectionName: "courses", pageNumber:currentPage,nPerPage:3 })
       .then((result) => {
         setCourses(result);
+        setRefresh(false)
       })
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [refresh]);
+
+  useEffect(() => {
+    getAllData({ url: "/api/commonRoute/getData", collectionName: "courses", pageNumber:currentPage, nPerPage:3  })
+      .then((result) => {
+        setCourses(result);
+        setRefresh(false)
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [currentPage]);
 
   return (
     <div className="courses">
 
       {/* course modal */}
-      <CourseModal
-        show={show}
-        setShow={setShow}
+      {showModal && <CourseModal
+        setShow={setShowModal}
         courses={courses}
         setCourses={setCourses}
-      />
+        courseModalType="Add"
+        setRefresh={setRefresh}
+      />}
 
       {/* action buttons */}
       <div className="action__buttons">
@@ -42,16 +65,17 @@ export const CoursesContainer = () => {
           variant="primary"
           size="sm"
           onClick={() => {
-            setShow(true);
+            setShowModal(true);
           }}
         >
           Add Courses
         </Button>
         <Pagination
-          totalPages={3}
+          totalPages={totalPages}
           nextButtonName="Next"
           prevButtonName="Prev"
-          currentPage={1}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
       <br />
@@ -61,8 +85,8 @@ export const CoursesContainer = () => {
             <tr>
               <th>#</th>
               <th>Course Name</th>
-              <th>Time</th>
-              <th>Fee</th>
+              <th>Time (Months)</th>
+              <th>Fee (Rs.)</th>
               <th>Course Details</th>
               <th>Actions</th>
             </tr>
@@ -71,7 +95,7 @@ export const CoursesContainer = () => {
             {courses &&
               courses.map((course, index) => {
                 return (
-                  <IndividualCourse course={course} index={index} key={index} />
+                  <IndividualCourse course={course} index={index} key={index} setRefresh={setRefresh} />
                 );
               })}
           </tbody>

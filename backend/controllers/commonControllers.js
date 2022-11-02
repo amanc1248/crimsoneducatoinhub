@@ -1,23 +1,41 @@
 const asyncHandler = require("express-async-handler");
 const { ObjectId } = require("mongodb");
 const { Promise } = require("mongoose");
+
 const { db } = require("../database");
-const { Student } = require("../database/schemas/Students");
+const courseModel = require("../schemas/Course");
 
 // get all documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName } = req.body;
+  const { collectionName,pageNumber,nPerPage } = req.body;
   try {
     const result = await db
       .collection(collectionName)
       .find()
-      .sort({ createdAt: "desc" })
+      .sort({ date: "desc" })
+      .skip(pageNumber > 0 ? (pageNumber - 1) * nPerPage : 0)
+      .limit(nPerPage)
       .toArray();
     return res.json(result);
   } catch (error) {
     return callback(error);
   }
 });
+
+// get one model total count
+const getOneModalTotalCount = asyncHandler(async (req, res, callback) => {
+  const { collectionName } = req.body;
+  console.log("here========>",collectionName)
+  try {
+    const result = await db
+      .collection(collectionName)
+      .countDocuments();
+    return res.json(result);
+  } catch (error) {
+    return callback(error);
+  }
+});
+
 
 // get one document common data controller
 const getOneDataController = asyncHandler(async (req, res, callback) => {
@@ -64,8 +82,8 @@ const updateCommonDataController = asyncHandler(async (req, res, callback) => {
 
 // delete one document common data controller
 const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName, id } = req.body;
-  console.log(req.body);
+  const { collectionName, id } = req.query;
+  console.log(req.query);
   try {
     const query = { _id: ObjectId(id) };
     const result = await db.collection(collectionName).deleteOne(query);
@@ -81,6 +99,7 @@ const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
 });
 
 const getTotalCountDataController = asyncHandler(async (req, res) => {
+  console.log(req.body.collectionNames)
   await Promise.all(
     req.body.collectionNames.map((collectionName) => {
       return db.collection(collectionName).countDocuments();
@@ -105,6 +124,7 @@ module.exports = {
   deleteCommonDataController,
   getOneDataController,
   insertOneDataController,
-  getTotalCountDataController,
   calulateDateDataController,
+  getTotalCountDataController,
+  getOneModalTotalCount
 };

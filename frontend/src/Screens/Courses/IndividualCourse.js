@@ -4,31 +4,35 @@ import { CourseModal } from "./CourseModal";
 
 export const IndividualCourse = ({
   course,
-  index
+  index,
+  setRefresh
 }) => {
 
   // usestates
   const [showModal, setShowModal]            = useState(false);
+  const [courseModalType, setCourseModalType]      = useState();
   
 
   // functions
   const onHandleUpdate = () => {
+    setCourseModalType("Update")
     setShowModal(true)
   };
   const onHandleDelete = () => {
+    setCourseModalType("delete")
     setShowModal(true)
   };
   return (
     <>
-    <CourseModal show={showModal} setShow={setShowModal}  individualCourse={course} ></CourseModal>
+    {showModal &&  <CourseModal show={true} setShow={setShowModal}  individualCourse={course} courseModalType={courseModalType} setRefresh={setRefresh} ></CourseModal>}
       <tr>
-        <td>{index}</td>
+        <td>{index + 1}</td>
         <td>{course.courseName}</td>
         <td>{course.time}</td>
 
         <td>{course.fee}</td>
 
-        <td style={{ width: "300px", textAlign: "left" }}>
+        <td style={{ width: "300px", textAlign: "center" }}>
           {" "}
           {course.courseDetails}
         </td>

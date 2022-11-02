@@ -11,9 +11,9 @@ const studentSchema = new Schema(
       type: String,
       required: true,
     },
-    course: {
-      type: String,
-      required: true,
+    phoneNumber:{
+      type: Number,
+      required:true,
     },
     qualification: {
       type: String,
@@ -30,10 +30,6 @@ const studentSchema = new Schema(
     feeStatus: {
       type: String,
       required: true,
-    },
-    testing:{
-        type:String,
-        default:"hiiiiiiiiiiiiii"
     }
   },
   { timestamps: true }
