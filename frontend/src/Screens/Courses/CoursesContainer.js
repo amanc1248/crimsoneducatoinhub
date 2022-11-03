@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Pagination from "react-js-pagination";
 
 import "../../styles/screens/home.css";
-import { Pagination } from "../../components/Pagination";
 import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { CourseModal } from "./CourseModal";
 import { IndividualCourse } from "./IndividualCourse";
@@ -21,7 +21,7 @@ export const CoursesContainer = () => {
   useEffect(()=>{
     getOneModalTotalCount({url:"/api/commonRoute/getOneModalTotalCount", collectionName:"courses"}).then((result)=>{
       console.log("total documents: ", result)
-      setTotalPages(Math.floor(result/3)+1)
+      setTotalPages(result)
     }).catch((e)=>console.log(e));
   },[])
 
@@ -49,15 +49,16 @@ export const CoursesContainer = () => {
 
   return (
     <div className="courses">
-
       {/* course modal */}
-      {showModal && <CourseModal
-        setShow={setShowModal}
-        courses={courses}
-        setCourses={setCourses}
-        courseModalType="Add"
-        setRefresh={setRefresh}
-      />}
+      {showModal && (
+        <CourseModal
+          setShow={setShowModal}
+          courses={courses}
+          setCourses={setCourses}
+          courseModalType="Add"
+          setRefresh={setRefresh}
+        />
+      )}
 
       {/* action buttons */}
       <div className="action__buttons">
@@ -71,11 +72,17 @@ export const CoursesContainer = () => {
           Add Courses
         </Button>
         <Pagination
-          totalPages={totalPages}
-          nextButtonName="Next"
-          prevButtonName="Prev"
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          itemClass="page-item"
+          linkClass="page-link"
+          firstPageText="First"
+          lastPageText="Last"
+          activePage={currentPage}
+          itemsCountPerPage={3}
+          totalItemsCount={totalPages}
+          pageRangeDisplayed={3}
+          onChange={(page) => {
+            setCurrentPage(page);
+          }}
         />
       </div>
       <br />
@@ -95,7 +102,12 @@ export const CoursesContainer = () => {
             {courses &&
               courses.map((course, index) => {
                 return (
-                  <IndividualCourse course={course} index={index} key={index} setRefresh={setRefresh} />
+                  <IndividualCourse
+                    course={course}
+                    index={index}
+                    key={index}
+                    setRefresh={setRefresh}
+                  />
                 );
               })}
           </tbody>
