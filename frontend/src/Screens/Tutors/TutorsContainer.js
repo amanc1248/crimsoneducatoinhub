@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Pagination from "react-js-pagination";
 
 import "../../styles/screens/home.css";
-import { Pagination } from "../../components/Pagination";
 import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { TutorModal } from "./TutorModal";
 import { IndividualTutor } from "./IndividualTutor";
@@ -35,6 +35,17 @@ export const TutorsContainer = () => {
         console.log(e);
       });
   }, [refresh]);
+
+  useEffect(() => {
+    getAllData({ url: "/api/commonRoute/getData", collectionName: "tutors", pageNumber:currentPage, nPerPage:3  })
+      .then((result) => {
+        setTutors(result);
+        setRefresh(false)
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [currentPage]);
   return (
     <div className="tutors">
       {showModal && (
@@ -84,6 +95,7 @@ export const TutorsContainer = () => {
               <th>Qualification</th>
               <th>Start Date</th>
               <th>Salary</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

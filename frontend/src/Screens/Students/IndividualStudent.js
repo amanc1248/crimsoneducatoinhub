@@ -1,56 +1,43 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import { StudentModal } from "./StudentModal";
 
-import { AddStudent } from "./AddStudent";
-export const IndividualStudent = ({ student, index}) => {
+export const IndividualStudent = ({ 
+  student,
+  index,
+  setRefresh}) => {
 
-  const [type, setType] = useState('');
-  const [shouldShow, setShouldShow]  =useState()
+    const [showModal, setShowModal]            = useState(false);
+    const [courseModalType, setCourseModalType]      = useState();
 
 
-  // FUNCTIONS
-  const handleOnClickUpdate = (data) => {
-    setShouldShow(true)
-    // setStudentModalType("update");
-    // setShow(true);
-    // setFetchAllDataAgain(false);
+  // functions
+  const onHandleUpdate = () => {
+    setCourseModalType("Update")
+    setShowModal(true)
   };
-  const handleOnClickDelete = () => {
-    setShouldShow(true)
-    // setStudents(data)
-    // setStudentModalType("delete");
-    // setShow(true);
-    // setFetchAllDataAgain(false);
+  const onHandleDelete = () => {
+    setCourseModalType("delete")
+    setShowModal(true)
   };
 
   return (
     <>
-    {/* <AddStudent
-      student={student}
-      type={type}
-      shouldShow={shouldShow}
-      // setFetchAllDataAgain,
-    /> */}
+        {showModal &&  <StudentModal show={true} setShow={setShowModal}  individualStudent={student} courseModalType={courseModalType} setRefresh={setRefresh} ></StudentModal>}
+
       <tr key={index}>  
         <td>{index + 1}</td>
         <td>{student.name}</td>
         <td>{student.email}</td>
-        <td>
-          {/* {student.courses.map((course) => (
-            <div key={course}>{course}</div>
-          ))} */}
-        </td>
+        <td>{student.phoneNumber}</td>
+
         <td>{student.qualification}</td>
-        <td>{student.startDate}</td>
-        <td>{student.endDate}</td>
-        <td>{student.feeStatus}</td>
         <td>
           <Button
             variant="success"
             size="sm"
             className="button__size"
-            onClick={handleOnClickUpdate}
+            onClick={onHandleUpdate}
           >
             Update
           </Button>
@@ -58,7 +45,7 @@ export const IndividualStudent = ({ student, index}) => {
             variant="danger"
             size="sm"
             className="button__size"
-            onClick={handleOnClickDelete}
+            onClick={onHandleDelete}
           >
             Delete
           </Button>

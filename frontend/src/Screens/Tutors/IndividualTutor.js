@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { CourseModal } from "./CourseModal";
 import { TutorModal } from "./TutorModal";
 
 export const IndividualTutor = ({

@@ -1,60 +1,84 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 
 import "../../styles/screens/home.css";
-import { Pagination } from "../../components/Pagination";
-import { AddStudent } from "./AddStudent";
-import { getAllData } from "../../actions/homeActions";
+import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { IndividualStudent } from "./IndividualStudent";
+import { StudentModal } from "./StudentModal";
+import Pagination from "react-js-pagination";
 
 export const StudentsContainer = () => {
   // data
 
   // use states
   const [students, setStudents]                   = useState();
-  const [show, setShow]                           = useState(false);
-  const [fetchAllDataAgain, setFetchAllDataAgain] = useState(false);
-  const [studentModalType, setStudentModalType] = useState()
+  const [showModal, setShowModal]                           = useState(false);
+  const [refresh, setRefresh]                    = useState(true);
+  const [totalPages, setTotalPages]              = useState();
+  const  [currentPage, setCurrentPage]           = useState(1);
 
-  // USE EFFECTS
+  // use effects
+  useEffect(()=>{
+    getOneModalTotalCount({url:"/api/commonRoute/getOneModalTotalCount", collectionName:"students"}).then((result)=>{
+      console.log("total documents: ", result)
+      setTotalPages(result)
+    }).catch((e)=>console.log(e));
+  },[])
+
   useEffect(() => {
-    getAllData({ url: "/api/commonRoute/getData", collectionName: "students" })
+    refresh && getAllData({ url: "/api/commonRoute/getData", collectionName: "students", pageNumber:currentPage,nPerPage:3 })
       .then((result) => {
         setStudents(result);
+        setRefresh(false)
       })
       .catch((e) => {
         console.log(e);
       });
-  }, [fetchAllDataAgain]);
+  }, [refresh]);
+
+  useEffect(() => {
+    getAllData({ url: "/api/commonRoute/getData", collectionName: "students", pageNumber:currentPage, nPerPage:3  })
+      .then((result) => {
+        setStudents(result);
+        setRefresh(false)
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [currentPage]);
 
   return (
     <div className="students">
-      <AddStudent
-        shouldShow={show}
-        setShouldShow={setShow}
-        setFetchAllDataAgain={setFetchAllDataAgain}
-        type={studentModalType}
-      />
+      {showModal && (<StudentModal
+        setShow={setShowModal}
+        students={students}
+        setStudents={setStudents}
+        courseModalType="Add"
+        setRefresh={setRefresh}
+      />)}
       <div className="action__buttons">
-        <Button
+      <Button
           variant="primary"
           size="sm"
           onClick={() => {
-            setShow(true);
-            setFetchAllDataAgain(false)
-            setStudentModalType('add')
+            setShowModal(true);
           }}
         >
           Add Student
         </Button>
         <Pagination
-          totalPages={3}
-          nextButtonName="Next"
-          prevButtonName="Prev"
-          currentPage={1}
-          // setCurrentPage=
+          itemClass="page-item"
+          linkClass="page-link"
+          firstPageText="First"
+          lastPageText="Last"
+          activePage={currentPage}
+          itemsCountPerPage={3}
+          totalItemsCount={totalPages}
+          pageRangeDisplayed={3}
+          onChange={(page) => {
+            setCurrentPage(page);
+          }}
         />
       </div>
       <br />
@@ -66,11 +90,7 @@ export const StudentsContainer = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Phone Number</th>
-              <th>Course</th>
               <th>Qualification</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Fee Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -79,8 +99,10 @@ export const StudentsContainer = () => {
               students.map((student, index) => {
                 return (
                   <IndividualStudent
-                    student={student}
-                    index={index}
+                  student={student}
+                  index={index}
+                  key={index}
+                  setRefresh={setRefresh}
                   />
                 );
               })}

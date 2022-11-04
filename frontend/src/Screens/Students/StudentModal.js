@@ -4,34 +4,30 @@ import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
 import { deleteData, getCourseData, insertData, updateData } from "../../actions/homeActions";
 
-export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, courseModalType, setRefresh }) {
+export function StudentModal({ show, setShow, students, setStudents,individualStudent, courseModalType, setRefresh }) {
 
   const qualificationList = [
-    { label: "Experience 1", value: "exp1" },
-    { label: "Experience 2", value: "exp2" },
-    { label: "Experience 3", value: "exp3" },
-    { label: "Experience 4", value: "exp4" },
-    { label: "Experience 5", value: "exp5" },
-    { label: "Experience 6", value: "exp6" },
-    { label: "Experience 7", value: "exp7" },
-    { label: "Experience 8", value: "exp8" },
-    { label: "Experience 9", value: "exp9" },
+    { label: "SLC", value: "slc" },
+    { label: "+2", value: "+2" },
+    { label: "Bachelors", value: "bachelors" },
+  ];
+  const feeStatusList = [
+    { label: "Paid", value: "paid" },
+    { label: "Unpaid", value: "unpaid" },
+    { label: "Partially Paid", value: "partially paid" },
   ];
 
   //   usestates
   // USESTATES
-  const [name, setName] = useState(individualTutor && individualTutor.name);
-  const [email, setEmail] = useState(individualTutor && individualTutor.email);
-  const [age, setAge] = useState(individualTutor && individualTutor.age);
-  const [qualification, setQualification] = useState(individualTutor && individualTutor.qualification);
-  const [startDate, setStartDate] = useState(individualTutor && individualTutor.startDate);
-  const [salary, setSalary] = useState(individualTutor && individualTutor.salary);
-  const [phoneNumber, setPhoneNumber] = useState(individualTutor && individualTutor.phoneNumber);
+  const [name, setName] = useState(individualStudent && individualStudent.name);
+  const [email, setEmail] = useState(individualStudent && individualStudent.email);
+  const [age, setAge]     = useState(individualStudent && individualStudent.age);
+  const [qualification, setQualification] = useState(individualStudent && individualStudent.qualification);
+  const [phoneNumber, setPhoneNumber] = useState(individualStudent && individualStudent.phoneNumber);
   const [loader, setLoader] = useState(false);
 
-  const [tutorsList, setTutorsList] = useState();
 
-  // functions
+// functions
   // 1. on adding course
   const handleOnClickSubmit = () => {
     const doc = {
@@ -39,8 +35,6 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
       email,
       age,
       qualification,
-      startDate,
-      salary,
       phoneNumber,
       date: new Date()
     };
@@ -48,17 +42,16 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
       email,
       age,
       qualification,
-      startDate,
-      salary, phoneNumber) {
-      let list = tutors;
+      phoneNumber) {
+      let list = students;
       setLoader(true);
       insertData({
         url: "/api/commonRoute/insertData",
-        collectionName: "tutors",
+        collectionName: "students",
         doc,
       })
         .then((result) => {
-          setTutors(list);
+          setStudents(list);
           setRefresh(true);
           setLoader(false);
           handleClose();
@@ -75,8 +68,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
     setEmail('');
     setAge('');
     setQualification('');
-    setStartDate('');
-    setSalary('');
+    setPhoneNumber('');
     setShow(false);
   };
 
@@ -87,23 +79,19 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
       email,
       age,
       qualification,
-      startDate,
-      salary,
       phoneNumber,
     };
     if (name,
       email,
       age,
       qualification,
-      startDate,
-      salary,
       phoneNumber) {
       setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
-        collectionName: "tutors",
+        collectionName: "students",
         updatedTo:doc,
-        id:individualTutor._id
+        id:individualStudent._id
       })
         .then((result) => {
           setRefresh(true);
@@ -120,7 +108,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
   const handleOnClickDelete = ()=>{
     setLoader(true);
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${individualTutor._id}&collectionName=tutors`,
+      url: `/api/commonRoute/deleteData?id=${individualStudent._id}&collectionName=students`,
     })
       .then((result) => {
         setRefresh(true);
@@ -131,7 +119,6 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
         console.log(e);
       });
   }
-
   return (
     <>
       <Modal
@@ -186,11 +173,8 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
                 ></input>
               </div>
             </div>
-
-            {/* Courses */}
-
             <div className="learning__form__group">
-              <label for="course">Phone Number</label>
+              <label for="email">Phone Number</label>
               <input
                 class="form-control"
                 id="phnNumber"
@@ -202,21 +186,8 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
                 }}
               ></input>
             </div>
-            <div class="learning__form__group">
-              <label for="name">Age</label>
-              <input
-                class="form-control"
-                id="name"
-                name="name"
-                rows="4"
-                cols="50"
-                placeholder="Enter Your Age"
-                value={age}
-                onChange={(e) => {
-                  setAge(e.target.value);
-                }}
-              ></input>
-            </div>
+
+            
 
             <div className="learning__form__group">
               <label for="qualification">Qualification</label>
@@ -228,41 +199,6 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
                   setQualification(e.label);
                 }}
               />
-            </div>
-
-            <div className="learning__form__group row">
-              {/* 3. Start Date  */}
-              <div class="learning__form__group col-lg-12 col-12">
-                <label for="startDate">Start Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="startDate"
-                  name="startDate"
-                  rows="4"
-                  cols="50"
-                  placeholder="Select starting date"
-                  value={startDate}
-                  onChange={(e) => {
-                    setStartDate(e.target.value);
-                  }}
-                ></input>
-              </div>
-            </div>
-            <div class="learning__form__group">
-              <label for="name">Salary</label>
-              <input
-                class="form-control"
-                id="name"
-                name="name"
-                rows="4"
-                cols="50"
-                placeholder="Enter Salary"
-                value={salary}
-                onChange={(e) => {
-                  setSalary(e.target.value);
-                }}
-              ></input>
             </div>
           </div>
         </Modal.Body>

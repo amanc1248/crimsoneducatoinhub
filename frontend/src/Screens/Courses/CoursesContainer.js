@@ -69,7 +69,7 @@ export const CoursesContainer = () => {
             setShowModal(true);
           }}
         >
-          Add Courses
+          Add Course
         </Button>
         <Pagination
           itemClass="page-item"
