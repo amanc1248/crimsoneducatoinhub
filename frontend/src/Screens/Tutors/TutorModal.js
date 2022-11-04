@@ -2,50 +2,9 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
-import { getCourseData, insertData } from "../../actions/homeActions";
+import { deleteData, getCourseData, insertData, updateData } from "../../actions/homeActions";
 
-export function AddTutor({ show, setShow, tutors, setTutors }) {
-  useEffect(() => {
-    getCourseData({
-      url: "/api/commonRoute/getData",
-      collectionName: "courses",
-    })
-      .then((result) => {
-        let list = [];
-
-        result.map((course) => {
-          list.push({ label: course.courseName, value: course.courseName });
-          setCourseList(list);
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
-
-  // data
-  // const courseList = [
-  //   {
-  //     label: "IELTS Class",
-  //     value: "IELTS",
-  //   },
-  //   {
-  //     label: "PTE Class",
-  //     value: "PTE",
-  //   },
-  //   {
-  //     label: "JAPNESE Class",
-  //     value: "JAPNENSE",
-  //   },
-  //   {
-  //     label: "KOREAN Class",
-  //     value: "KOREAN",
-  //   },
-  //   {
-  //     label: "COMPUTER Class",
-  //     value: "COMPUTER",
-  //   },
-  // ];
+export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, courseModalType, setRefresh }) {
 
   const qualificationList = [
     { label: "Experience 1", value: "exp1" },
@@ -63,7 +22,6 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
   // USESTATES
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [courses, setCourses] = useState();
   const [age, setAge] = useState();
   const [qualification, setQualification] = useState();
   const [startDate, setStartDate] = useState();
@@ -71,33 +29,27 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
   const [loader, setLoader] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState();
 
-  const [courseList, setCourseList] = useState();
+  const [tutorsList, setTutorsList] = useState();
 
   // functions
+  // 1. on adding course
   const handleOnClickSubmit = () => {
-    const date = new Date();
     const doc = {
       name,
       email,
-      courses,
       age,
       qualification,
       startDate,
       salary,
-      date,
       phoneNumber,
+      date: new Date()
     };
-    console.log(courses);
-    if (
-      name &&
-      email &&
-      courses &&
-      age &&
-      qualification &&
-      startDate &&
-      salary &&
-      phoneNumber
-    ) {
+    if (name,
+      email,
+      age,
+      qualification,
+      startDate,
+      salary, phoneNumber) {
       let list = tutors;
       setLoader(true);
       insertData({
@@ -106,8 +58,8 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
         doc,
       })
         .then((result) => {
-          list.unshift(doc);
           setTutors(list);
+          setRefresh(true);
           setLoader(false);
           handleClose();
         })
@@ -116,7 +68,69 @@ export function AddTutor({ show, setShow, tutors, setTutors }) {
         });
     }
   };
-  const handleClose = () => setShow(false);
+
+  // 2. closing course modal
+  const handleClose = () => {
+    setName('');
+    setEmail('');
+    setAge('');
+    setQualification('');
+    setStartDate('');
+    setSalary('');
+    setShow(false);
+  };
+
+  // 3. on updating course
+  const handleOnClickUpdate = ()=>{
+    const doc = {
+      name,
+      email,
+      age,
+      qualification,
+      startDate,
+      salary,
+      phoneNumber,
+    };
+    if (name,
+      email,
+      age,
+      qualification,
+      startDate,
+      salary,
+      phoneNumber) {
+      setLoader(true);
+      updateData({
+        url: "/api/commonRoute/updateData",
+        collectionName: "tutors",
+        updatedTo:doc,
+        id:individualTutor._id
+      })
+        .then((result) => {
+          setRefresh(true);
+          setLoader(false);
+          handleClose();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }
+
+  // 4. on deleting course
+  const handleOnClickDelete = ()=>{
+    setLoader(true);
+    deleteData({
+      url: `/api/commonRoute/deleteData?id=${individualTutor._id}&collectionName=tutors`,
+    })
+      .then((result) => {
+        setRefresh(true);
+        setLoader(false);
+        handleClose();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   return (
     <>

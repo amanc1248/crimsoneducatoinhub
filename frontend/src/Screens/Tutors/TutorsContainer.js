@@ -1,50 +1,73 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 
 import "../../styles/screens/home.css";
 import { Pagination } from "../../components/Pagination";
-import { AddTutor } from "./AddTutor";
-import { getAllData } from "../../actions/homeActions";
+import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
+import { TutorModal } from "./TutorModal";
+import { IndividualTutor } from "./IndividualTutor";
 
 export const TutorsContainer = () => {
-  const [tutors, setTutors] = useState();
-  const [show, setShow] = useState(false);
+
+  // use states
+  const [tutors, setTutors]                      = useState();
+  const [showModal, setShowModal]                = useState(false); 
+  const [refresh, setRefresh]                    = useState(true);
+  const [totalPages, setTotalPages]              = useState();
+  const  [currentPage, setCurrentPage]           = useState(1);
+
+  // use effects
+  useEffect(()=>{
+    getOneModalTotalCount({url:"/api/commonRoute/getOneModalTotalCount", collectionName:"tutors"}).then((result)=>{
+      console.log("total documents: ", result)
+      setTotalPages(result)
+    }).catch((e)=>console.log(e));
+  },[])
 
   useEffect(() => {
-    getAllData({ url: "/api/commonRoute/getData", collectionName: "tutors" })
+    refresh && getAllData({ url: "/api/commonRoute/getData", collectionName: "tutors", pageNumber:currentPage,nPerPage:3 })
       .then((result) => {
         setTutors(result);
+        setRefresh(false)
       })
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [refresh]);
   return (
     <div className="tutors">
-      <AddTutor
-        show={show}
-        setShow={setShow}
-        tutors={tutors}
-        setTutors={setTutors}
-      />
+      {showModal && (
+        <TutorModal
+          setShow={setShowModal}
+          tutors={tutors}
+          setTutors={setTutors}
+          courseModalType="Add"
+          setRefresh={setRefresh}
+        />
+      )}
       <div className="action__buttons">
         <Button
           variant="primary"
           size="sm"
           onClick={() => {
-            setShow(true);
+            setShowModal(true);
           }}
         >
           Add Tutor
         </Button>
         <Pagination
-          totalPages={3}
-          nextButtonName="Next"
-          prevButtonName="Prev"
-          currentPage={1}
-          // setCurrentPage=
+          itemClass="page-item"
+          linkClass="page-link"
+          firstPageText="First"
+          lastPageText="Last"
+          activePage={currentPage}
+          itemsCountPerPage={3}
+          totalItemsCount={totalPages}
+          pageRangeDisplayed={3}
+          onChange={(page) => {
+            setCurrentPage(page);
+          }}
         />
       </div>
       <br />
@@ -67,28 +90,12 @@ export const TutorsContainer = () => {
             {tutors &&
               tutors.map((tutor, index) => {
                 return (
-                  <tr key={index}>
-                    <td>{index}</td>
-                    <td>{tutor.name}</td>
-                    <td>{tutor.email}</td>
-                    <td>{tutor.phoneNumber}</td>
-                    <td>
-                      {tutor.courses}
-
-                      {/* {courses && 
-                    courses.map((course, index) => {
-                        <td>
-
-                        </td>
-                    })
-                    } */}
-                    </td>
-                    <td>{tutor.age}</td>
-
-                    <td>{tutor.qualification}</td>
-                    <td>{tutor.startDate}</td>
-                    <td>{tutor.salary}</td>
-                  </tr>
+                  <IndividualTutor
+                  tutor={tutor}
+                  index={index}
+                  key={index}
+                  setRefresh={setRefresh}
+                />
                 );
               })}
           </tbody>
