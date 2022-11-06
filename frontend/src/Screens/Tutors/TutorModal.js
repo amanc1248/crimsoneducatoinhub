@@ -185,6 +185,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
+                  type="email"
                 ></input>
               </div>
             </div>
@@ -202,6 +203,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
                 onChange={(e) => {
                   setPhoneNumber(e.target.value);
                 }}
+                type="number"
               ></input>
             </div>
             <div class="learning__form__group">
@@ -217,6 +219,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
                 onChange={(e) => {
                   setAge(e.target.value);
                 }}
+                type="number"
               ></input>
             </div>
 

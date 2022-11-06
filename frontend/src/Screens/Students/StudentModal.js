@@ -170,6 +170,7 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
+                  type="email"
                 ></input>
               </div>
             </div>
@@ -184,6 +185,7 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
                 onChange={(e) => {
                   setPhoneNumber(e.target.value);
                 }}
+                type="number"
               ></input>
             </div>
 

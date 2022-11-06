@@ -6,17 +6,17 @@ import Select from "react-select";
 import { useEffect } from 'react';
 import { getOneModalAllDocuments, updateData } from '../../actions/homeActions';
 
-export const AssignedCoursesModal = ({show, setShow, individualTutor,setRefresh})=>{
+export const EnrolledCoursesModal = ({show, setShow, individualStudent,setRefresh})=>{
     
     // data
     let theSelectedCourseId="";
     let theSelectedCourse="";
     let startDate="";
     let endDate="";
-
+    
     // usestates
     const [addCourse, setAddCourse]   = useState(false);
-    const [assignedCourses, setAssignedCourses] =  useState(individualTutor?.assignedCourses ? individualTutor.assignedCourses : []);
+    const [assignedCourses, setAssignedCourses] =  useState(individualStudent?.assignedCourses ? individualStudent.assignedCourses : []);
     const [allCourses, setAllCourses] = useState();
     const [originalCourses, setOriginalCourse] =useState();
 
@@ -100,7 +100,7 @@ export const AssignedCoursesModal = ({show, setShow, individualTutor,setRefresh}
       const theDoc = {assignedCourses: assignedCourses};
       updateData({
         url: "/api/commonRoute/updateData",
-        collectionName: "tutors",
+        collectionName: "students",
         updatedTo:theDoc,
         id:id
       })
@@ -123,7 +123,7 @@ export const AssignedCoursesModal = ({show, setShow, individualTutor,setRefresh}
         >
           <Modal.Header>
             <Modal.Title>
-              {individualTutor.name + "Assigned Courses"}
+              Enrolled Courses
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -230,7 +230,7 @@ export const AssignedCoursesModal = ({show, setShow, individualTutor,setRefresh}
             <button className="btn btn-close" onClick={handleClose}>
               Cancel
             </button>
-            <button className="btn btn-primary" onClick={()=>{handleOnAddAssignedCourses(individualTutor._id)}}>
+            <button className="btn btn-primary" onClick={()=>{handleOnAddAssignedCourses(individualStudent._id)}}>
               Save
             </button>
           </Modal.Footer>

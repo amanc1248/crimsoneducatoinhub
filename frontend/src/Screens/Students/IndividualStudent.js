@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
+import { EnrolledCoursesModal } from "./EnrolledCoursesStudents";
 import { StudentModal } from "./StudentModal";
 
 export const IndividualStudent = ({ 
@@ -9,6 +10,7 @@ export const IndividualStudent = ({
 
     const [showModal, setShowModal]            = useState(false);
     const [courseModalType, setCourseModalType]      = useState();
+    const [showAssignedCourse, setShowAssignedCourse] = useState(false);
 
 
   // functions
@@ -20,11 +22,19 @@ export const IndividualStudent = ({
     setCourseModalType("delete")
     setShowModal(true)
   };
-
+  const onHandleAssignedCourses = ()=>{
+    setShowAssignedCourse(true)
+  }
   return (
     <>
         {showModal &&  <StudentModal show={true} setShow={setShowModal}  individualStudent={student} courseModalType={courseModalType} setRefresh={setRefresh} ></StudentModal>}
-
+        {showAssignedCourse && 
+        <EnrolledCoursesModal 
+        show={true} 
+        setShow={setShowAssignedCourse} 
+        individualStudent={student}
+        setRefresh={setRefresh}
+        />}
       <tr key={index}>  
         <td>{index + 1}</td>
         <td>{student.name}</td>
@@ -40,6 +50,14 @@ export const IndividualStudent = ({
             onClick={onHandleUpdate}
           >
             Update
+          </Button>
+          <Button
+            variant="warning"
+            size="sm"
+            className="button__size  mr-1 ml-1"
+            onClick={onHandleAssignedCourses}
+          >
+            Assigned Courses
           </Button>
           <Button
             variant="danger"

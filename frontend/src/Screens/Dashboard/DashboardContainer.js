@@ -9,10 +9,10 @@ export const DashboardContainer = ()=>{
     
     return(
         <div className='dashboard__container'>
-            <div className="dashboard__upper__section row g-0">
+            {/* <div className="dashboard__upper__section row g-0">
                 <DashboardSection1/>
                 <DashboardSection2/>
-            </div>
+            </div> */}
             <div className="dashboard__lower__section row g-0">
                 <DashboardSection3/>
             </div>
