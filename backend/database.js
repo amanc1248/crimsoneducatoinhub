@@ -8,5 +8,5 @@ console.log("this is ", process.env.NODE_ENV)
 const uri = process.env.MONGO_URL;
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 client.connect();
-const db = client.db('development');
+const db = client.db(process.env.NODE_ENV);
 module.exports={db}

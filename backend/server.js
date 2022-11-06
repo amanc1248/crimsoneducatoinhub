@@ -19,10 +19,11 @@ app.use(cors(corsOptions));
 app.use(express.static("public"));
 app.use("/api/commonRoute", commonRouter);
 
-app.get("/", async (req, res) => {
-  console.log("hi we are running");
-  return res.json("Hiii we are running");
-});
+// COMMENT THIS CODE WHEN DEPLOYING TO PRODUCTION
+// app.get("/", async (req, res) => {
+//   console.log("hi we are running");
+//   return res.json("Hiii we are running");
+// });
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
   app.get("*", (req, res) =>
