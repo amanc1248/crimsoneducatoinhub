@@ -2,7 +2,7 @@ const express = require('express')
 const app = express();
 const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
-dotenv.config({path: "../.env" });
+dotenv.config();
 
 console.log("this is ", process.env.NODE_ENV)
 const uri = process.env.MONGO_URL;
