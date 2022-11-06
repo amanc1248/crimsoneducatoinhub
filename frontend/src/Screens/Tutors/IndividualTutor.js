@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
+import { AssignedCoursesModal } from "./AssignedCoursesModal";
 import { TutorModal } from "./TutorModal";
 
 export const IndividualTutor = ({
@@ -11,6 +12,7 @@ export const IndividualTutor = ({
   // usestates
   const [showModal, setShowModal]            = useState(false);
   const [courseModalType, setCourseModalType]      = useState();
+  const [showAssignedCourse, setShowAssignedCourse] = useState(false);
   
 
   // functions
@@ -22,6 +24,9 @@ export const IndividualTutor = ({
     setCourseModalType("delete")
     setShowModal(true)
   };
+  const onHandleAssignedCourses = ()=>{
+    setShowAssignedCourse(true)
+  }
   return (
     <>
       {showModal && (
@@ -33,22 +38,19 @@ export const IndividualTutor = ({
           setRefresh={setRefresh}
         ></TutorModal>
       )}
+
+      {showAssignedCourse && 
+        <AssignedCoursesModal 
+        show={true} 
+        setShow={setShowAssignedCourse} 
+        individualTutor={tutor}
+        setRefresh={setRefresh}
+        />}
       <tr key={index}>
         <td>{index}</td>
         <td>{tutor.name}</td>
         <td>{tutor.email}</td>
         <td>{tutor.phoneNumber}</td>
-        <td>
-          {tutor.courses}
-
-          {/* {courses && 
-                    courses.map((course, index) => {
-                        <td>
-
-                        </td>
-                    })
-                    } */}
-        </td>
         <td>{tutor.age}</td>
 
         <td>{tutor.qualification}</td>
@@ -62,6 +64,14 @@ export const IndividualTutor = ({
             onClick={onHandleUpdate}
           >
             Update
+          </Button>
+          <Button
+            variant="warning"
+            size="sm"
+            className="button__size  mr-1 ml-1"
+            onClick={onHandleAssignedCourses}
+          >
+            Assigned Courses
           </Button>
           <Button
             variant="danger"

@@ -12,19 +12,19 @@
     justify-content: space-around;
     text-align: center;
     align-items: center;
-    border-radius: 30px 0 0 30px;
+    /* border-radius: 30px 0 0 30px; */
     height: 100%;
 }
 .tab__content{
     width: 80%;
     background-color: white;
-    border-radius: 0 30px 30px 0;
+    /* border-radius: 0 30px 30px 0; */
     height: 100%;
 
 }
 .tab__content__inside{
     background-color: #F3F1EF;
-    border-radius: 30px;
+    /* border-radius: 30px; */
     height: 100%;
     padding: 10px 40px;
 }
@@ -45,10 +45,10 @@
     padding: 10px 30px;
     margin: 7px 0;
     cursor: pointer;
-    border-radius: 12px;
+    /* border-radius: 12px; */
 }
 .dashboard__tab__active{
-    background-color: #F3F1EF;
+    background-color: #dab085aa;
 }
 .dashboard__tab__icon{
     color: #0A033A;
@@ -79,9 +79,10 @@
     overflow: auto;
 }
 .table__list{
-    background-color: #95CFD9;
-    border-radius: 20px;
+    background-color: white;
+    /* border-radius: 20px; */
     font-size: small;
+    border: 1px solid rgba(0, 0, 0, 0.409);
 }
 
 
@@ -192,4 +193,19 @@
   .button__size{
     height: 22px;
     font-size: smaller;
+  }
+  .selecting__divs{
+    /* width: 33%; */
+    height: 30px;
+    font-size: small;
+  }
+  .adding__course__div{
+    font-size: smaller;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  .add__button__size{
+    font-size: 10px;
   }

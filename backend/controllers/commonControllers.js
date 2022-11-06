@@ -5,7 +5,7 @@ const { Promise } = require("mongoose");
 const { db } = require("../database");
 const courseModel = require("../schemas/Course");
 
-// get all documents common data controller
+// get number of documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
   const { collectionName,pageNumber,nPerPage } = req.body;
   try {
@@ -36,6 +36,19 @@ const getOneModalTotalCount = asyncHandler(async (req, res, callback) => {
   }
 });
 
+// get modal all documents
+const getModalAllDocumentsController = asyncHandler(async(req,res,callback)=>{
+  const { collectionName} = req.body;
+  try{
+    const result  = await db.collection(collectionName).find().toArray();
+    if(result){
+      return res.json(result);
+    }
+  }catch(e){
+    throw e
+  }
+})
+
 
 // get one document common data controller
 const getOneDataController = asyncHandler(async (req, res, callback) => {
@@ -63,6 +76,25 @@ const insertOneDataController = asyncHandler(async (req, res, callback) => {
 
 // update one document common data controller
 const updateCommonDataController = asyncHandler(async (req, res, callback) => {
+  const { collectionName, id, updateTo } = req.body;
+  console.log(req.body);
+  try {
+    const filter = { _id: ObjectId(id) };
+    const updateDoc = {
+      $set: updateTo,
+    };
+
+    const result = await db
+      .collection(collectionName)
+      .updateOne(filter, updateDoc);
+    return res.json(result);
+  } catch (error) {
+    return callback(error);
+  }
+});
+
+// update one document common data controller
+const updateCommonDataControllerWithSet = asyncHandler(async (req, res, callback) => {
   const { collectionName, id, updateTo } = req.body;
   console.log(req.body);
   try {
@@ -126,5 +158,6 @@ module.exports = {
   insertOneDataController,
   calulateDateDataController,
   getTotalCountDataController,
-  getOneModalTotalCount
+  getOneModalTotalCount,
+  getModalAllDocumentsController
 };

@@ -83,14 +83,13 @@ export const TutorsContainer = () => {
       </div>
       <br />
       <div className="students__inside">
-        <Table striped hover size="sm" className="table__list">
+        <Table striped  hover size="sm" className="table__list">
           <thead>
             <tr>
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
               <th>Phone Number</th>
-              <th>Courses</th>
               <th>Age</th>
               <th>Qualification</th>
               <th>Start Date</th>

@@ -6,7 +6,8 @@ const {
   getOneDataController,
   insertOneDataController,
   getTotalCountDataController,
-  getOneModalTotalCount
+  getOneModalTotalCount,
+  getModalAllDocumentsController
 } = require("../controllers/commonControllers");
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.route("/insertData").post(insertOneDataController);
 router.route("/updateData").post(updateCommonDataController);
 router.route("/deleteData").delete(deleteCommonDataController);
 router.route("/getTotalDocument").post(getTotalCountDataController);
-router.route("/getOneModalTotalCount").post(getOneModalTotalCount)
+router.route("/getOneModalTotalCount").post(getOneModalTotalCount);
+router.route("/getAllDocuments").post(getModalAllDocumentsController);
 module.exports = router;

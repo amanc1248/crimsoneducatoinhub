@@ -34,6 +34,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
   // functions
   // 1. on adding course
   const handleOnClickSubmit = () => {
+    const assignedCourses=[];
     const doc = {
       name,
       email,
@@ -42,6 +43,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
       startDate,
       salary,
       phoneNumber,
+      assignedCourses,
       date: new Date()
     };
     if (name,

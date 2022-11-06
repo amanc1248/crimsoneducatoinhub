@@ -214,3 +214,30 @@ export function getOneModalTotalCount(data) {
       });
   });
 }
+
+//get one modal all documents
+export function getOneModalAllDocuments(data) {
+  let url = data.url;
+  const config = {
+    header: {
+      "Content-Type": "application/json",
+    },
+  };
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        url,
+        {
+          collectionName: data.collectionName,
+        },
+        config
+      )
+      .then((result) => {
+        console.log(result.data);
+        resolve(result.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+}
