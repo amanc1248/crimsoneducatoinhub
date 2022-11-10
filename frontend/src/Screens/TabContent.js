@@ -3,6 +3,7 @@ import React from "react";
 import "../styles/screens/home.css";
 import { CoursesContainer } from "./Courses/CoursesContainer";
 import { DashboardContainer } from "./Dashboard/DashboardContainer";
+import { ShiftsContainer } from "./Shifts/ShiftContainer";
 import { StudentsContainer } from "./Students/StudentsContainer";
 import { TutorsContainer } from "./Tutors/TutorsContainer";
 
@@ -14,6 +15,7 @@ export const TabContent = ({ tabIndex }) => {
     <CoursesContainer />,
     <TutorsContainer />,
     <StudentsContainer />,
+    <ShiftsContainer />,
   ];
   return (
     <div className="tab__content">

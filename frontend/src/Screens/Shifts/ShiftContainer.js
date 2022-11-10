@@ -4,15 +4,15 @@ import Button from "react-bootstrap/Button";
 
 import "../../styles/screens/home.css";
 import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
-import { IndividualStudent } from "./IndividualStudent";
-import { StudentModal } from "./StudentModal";
+import { ShiftModal } from "./ShiftModal";
 import Pagination from "react-js-pagination";
+import { IndividualShift } from "./IndividualShift";
 
-export const StudentsContainer = () => {
+export const ShiftsContainer = () => {
   // data
 
   // use states
-  const [students, setStudents] = useState();
+  const [shifts, setShifts] = useState();
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const [totalPages, setTotalPages] = useState();
@@ -22,7 +22,7 @@ export const StudentsContainer = () => {
   useEffect(() => {
     getOneModalTotalCount({
       url: "/api/commonRoute/getOneModalTotalCount",
-      collectionName: "students",
+      collectionName: "shifts",
     })
       .then((result) => {
         console.log("total documents: ", result);
@@ -35,12 +35,12 @@ export const StudentsContainer = () => {
     refresh &&
       getAllData({
         url: "/api/commonRoute/getData",
-        collectionName: "students",
+        collectionName: "shifts",
         pageNumber: currentPage,
         nPerPage: 3,
       })
         .then((result) => {
-          setStudents(result);
+          setShifts(result);
           setRefresh(false);
         })
         .catch((e) => {
@@ -51,12 +51,12 @@ export const StudentsContainer = () => {
   useEffect(() => {
     getAllData({
       url: "/api/commonRoute/getData",
-      collectionName: "students",
+      collectionName: "shifts",
       pageNumber: currentPage,
       nPerPage: 3,
     })
       .then((result) => {
-        setStudents(result);
+        setShifts(result);
         setRefresh(false);
       })
       .catch((e) => {
@@ -67,10 +67,10 @@ export const StudentsContainer = () => {
   return (
     <div className="students">
       {showModal && (
-        <StudentModal
+        <ShiftModal
           setShow={setShowModal}
-          students={students}
-          setStudents={setStudents}
+          shifts={shifts}
+          setShifts={setShifts}
           courseModalType="Add"
           setRefresh={setRefresh}
         />
@@ -83,7 +83,7 @@ export const StudentsContainer = () => {
             setShowModal(true);
           }}
         >
-          Add Student
+          Add Shift
         </Button>
         <Pagination
           itemClass="page-item"
@@ -105,20 +105,18 @@ export const StudentsContainer = () => {
           <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Your Phone Number</th>
-              <th>Parent Phone Number</th>
-              <th>Qualification</th>
-              <th>Actions</th>
+              <th>Shift Name</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {students &&
-              students.map((student, index) => {
+            {shifts &&
+              shifts.map((shift, index) => {
                 return (
-                  <IndividualStudent
-                    student={student}
+                  <IndividualShift
+                    shift={shift}
                     index={index}
                     key={index}
                     setRefresh={setRefresh}

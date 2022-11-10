@@ -2,10 +2,22 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
-import { deleteData, getCourseData, insertData, updateData } from "../../actions/homeActions";
+import {
+  deleteData,
+  getCourseData,
+  insertData,
+  updateData,
+} from "../../actions/homeActions";
 
-export function StudentModal({ show, setShow, students, setStudents,individualStudent, courseModalType, setRefresh }) {
-
+export function StudentModal({
+  show,
+  setShow,
+  students,
+  setStudents,
+  individualStudent,
+  courseModalType,
+  setRefresh,
+}) {
   const qualificationList = [
     { label: "SLC", value: "slc" },
     { label: "+2", value: "+2" },
@@ -20,14 +32,22 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
   //   usestates
   // USESTATES
   const [name, setName] = useState(individualStudent && individualStudent.name);
-  const [email, setEmail] = useState(individualStudent && individualStudent.email);
-  const [age, setAge]     = useState(individualStudent && individualStudent.age);
-  const [qualification, setQualification] = useState(individualStudent && individualStudent.qualification);
-  const [phoneNumber, setPhoneNumber] = useState(individualStudent && individualStudent.phoneNumber);
+  const [email, setEmail] = useState(
+    individualStudent && individualStudent.email
+  );
+  const [age, setAge] = useState(individualStudent && individualStudent.age);
+  const [qualification, setQualification] = useState(
+    individualStudent && individualStudent.qualification
+  );
+  const [phoneNumber, setPhoneNumber] = useState(
+    individualStudent && individualStudent.phoneNumber
+  );
+  const [parentPhoneNumber, setParentPhoneNumber] = useState(
+    individualStudent && individualStudent.parentPhoneNumber
+  );
   const [loader, setLoader] = useState(false);
 
-
-// functions
+  // functions
   // 1. on adding course
   const handleOnClickSubmit = () => {
     const doc = {
@@ -36,13 +56,10 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
       age,
       qualification,
       phoneNumber,
-      date: new Date()
+      parentPhoneNumber,
+      date: new Date(),
     };
-    if (name,
-      email,
-      age,
-      qualification,
-      phoneNumber) {
+    if ((name, email, age, qualification, phoneNumber, parentPhoneNumber)) {
       let list = students;
       setLoader(true);
       insertData({
@@ -64,34 +81,31 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
 
   // 2. closing course modal
   const handleClose = () => {
-    setName('');
-    setEmail('');
-    setAge('');
-    setQualification('');
-    setPhoneNumber('');
+    setName("");
+    setEmail("");
+    setAge("");
+    setQualification("");
+    setPhoneNumber("");
     setShow(false);
   };
 
   // 3. on updating course
-  const handleOnClickUpdate = ()=>{
+  const handleOnClickUpdate = () => {
     const doc = {
       name,
       email,
       age,
       qualification,
       phoneNumber,
+      parentPhoneNumber,
     };
-    if (name,
-      email,
-      age,
-      qualification,
-      phoneNumber) {
+    if ((name, email, age, qualification, phoneNumber, parentPhoneNumber)) {
       setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
         collectionName: "students",
-        updatedTo:doc,
-        id:individualStudent._id
+        updatedTo: doc,
+        id: individualStudent._id,
       })
         .then((result) => {
           setRefresh(true);
@@ -102,10 +116,10 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
           console.log(e);
         });
     }
-  }
+  };
 
   // 4. on deleting course
-  const handleOnClickDelete = ()=>{
+  const handleOnClickDelete = () => {
     setLoader(true);
     deleteData({
       url: `/api/commonRoute/deleteData?id=${individualStudent._id}&collectionName=students`,
@@ -118,7 +132,7 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
       .catch((e) => {
         console.log(e);
       });
-  }
+  };
   return (
     <>
       <Modal
@@ -130,10 +144,10 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
         <Modal.Header>
           <Modal.Title>
             {courseModalType === "Add"
-              ? "Add Tutor"
+              ? "Add Student"
               : courseModalType === "Update"
-              ? "Update Tutor"
-              : "Delete Tutor"}
+              ? "Update Student"
+              : "Delete Student"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -174,22 +188,43 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
                 ></input>
               </div>
             </div>
-            <div className="learning__form__group">
-              <label for="email">Phone Number</label>
-              <input
-                class="form-control"
-                id="phnNumber"
-                name="phnNumber"
-                placeholder="Enter your phone number"
-                value={phoneNumber}
-                onChange={(e) => {
-                  setPhoneNumber(e.target.value);
-                }}
-                type="number"
-              ></input>
-            </div>
+            <div className="parent_your_phone row">
+              {/* 1. Your Phone Number */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="yourPhnNumber">Your Phone Number</label>
+                <input
+                  class="form-control"
+                  id="yourPhnNumber"
+                  name="yourPhnNumber"
+                  rows="4"
+                  cols="50"
+                  placeholder="Enter your phone number"
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                  }}
+                  type="number"
+                ></input>
+              </div>
 
-            
+              {/* 2. Parent Phone Number  */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="parentPhnNumber">Parent Phone Number</label>
+                <input
+                  class="form-control"
+                  id="parentPhnNumber"
+                  name="parentPhnNumber"
+                  rows="4"
+                  cols="50"
+                  placeholder="Enter your parent phone number"
+                  value={parentPhoneNumber}
+                  onChange={(e) => {
+                    setParentPhoneNumber(e.target.value);
+                  }}
+                  type="number"
+                ></input>
+              </div>
+            </div>
 
             <div className="learning__form__group">
               <label for="qualification">Qualification</label>
@@ -205,15 +240,19 @@ export function StudentModal({ show, setShow, students, setStudents,individualSt
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button
-            className="btn btn-close"
-            onClick={handleClose}
-          >
+          <button className="btn btn-close" onClick={handleClose}>
             Cancel
           </button>
-          <button className="btn btn-primary" onClick={
-            courseModalType==='Add' ? handleOnClickSubmit : courseModalType==='Update' ? handleOnClickUpdate : handleOnClickDelete
-          }>
+          <button
+            className="btn btn-primary"
+            onClick={
+              courseModalType === "Add"
+                ? handleOnClickSubmit
+                : courseModalType === "Update"
+                ? handleOnClickUpdate
+                : handleOnClickDelete
+            }
+          >
             {courseModalType}
           </button>
         </Modal.Footer>

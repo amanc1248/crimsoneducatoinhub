@@ -3,6 +3,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 
 import { DashboardTab } from "./DashboardTab";
 
@@ -13,6 +14,7 @@ export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
     { label: "Courses", icon: <MenuBookIcon sx={{ fontSize: 18 }} /> },
     { label: "Tutors", icon: <SchoolIcon sx={{ fontSize: 18 }} /> },
     { label: "Students", icon: <PersonIcon sx={{ fontSize: 18 }} /> },
+    { label: "Shifts", icon: <AccessTimeFilledIcon sx={{ fontSize: 18 }} /> },
   ];
 
   // usestate
