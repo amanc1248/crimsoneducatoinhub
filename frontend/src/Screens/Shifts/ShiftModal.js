@@ -18,16 +18,11 @@ export function ShiftModal({
   courseModalType,
   setRefresh,
 }) {
-  const shiftList = [
-    { label: "Morning", value: "morning" },
-    { label: "Day", value: "day" },
-  ];
-
   //   usestates
   // USESTATES
 
   const [shiftName, setShiftName] = useState(
-    individualShift && individualShift.shift
+    individualShift && individualShift.shiftName
   );
 
   const [startTime, setStartTime] = useState(
@@ -69,7 +64,7 @@ export function ShiftModal({
 
   // 2. closing course modal
   const handleClose = () => {
-    setShiftName(0);
+    setShiftName("");
     setStartTime("");
     setEndTime("");
     setShow(false);
@@ -135,16 +130,20 @@ export function ShiftModal({
         </Modal.Header>
         <Modal.Body>
           <div className="new__feature__request__form">
-            <div className="learning__form__group">
-              <label for="qualification">Shifts</label>
-              <Select
-                placeholder="Select Shifts"
-                className="select__learning__module"
-                options={shiftList}
+            <div class="learning__form__group ">
+              <label for="shift">Shift Name</label>
+              <input
+                class="form-control"
+                id="shift"
+                name="shift"
+                rows="4"
+                cols="50"
+                placeholder="Enter Shift Name"
+                value={shiftName}
                 onChange={(e) => {
-                  setShiftName(e.label);
+                  setShiftName(e.target.value);
                 }}
-              />
+              ></input>
             </div>
             <div className="starttime_endtime row">
               {/* 1. Starting Time */}
@@ -161,6 +160,8 @@ export function ShiftModal({
                   onChange={(e) => {
                     setStartTime(e.target.value);
                   }}
+                  type="time"
+                  pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$"
                 ></input>
               </div>
 
@@ -173,12 +174,14 @@ export function ShiftModal({
                   name="endTime"
                   rows="4"
                   cols="50"
-                  placeholder="Enter Ending Time"
+                  // placeholder="hrs:mins"
+                  // pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$"
+                  // required
                   value={endTime}
                   onChange={(e) => {
                     setEndTime(e.target.value);
                   }}
-                  type="email"
+                  type="time"
                 ></input>
               </div>
             </div>
