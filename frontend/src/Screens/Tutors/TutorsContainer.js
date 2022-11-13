@@ -9,38 +9,53 @@ import { TutorModal } from "./TutorModal";
 import { IndividualTutor } from "./IndividualTutor";
 
 export const TutorsContainer = () => {
-
   // use states
-  const [tutors, setTutors]                      = useState();
-  const [showModal, setShowModal]                = useState(false); 
-  const [refresh, setRefresh]                    = useState(true);
-  const [totalPages, setTotalPages]              = useState();
-  const  [currentPage, setCurrentPage]           = useState(1);
+  const [tutors, setTutors] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(true);
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   // use effects
-  useEffect(()=>{
-    getOneModalTotalCount({url:"/api/commonRoute/getOneModalTotalCount", collectionName:"tutors"}).then((result)=>{
-      console.log("total documents: ", result)
-      setTotalPages(result)
-    }).catch((e)=>console.log(e));
-  },[])
+  useEffect(() => {
+    getOneModalTotalCount({
+      url: "/api/commonRoute/getOneModalTotalCount",
+      collectionName: "tutors",
+    })
+      .then((result) => {
+        console.log("total documents: ", result);
+        setTotalPages(result);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   useEffect(() => {
-    refresh && getAllData({ url: "/api/commonRoute/getData", collectionName: "tutors", pageNumber:currentPage,nPerPage:3 })
-      .then((result) => {
-        setTutors(result);
-        setRefresh(false)
+    refresh &&
+      getAllData({
+        url: "/api/commonRoute/getData",
+        collectionName: "tutors",
+        pageNumber: currentPage,
+        nPerPage: 3,
       })
-      .catch((e) => {
-        console.log(e);
-      });
+        .then((result) => {
+          setTutors(result);
+          setRefresh(false);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   }, [refresh]);
 
   useEffect(() => {
-    getAllData({ url: "/api/commonRoute/getData", collectionName: "tutors", pageNumber:currentPage, nPerPage:3  })
+    getAllData({
+      url: "/api/commonRoute/getData",
+      collectionName: "tutors",
+      pageNumber: currentPage,
+      nPerPage: 3,
+    })
       .then((result) => {
         setTutors(result);
-        setRefresh(false)
+        setRefresh(false);
       })
       .catch((e) => {
         console.log(e);
@@ -83,7 +98,7 @@ export const TutorsContainer = () => {
       </div>
       <br />
       <div className="students__inside">
-        <Table striped  hover size="sm" className="table__list">
+        <Table striped hover size="sm" className="table__list">
           <thead>
             <tr>
               <th>#</th>
@@ -93,7 +108,6 @@ export const TutorsContainer = () => {
               <th>Age</th>
               <th>Qualification</th>
               <th>Start Date</th>
-              <th>Salary</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -102,11 +116,11 @@ export const TutorsContainer = () => {
               tutors.map((tutor, index) => {
                 return (
                   <IndividualTutor
-                  tutor={tutor}
-                  index={index}
-                  key={index}
-                  setRefresh={setRefresh}
-                />
+                    tutor={tutor}
+                    index={index}
+                    key={index}
+                    setRefresh={setRefresh}
+                  />
                 );
               })}
           </tbody>
