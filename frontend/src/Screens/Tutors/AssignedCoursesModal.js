@@ -217,7 +217,7 @@ export const AssignedCoursesModal = ({
             setShow={setSalaryHistoryModal}
             // tutors={tutors}
             // setTutors={setTutors}
-            courseModalType="Add"
+            // courseModalType="Add"
             setRefresh={setRefresh}
           />
         )}
