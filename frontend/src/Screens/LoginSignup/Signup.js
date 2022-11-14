@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { insertData } from "../../actions/homeActions";
+import {
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBBtn,
+  MDBIcon,
+  MDBInput,
+  MDBCheckbox,
+} from "mdb-react-ui-kit";
 
 const Signup = () => {
   const [name, setName] = useState();
@@ -10,6 +19,10 @@ const Signup = () => {
   const [address, setAddress] = useState();
   const [password, setPassword] = useState();
   const [cPassword, setCPassword] = useState();
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s]{2,8}$/i;
+  const phoneNumberRegex =
+    /^\+?(?:977)?[ -]?(?:(?:(?:98|97)-?\d{8})|(?:01-?\d{7}))$/i;
 
   const handleOnClickSubmit = () => {
     const doc = {
@@ -26,6 +39,10 @@ const Signup = () => {
 
     if (password != cPassword) {
       alert("Pass Not Match");
+    } else if (!emailRegex.test(email)) {
+      alert("Invalid Email");
+    } else if (!phoneNumberRegex.test(phoneNumber)) {
+      alert("Invalid Phone Number");
     } else if (
       name &&
       email &&
@@ -51,82 +68,176 @@ const Signup = () => {
 
   return (
     <div>
-      This is SignUp Form
-      <div>
-        <div>
-          <label for="name">Full Name</label>
-          <input
-            id="name"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            type="text"
-          ></input>
-        </div>
+      <MDBContainer fluid className="p-3 my-1 h-custom">
+        <MDBRow>
+          <MDBCol col="10" md="6">
+            <img
+              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+              class="img-fluid"
+              alt="Sample image"
+            />
+          </MDBCol>
 
-        <div>
-          <label for="email">Email</label>
-          <input
-            id="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            type="email"
-          ></input>
-        </div>
+          <MDBCol col="4" md="6">
+            <div className="d-flex flex-row align-items-center justify-content-center">
+              <h2 className="">Crimson Education Hub</h2>
+            </div>
 
-        <div>
-          <label for="position">Position</label>
-          <input
-            id="position"
-            onChange={(e) => {
-              setPosition(e.target.value);
-            }}
-            type="text"
-          ></input>
+            <div className="divider d-flex align-items-center my-4">
+              <p className="text-center fw-bold mx-3 mb-0">Signup Form</p>
+            </div>
+
+            <MDBInput
+              wrapperClass="mb-4"
+              //   label="Full Name"
+              id="formControlLg"
+              size="lg"
+              placeholder="Full Name"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              type="text"
+            />
+
+            <MDBInput
+              wrapperClass="mb-4"
+              //   label="Email"
+              id="formControlLg"
+              size="lg"
+              placeholder="Email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              type="email"
+            />
+            <MDBInput
+              wrapperClass="mb-4"
+              //   label="Position"
+              id="formControlLg"
+              size="lg"
+              placeholder="Position"
+              onChange={(e) => {
+                setPosition(e.target.value);
+              }}
+              type="text"
+            />
+            <MDBInput
+              wrapperClass="mb-4"
+              //   label="Phone Number"
+              id="formControlLg"
+              type="number"
+              size="lg"
+              placeholder="Phone Number"
+              onChange={(e) => {
+                setPhoneNumber(e.target.value);
+              }}
+            />
+            <MDBInput
+              wrapperClass="mb-4"
+              //   label="Address"
+              id="formControlLg"
+              type="text"
+              size="lg"
+              placeholder="Address"
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
+            />
+            <MDBInput
+              wrapperClass="mb-4"
+              //   label="Password"
+              id="formControlLg"
+              type="password"
+              size="lg"
+              placeholder="Password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <MDBInput
+              wrapperClass="mb-4"
+              //   label="Confirm Password"
+              id="formControlLg"
+              type="password"
+              size="lg"
+              placeholder="Confirm Password"
+              onChange={(e) => {
+                setCPassword(e.target.value);
+              }}
+            />
+
+            {/* <div className="d-flex justify-content-between mb-4">
+              <MDBCheckbox
+                name="flexCheck"
+                value=""
+                id="flexCheckDefault"
+                label="Remember me"
+              />
+              <a href="!#">Forgot password?</a>
+            </div> */}
+
+            <div className="text-center text-md-start mt-4 pt-2">
+              <MDBBtn
+                className="mb-0 px-5"
+                size="lg"
+                onClick={handleOnClickSubmit}
+              >
+                Register
+              </MDBBtn>
+              <p className="small fw-bold mt-2 pt-1 mb-2">
+                Already have an account?{" "}
+                <a href="#!" className="link-danger">
+                  Login
+                </a>
+              </p>
+            </div>
+          </MDBCol>
+        </MDBRow>
+
+        <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+          <div className="text-white mb-3 mb-md-0">
+            Copyright © 2020. All rights reserved.
+          </div>
+
+          <div>
+            <MDBBtn
+              tag="a"
+              color="none"
+              className="mx-3"
+              style={{ color: "white" }}
+            >
+              <MDBIcon fab icon="facebook-f" size="md" />
+            </MDBBtn>
+
+            <MDBBtn
+              tag="a"
+              color="none"
+              className="mx-3"
+              style={{ color: "white" }}
+            >
+              <MDBIcon fab icon="twitter" size="md" />
+            </MDBBtn>
+
+            <MDBBtn
+              tag="a"
+              color="none"
+              className="mx-3"
+              style={{ color: "white" }}
+            >
+              <MDBIcon fab icon="google" size="md" />
+            </MDBBtn>
+
+            <MDBBtn
+              tag="a"
+              color="none"
+              className="mx-3"
+              style={{ color: "white" }}
+            >
+              <MDBIcon fab icon="linkedin-in" size="md" />
+            </MDBBtn>
+          </div>
         </div>
-        <div>
-          <label for="phnNumber">Phone Number</label>
-          <input
-            id="phnNumber"
-            onChange={(e) => {
-              setPhoneNumber(e.target.value);
-            }}
-            type="number"
-          ></input>
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input
-            id="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            type="text"
-          ></input>
-        </div>
-        <div>
-          <label for="cpassword">Confirm Password</label>
-          <input
-            id="cpassword"
-            onChange={(e) => {
-              setCPassword(e.target.value);
-            }}
-            type="text"
-          ></input>
-        </div>
-        <div>
-          <label for="address">Address</label>
-          <input
-            id="address"
-            onChange={(e) => {
-              setAddress(e.target.value);
-            }}
-            type="text"
-          ></input>
-        </div>
-      </div>
-      <Button onClick={handleOnClickSubmit}>Submit</Button>
+      </MDBContainer>
     </div>
   );
 };

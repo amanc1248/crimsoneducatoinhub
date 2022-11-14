@@ -4,6 +4,7 @@ const { Promise } = require("mongoose");
 
 const { db } = require("../database");
 const courseModel = require("../schemas/Course");
+const bcrypt = require("bcrypt");
 
 // get number of documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
@@ -152,12 +153,19 @@ const calulateDateDataController = asyncHandler(async (req, res) => {
 });
 
 const signupNewUserController = asyncHandler(async (req, res, callback) => {
-  const { collectionName, doc } = req.body;
+  const { collectionName } = req.body;
+
+  const name = req.body.doc.name;
+  const email = req.body.doc.email;
+  const position = req.body.doc.position;
+  const phoneNumber = req.body.doc.phoneNumber;
+  const address = req.body.doc.address;
+  const password = req.body.doc.password;
 
   try {
     const result = await db
       .collection(collectionName)
-      .findOne({ phoneNumber: doc.phoneNumber });
+      .findOne({ phoneNumber: phoneNumber });
 
     if (result) {
       return res.json({
@@ -165,7 +173,18 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
         result: result,
       });
     } else {
-      const newUser = await db.collection(collectionName).insertOne(doc);
+      const hashedPassword = await bcrypt.hash(password, 8);
+
+      const newDoc = {
+        name,
+        email,
+        position,
+        phoneNumber,
+        address,
+        hashedPassword,
+      };
+
+      const newUser = await db.collection(collectionName).insertOne(newDoc);
       return res.json({ signup: true, result: newUser });
     }
   } catch (err) {
@@ -179,12 +198,23 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
   try {
     const result = await db
       .collection(collectionName)
-      .findOne({ phoneNumber: doc.phoneNumber, password: doc.password });
+      .findOne({ phoneNumber: doc.phoneNumber });
     if (result) {
-      return res.json({
-        login: true,
-        result: result,
-      });
+      const validHashedPassword = await bcrypt.compare(
+        doc.password,
+        result.hashedPassword
+      );
+      if (validHashedPassword) {
+        return res.json({
+          login: true,
+          result: result,
+        });
+      } else {
+        return res.json({
+          login: false,
+          result: result,
+        });
+      }
     } else {
       return res.json({
         login: false,
