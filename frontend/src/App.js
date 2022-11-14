@@ -1,17 +1,20 @@
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 
-import './App.css';
-import { Home } from './Screens/Home/Home';
+import "./App.css";
+import { Home } from "./Screens/Home/Home";
+import Login from "./Screens/LoginSignup/Login";
+import Signup from "./Screens/LoginSignup/Signup";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route 
-          path='/' 
+        <Route
+          path="/"
           element={
             <>
               <Home></Home>
+              {/* <Login></Login> */}
             </>
           }
         />
