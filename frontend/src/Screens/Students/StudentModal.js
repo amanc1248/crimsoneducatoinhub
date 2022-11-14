@@ -140,6 +140,9 @@ export function StudentModal({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
         <Modal.Header>
           <Modal.Title>

@@ -62,7 +62,7 @@ export const IndividualStudent = ({ student, index, setRefresh }) => {
             className="button__size  mr-1 ml-1"
             onClick={onHandleAssignedCourses}
           >
-            Assigned Courses
+            Enrolled Courses
           </Button>
           <Button
             variant="danger"

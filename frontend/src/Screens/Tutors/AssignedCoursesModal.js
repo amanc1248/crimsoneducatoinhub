@@ -114,12 +114,14 @@ export const AssignedCoursesModal = ({show, setShow, individualTutor,setRefresh}
     }
   
     return (
-      <>
         <Modal
           show={true}
           onHide={handleClose}
           backdrop="static"
           keyboard={false}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
         >
           <Modal.Header>
             <Modal.Title>
@@ -235,6 +237,5 @@ export const AssignedCoursesModal = ({show, setShow, individualTutor,setRefresh}
             </button>
           </Modal.Footer>
         </Modal>
-      </>
     );
 }

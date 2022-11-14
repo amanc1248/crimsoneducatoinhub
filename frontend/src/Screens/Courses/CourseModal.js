@@ -15,7 +15,7 @@ export function CourseModal({ show, setShow, courses, setCourses,individualCours
 
   // functions
   // 1. on adding course
-  const handleOnClickSubmit = () => {
+  const handleOnClickSubmit = () => { 
     const doc = {
       courseName,
       time,
@@ -103,6 +103,9 @@ export function CourseModal({ show, setShow, courses, setCourses,individualCours
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
         <Modal.Header>
           <Modal.Title>
@@ -134,11 +137,11 @@ export function CourseModal({ show, setShow, courses, setCourses,individualCours
 
             {/* 2. course duration  */}
             <div class="learning__form__group ">
-              <label for="email">Course Duration (Months)</label>
+              <label for="email">Course Duration (Days)</label>
               <input
                 class="form-control"
-                id="email"
-                name="email"
+                id="courseDuration"
+                name="courseDuration"
                 rows="4"
                 cols="50"
                 placeholder="Enter Time Period"

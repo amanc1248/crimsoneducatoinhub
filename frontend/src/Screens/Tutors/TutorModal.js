@@ -29,7 +29,7 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
   const [phoneNumber, setPhoneNumber] = useState(individualTutor && individualTutor.phoneNumber);
   const [loader, setLoader] = useState(false);
 
-  const [tutorsList, setTutorsList] = useState();
+
 
   // functions
   // 1. on adding course
@@ -269,6 +269,10 @@ export function TutorModal({ show, setShow, tutors, setTutors,individualTutor, c
                 }}
               ></input>
             </div>
+
+            <p>
+      <input type="text" id="nepali-datepicker" placeholder="Select Nepali Date" onChange={(e)=>{console.log(e.target.value)}}/>
+  </p>
           </div>
         </Modal.Body>
         <Modal.Footer>

@@ -20,6 +20,39 @@ export const EnrolledCoursesModal = ({
   let theSelectedShift = "";
   let theSelectedShiftId = "";
 
+  let yearsList=[
+    {id:1,
+    label:2001,
+  value:2001},
+  {id:2,
+    label:2002,
+  value:2002},
+  {id:3,
+    label:2003,
+  value:2003},
+  {id:4,
+    label:2004,
+  value:2004},
+  {id:5,
+    label:2005,
+  value:2005},
+  {id:6,
+    label:2006,
+  value:2006},
+  {id:7,
+    label:2007,
+  value:2007},
+  {id:8,
+    label:2008,
+  value:2008},
+  {id:9,
+    label:2009,
+  value:2009},
+  {id:10,
+    label:2010,
+  value:2010}
+  ]
+
   // usestates
   const [addCourse, setAddCourse] = useState(false);
   const [assignedCourses, setAssignedCourses] = useState(
@@ -196,6 +229,9 @@ export const EnrolledCoursesModal = ({
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
         <Modal.Header>
           <Modal.Title>
@@ -266,6 +302,20 @@ export const EnrolledCoursesModal = ({
                   />
                 </div>
 
+                {/* select year */}
+                <div>
+                  <label htmlFor="">Select an year</label>
+                  <Select
+                    placeholder="year"
+                    className="selecting__divs"
+                    options={allCourses}
+                    onChange={(e) => {
+                      theSelectedCourse = e.label;
+                      theSelectedCourseId = e._id;
+                    }}
+                  />
+                </div>
+
                 {/* 2. Start Date  */}
                 <div class="learning__form__group ">
                   <label for="startDate">Start Date</label>
@@ -299,19 +349,20 @@ export const EnrolledCoursesModal = ({
                     }}
                   ></input>
                 </div>
+                <div>
+                  <label htmlFor="">Select a shift</label>
+                  <Select
+                    placeholder="Shift"
+                    className="selecting__divs"
+                    options={allShifts}
+                    onChange={(e) => {
+                      theSelectedShift = e.label;
+                      theSelectedShiftId = e._id;
+                    }}
+                  />
+                </div>
               </div>
-              <div>
-                <label htmlFor="">Select a shift</label>
-                <Select
-                  placeholder="Shift"
-                  className="selecting__divs"
-                  options={allShifts}
-                  onChange={(e) => {
-                    theSelectedShift = e.label;
-                    theSelectedShiftId = e._id;
-                  }}
-                />
-              </div>
+
               <Button
                 variant="btn-close"
                 size="sm"
