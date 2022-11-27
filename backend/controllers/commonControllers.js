@@ -7,7 +7,7 @@ const courseModel = require("../schemas/Course");
 
 // get number of documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName,pageNumber,nPerPage } = req.body;
+  const { collectionName, pageNumber, nPerPage } = req.body;
   try {
     const result = await db
       .collection(collectionName)
@@ -25,11 +25,9 @@ const getCommonDataController = asyncHandler(async (req, res, callback) => {
 // get one model total count
 const getOneModalTotalCount = asyncHandler(async (req, res, callback) => {
   const { collectionName } = req.body;
-  console.log("here========>",collectionName)
+  console.log("here========>", collectionName);
   try {
-    const result = await db
-      .collection(collectionName)
-      .countDocuments();
+    const result = await db.collection(collectionName).countDocuments();
     return res.json(result);
   } catch (error) {
     return callback(error);
@@ -37,18 +35,19 @@ const getOneModalTotalCount = asyncHandler(async (req, res, callback) => {
 });
 
 // get modal all documents
-const getModalAllDocumentsController = asyncHandler(async(req,res,callback)=>{
-  const { collectionName} = req.body;
-  try{
-    const result  = await db.collection(collectionName).find().toArray();
-    if(result){
-      return res.json(result);
+const getModalAllDocumentsController = asyncHandler(
+  async (req, res, callback) => {
+    const { collectionName } = req.body;
+    try {
+      const result = await db.collection(collectionName).find().toArray();
+      if (result) {
+        return res.json(result);
+      }
+    } catch (e) {
+      throw e;
     }
-  }catch(e){
-    throw e
   }
-})
-
+);
 
 // get one document common data controller
 const getOneDataController = asyncHandler(async (req, res, callback) => {
@@ -94,23 +93,25 @@ const updateCommonDataController = asyncHandler(async (req, res, callback) => {
 });
 
 // update one document common data controller
-const updateCommonDataControllerWithSet = asyncHandler(async (req, res, callback) => {
-  const { collectionName, id, updateTo } = req.body;
-  console.log(req.body);
-  try {
-    const filter = { _id: ObjectId(id) };
-    const updateDoc = {
-      $set: updateTo,
-    };
+const updateCommonDataControllerWithSet = asyncHandler(
+  async (req, res, callback) => {
+    const { collectionName, id, updateTo } = req.body;
+    console.log(req.body);
+    try {
+      const filter = { _id: ObjectId(id) };
+      const updateDoc = {
+        $set: updateTo,
+      };
 
-    const result = await db
-      .collection(collectionName)
-      .updateOne(filter, updateDoc);
-    return res.json(result);
-  } catch (error) {
-    return callback(error);
+      const result = await db
+        .collection(collectionName)
+        .updateOne(filter, updateDoc);
+      return res.json(result);
+    } catch (error) {
+      return callback(error);
+    }
   }
-});
+);
 
 // delete one document common data controller
 const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
@@ -131,7 +132,7 @@ const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
 });
 
 const getTotalCountDataController = asyncHandler(async (req, res) => {
-  console.log(req.body.collectionNames)
+  console.log(req.body.collectionNames);
   await Promise.all(
     req.body.collectionNames.map((collectionName) => {
       return db.collection(collectionName).countDocuments();
@@ -150,6 +151,51 @@ const calulateDateDataController = asyncHandler(async (req, res) => {
   // console.log(date);
 });
 
+const signupNewUserController = asyncHandler(async (req, res, callback) => {
+  const { collectionName, doc } = req.body;
+
+  try {
+    const result = await db
+      .collection(collectionName)
+      .findOne({ phoneNumber: doc.phoneNumber });
+
+    if (result) {
+      return res.json({
+        signup: false,
+        result: result,
+      });
+    } else {
+      const newUser = await db.collection(collectionName).insertOne(doc);
+      return res.json({ signup: true, result: newUser });
+    }
+  } catch (err) {
+    return callback(err);
+  }
+});
+
+const loginUserController = asyncHandler(async (req, res, callback) => {
+  const { collectionName, doc } = req.body;
+
+  try {
+    const result = await db
+      .collection(collectionName)
+      .findOne({ phoneNumber: doc.phoneNumber, password: doc.password });
+    if (result) {
+      return res.json({
+        login: true,
+        result: result,
+      });
+    } else {
+      return res.json({
+        login: false,
+        result: result,
+      });
+    }
+  } catch (err) {
+    return callback(err);
+  }
+});
+
 module.exports = {
   getCommonDataController,
   updateCommonDataController,
@@ -159,5 +205,7 @@ module.exports = {
   calulateDateDataController,
   getTotalCountDataController,
   getOneModalTotalCount,
-  getModalAllDocumentsController
+  getModalAllDocumentsController,
+  signupNewUserController,
+  loginUserController,
 };

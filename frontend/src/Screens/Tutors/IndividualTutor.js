@@ -3,30 +3,24 @@ import Button from "react-bootstrap/Button";
 import { AssignedCoursesModal } from "./AssignedCoursesModal";
 import { TutorModal } from "./TutorModal";
 
-export const IndividualTutor = ({
-  tutor,
-  index,
-  setRefresh
-}) => {
-
+export const IndividualTutor = ({ tutor, index, setRefresh }) => {
   // usestates
-  const [showModal, setShowModal]            = useState(false);
-  const [courseModalType, setCourseModalType]      = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [courseModalType, setCourseModalType] = useState();
   const [showAssignedCourse, setShowAssignedCourse] = useState(false);
-  
 
   // functions
   const onHandleUpdate = () => {
-    setCourseModalType("Update")
-    setShowModal(true)
+    setCourseModalType("Update");
+    setShowModal(true);
   };
   const onHandleDelete = () => {
-    setCourseModalType("delete")
-    setShowModal(true)
+    setCourseModalType("delete");
+    setShowModal(true);
   };
-  const onHandleAssignedCourses = ()=>{
-    setShowAssignedCourse(true)
-  }
+  const onHandleAssignedCourses = () => {
+    setShowAssignedCourse(true);
+  };
   return (
     <>
       {showModal && (
@@ -39,13 +33,14 @@ export const IndividualTutor = ({
         ></TutorModal>
       )}
 
-      {showAssignedCourse && 
-        <AssignedCoursesModal 
-        show={true} 
-        setShow={setShowAssignedCourse} 
-        individualTutor={tutor}
-        setRefresh={setRefresh}
-        />}
+      {showAssignedCourse && (
+        <AssignedCoursesModal
+          show={true}
+          setShow={setShowAssignedCourse}
+          individualTutor={tutor}
+          setRefresh={setRefresh}
+        />
+      )}
       <tr key={index}>
         <td>{index}</td>
         <td>{tutor.name}</td>
@@ -55,7 +50,6 @@ export const IndividualTutor = ({
 
         <td>{tutor.qualification}</td>
         <td>{tutor.startDate}</td>
-        <td>{tutor.salary}</td>
         <td>
           <Button
             variant="success"
