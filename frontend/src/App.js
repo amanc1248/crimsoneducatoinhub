@@ -13,8 +13,8 @@ function App() {
           path="/"
           element={
             <>
-              {/* <Home></Home> */}
-              <Login></Login>
+              <Home></Home>
+              {/* <Login></Login> */}
             </>
           }
         />
