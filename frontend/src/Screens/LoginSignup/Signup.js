@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
-import { insertData } from "../../actions/homeActions";
+import { getOneModalAllDocuments, insertData } from "../../actions/homeActions";
 import {
   MDBContainer,
   MDBCol,
@@ -10,8 +10,27 @@ import {
   MDBInput,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
+import { Link, useNavigate } from "react-router-dom";
+import Login from "./Login";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    getOneModalAllDocuments({
+      url: "/api/commonRoute/verifyToken",
+      collectionName: "users",
+      token: localStorage.getItem("token"),
+    })
+      .then((result) => {
+        if (result.login === false) {
+          navigate("/signup");
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [position, setPosition] = useState();
@@ -58,9 +77,10 @@ const Signup = () => {
         doc,
       }).then((result) => {
         if (result.signup === false) {
-          alert("number already used");
+          alert("Number already used");
         } else if (result.signup === true) {
-          alert("user created");
+          localStorage.setItem("token", result.token);
+          navigate("/");
         }
       });
     }
@@ -186,7 +206,7 @@ const Signup = () => {
               </MDBBtn>
               <p className="small fw-bold mt-2 pt-1 mb-2">
                 Already have an account?{" "}
-                <a href="#!" className="link-danger">
+                <a href="/login" className="link-danger">
                   Login
                 </a>
               </p>
@@ -196,7 +216,7 @@ const Signup = () => {
 
         <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
           <div className="text-white mb-3 mb-md-0">
-            Copyright © 2020. All rights reserved.
+            Crimson Education Hub © 2020. All rights reserved.
           </div>
 
           <div>

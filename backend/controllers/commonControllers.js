@@ -5,6 +5,7 @@ const { Promise } = require("mongoose");
 const { db } = require("../database");
 const courseModel = require("../schemas/Course");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // get number of documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
@@ -174,6 +175,7 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
       });
     } else {
       const hashedPassword = await bcrypt.hash(password, 8);
+      const token = jwt.sign({ _id: phoneNumber }, "secretcode");
 
       const newDoc = {
         name,
@@ -185,7 +187,7 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
       };
 
       const newUser = await db.collection(collectionName).insertOne(newDoc);
-      return res.json({ signup: true, result: newUser });
+      return res.json({ signup: true, result: newUser, token: token });
     }
   } catch (err) {
     return callback(err);
@@ -205,7 +207,9 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
         result.hashedPassword
       );
       if (validHashedPassword) {
+        const token = jwt.sign({ _id: result._id }, "secretcode");
         return res.json({
+          token: token,
           login: true,
           result: result,
         });
@@ -226,6 +230,32 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
   }
 });
 
+const verifyToken = asyncHandler(async (req, res, next) => {
+  const { collectionName } = req.body;
+  const token = req.body.token;
+
+  try {
+    if (token === null) {
+      return res.json({
+        login: false,
+      });
+    }
+    const userData = jwt.verify(token, "secretcode", function (err, decoded) {
+      if (err) {
+        return res.json({
+          login: false,
+        });
+      } else {
+        return res.json({
+          login: true,
+        });
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
+});
+
 module.exports = {
   getCommonDataController,
   updateCommonDataController,
@@ -238,4 +268,5 @@ module.exports = {
   getModalAllDocumentsController,
   signupNewUserController,
   loginUserController,
+  verifyToken,
 };

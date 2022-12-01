@@ -234,6 +234,7 @@ export function getOneModalTotalCount(data) {
   });
 }
 
+//yaha maile token add grya xu yesma token add grda kai farak prxa prdaina?
 //get one modal all documents
 export function getOneModalAllDocuments(data) {
   let url = data.url;
@@ -248,6 +249,7 @@ export function getOneModalAllDocuments(data) {
         url,
         {
           collectionName: data.collectionName,
+          token: data.token,
         },
         config
       )
@@ -260,3 +262,28 @@ export function getOneModalAllDocuments(data) {
       });
   });
 }
+// export function getOneModalAllDocumentsToken(data) {
+//   let url = data.url;
+//   const config = {
+//     header: {
+//       "Content-Type": "application/json",
+//     },
+//   };
+//   return new Promise((resolve, reject) => {
+//     axios
+//       .post(
+//         url,
+//         {
+//           collectionName: data.collectionName,
+//         },
+//         config
+//       )
+//       .then((result) => {
+//         console.log(result.data);
+//         resolve(result.data);
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//       });
+//   });
+// }
