@@ -10,6 +10,7 @@ const {
   getModalAllDocumentsController,
   signupNewUserController,
   loginUserController,
+  getDocumentsByIdController
 } = require("../controllers/commonControllers");
 const router = express.Router();
 
@@ -23,4 +24,5 @@ router.route("/getOneModalTotalCount").post(getOneModalTotalCount);
 router.route("/getAllDocuments").post(getModalAllDocumentsController);
 router.route("/signup").post(signupNewUserController);
 router.route("/login").post(loginUserController);
+router.route("/getDocumentsById").post(getDocumentsByIdController);
 module.exports = router;

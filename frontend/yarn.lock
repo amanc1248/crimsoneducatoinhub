@@ -3121,6 +3121,11 @@
   "resolved" "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   "version" "5.2.2"
 
+"bikram-sambat-js@^1.0.1":
+  "integrity" "sha512-d1hdHN0F2BdlJYzT866/FTHX7G+rsJ5AKggJlch4lU1kL7o6AVnbaeJ9JrEUusRwAM4vQhXmCEtPRRCrdnuPRA=="
+  "resolved" "https://registry.npmjs.org/bikram-sambat-js/-/bikram-sambat-js-1.0.1.tgz"
+  "version" "1.0.1"
+
 "binary-extensions@^2.0.0":
   "integrity" "sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA=="
   "resolved" "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
@@ -6650,6 +6655,19 @@
   dependencies:
     "jquery" ">= 1.11.1"
 
+"nepali-datepicker-reactjs@^1.1.5":
+  "integrity" "sha512-E+zo9Bt81trrLvEAWjDqWT7Ht5dK83GTLxC78fVIzB0W710u1e2w7E61FGXvk5eWZ/DqlSZurw+SS4/uZ0Jeaw=="
+  "resolved" "https://registry.npmjs.org/nepali-datepicker-reactjs/-/nepali-datepicker-reactjs-1.1.5.tgz"
+  "version" "1.1.5"
+  dependencies:
+    "bikram-sambat-js" "^1.0.1"
+    "nepali-number" "^1.0.3"
+
+"nepali-number@^1.0.3":
+  "integrity" "sha512-Vb6aMQM/xtE7KiiEhemgDcACxIMaDn18Ub/imWXB6JlhDwc2qVDnGW+sR0gDLPQmyiyk06bkKze1oK88FxWIjw=="
+  "resolved" "https://registry.npmjs.org/nepali-number/-/nepali-number-1.0.3.tgz"
+  "version" "1.0.3"
+
 "no-case@^3.0.4":
   "integrity" "sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg=="
   "resolved" "https://registry.npmjs.org/no-case/-/no-case-3.0.4.tgz"
@@ -7981,7 +7999,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>=0.14.0", "react@>=15.0.0", "react@>=16", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
+"react@^16.8.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>=0.14.0", "react@>=15.0.0", "react@>=16", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

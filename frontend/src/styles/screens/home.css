@@ -198,6 +198,7 @@
     /* width: 33%; */
     height: 30px;
     font-size: small;
+    width: 100px;
   }
   .adding__course__div{
     font-size: smaller;
@@ -208,4 +209,23 @@
   }
   .add__button__size{
     font-size: 10px;
+  }
+  .see__details__link{
+    color: blue;
+    cursor: pointer;
+  }
+  .my-modal .modal-content {
+    background-color: red;
+  }
+  .payment__date{
+    display: flex;
+    flex-direction: column;
+  }
+  .payment__paid{
+    color:green;
+    border:1px solid green;
+  }
+  .payment__not__paid{
+    border: 1px solid red;
+    color:red;
   }

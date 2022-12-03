@@ -5,8 +5,8 @@ import Button from "react-bootstrap/Button";
 import "../../styles/screens/home.css";
 import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { IndividualStudent } from "./IndividualStudent";
-import { StudentModal } from "./StudentModal";
 import Pagination from "react-js-pagination";
+import { StudentModal } from "./StudentModal/StudentModalContainer";
 
 export const StudentsContainer = () => {
   // data

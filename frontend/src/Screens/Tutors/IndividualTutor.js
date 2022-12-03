@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { AssignedCoursesModal } from "./AssignedCoursesModal";
-import { TutorModal } from "./TutorModal";
+import { AssignedCoursesModal } from "./AssignedCoursesModal/AssignedCoursesModalContainer";
+import { TutorModalContainer } from "./TutorModal/TutorModalContainer";
 
 export const IndividualTutor = ({ tutor, index, setRefresh }) => {
   // usestates
@@ -24,13 +24,13 @@ export const IndividualTutor = ({ tutor, index, setRefresh }) => {
   return (
     <>
       {showModal && (
-        <TutorModal
+        <TutorModalContainer
           show={true}
           setShow={setShowModal}
           individualTutor={tutor}
           courseModalType={courseModalType}
           setRefresh={setRefresh}
-        ></TutorModal>
+        ></TutorModalContainer>
       )}
 
       {showAssignedCourse && (

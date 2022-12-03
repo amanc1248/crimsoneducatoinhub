@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { EnrolledCoursesModal } from "./EnrolledCoursesStudents";
-import { StudentModal } from "./StudentModal";
+import { EnrolledCoursesModalContainer } from "./EnrolledCoursesModal/EnrolledCoursesContainer";
+import { StudentModal } from "./StudentModal/StudentModalContainer";
 
 export const IndividualStudent = ({ student, index, setRefresh }) => {
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +32,7 @@ export const IndividualStudent = ({ student, index, setRefresh }) => {
         ></StudentModal>
       )}
       {showAssignedCourse && (
-        <EnrolledCoursesModal
+        <EnrolledCoursesModalContainer
           show={true}
           setShow={setShowAssignedCourse}
           individualStudent={student}

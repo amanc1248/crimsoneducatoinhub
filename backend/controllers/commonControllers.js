@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { ObjectId } = require("mongodb");
-const { Promise } = require("mongoose");
+const { Promise, Schema } = require("mongoose");
 
 const { db } = require("../database");
 const courseModel = require("../schemas/Course");
@@ -196,6 +196,20 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
   }
 });
 
+// find all documents by id
+const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
+  try {
+    const { collectionName, id } = req.body;
+    console.log(collectionName, id)
+    const result = await db.collection(collectionName).find({enrolledCourseId:id}).toArray();
+      if (result) {
+        return res.json(result);
+      }
+  } catch (err) {
+    throw e;
+  }
+});
+
 module.exports = {
   getCommonDataController,
   updateCommonDataController,
@@ -208,4 +222,5 @@ module.exports = {
   getModalAllDocumentsController,
   signupNewUserController,
   loginUserController,
+  getDocumentsByIdController
 };

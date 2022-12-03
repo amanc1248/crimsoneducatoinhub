@@ -241,3 +241,33 @@ export function getOneModalAllDocuments(data) {
       });
   });
 }
+
+
+
+//get one modal documents by id 
+export function getOneModalDocumentsById(data) {
+  let url = data.url;
+  const config = {
+    header: {
+      "Content-Type": "application/json",
+    },
+  };
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        url,
+        {
+          collectionName: data.collectionName,
+          id:data.id
+        },
+        config
+      )
+      .then((result) => {
+        console.log(result.data);
+        resolve(result.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+}
