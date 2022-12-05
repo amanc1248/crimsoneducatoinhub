@@ -229,3 +229,13 @@
     border: 1px solid red;
     color:red;
   }
+  .payment__paide{
+    color:green;
+  }
+  .payment__not__paide{
+    color:red;
+  }
+  .searching__component{
+    border-radius: 8px;
+    /* height: 50px; */
+  }

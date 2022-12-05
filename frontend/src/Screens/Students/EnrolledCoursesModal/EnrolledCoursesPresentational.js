@@ -57,7 +57,7 @@ export const EnrolledCoursesPresentataional = ({
                 enrolledCourses.map((course, index) => {
                   return (
                     <IndividualEnrolledCourseC
-                    key={course.enrolledCourseId}
+                    key={course.id}
                     course={course}
                     index={index}
                     ></IndividualEnrolledCourseC>

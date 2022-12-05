@@ -31,7 +31,7 @@ export const TutorsContainer = () => {
         url: "/api/commonRoute/getData",
         collectionName: "tutors",
         pageNumber: currentPage,
-        nPerPage: 3,
+        nPerPage: 100,
       })
         .then((result) => {
           setTutors(result);
@@ -47,7 +47,7 @@ export const TutorsContainer = () => {
       url: "/api/commonRoute/getData",
       collectionName: "tutors",
       pageNumber: currentPage,
-      nPerPage: 3,
+      nPerPage: 100,
     })
       .then((result) => {
         setTutors(result);

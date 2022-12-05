@@ -1,6 +1,6 @@
 class EnrolledCourse{
-    constructor({ enrolledCourseId, courseId,courseName, year,month, startDate, endDate, shiftId, shift, paymentStatus,actualCoursePrice, studentId}){
-        this.enrolledCourseId = enrolledCourseId
+    constructor({ id, courseId,courseName, year,month, startDate, endDate, shiftId, shift, paymentStatus,actualCoursePrice, studentId}){
+        this.id = id
         this.courseId = courseId;
         this.courseName = courseName;
         this.year = year;

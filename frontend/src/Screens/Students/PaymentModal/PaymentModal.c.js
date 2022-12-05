@@ -26,6 +26,7 @@ export const PaymentModalC = ({
     amount: "",
     paymentDetails: "",
   });
+  const [paymentStatus, setPaymentStatus] = useState();
 
   // use effects
   useEffect(() => {
@@ -57,9 +58,9 @@ export const PaymentModalC = ({
     setAddPayment(true);
   };
   const handleAddPayment = async () => {
-    let obj = studentPayment;
-    obj = {
-      ...obj,
+    let studentObj = studentPayment;
+    studentObj = {
+      ...studentObj,
       enrolledCourseId: course.enrolledCourseId,
       studentId: course.studentId,
     };
@@ -68,25 +69,28 @@ export const PaymentModalC = ({
       studentPayment.amount &&
       studentPayment.paymentDetails
     ) {
-      insertData({
+     const insertedData = await insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "studentsCoursePayment",
-        doc: obj,
-      }).then(async (result) => {
+        doc: studentObj,
+      });
+      if(insertedData){
         const studentPaymentObject = new StudentPaymentClass({
           enrolledCourseId: studentPayment.enrolledCourseId,
           studentId: studentPayment.studentId,
           amount: studentPayment.amount,
           paymentDate: studentPayment.paymentDate,
           paymentDetails: studentPayment.paymentDetails,
-          paymentId: result.insertedId,
+          paymentId: insertData.insertedId,
         });
         setAllPayments((prevState) => {
           return [...prevState, studentPaymentObject];
         });
         setStudentPayment({});
         setAddPayment(false);
-      });
+      }else{
+        console.log("error")
+      }
     }
   };
 

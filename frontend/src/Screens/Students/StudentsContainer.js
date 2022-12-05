@@ -7,16 +7,17 @@ import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { IndividualStudent } from "./IndividualStudent";
 import Pagination from "react-js-pagination";
 import { StudentModal } from "./StudentModal/StudentModalContainer";
+import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 
 export const StudentsContainer = () => {
-  // data
-
+  
   // use states
-  const [students, setStudents] = useState();
+  const [students, setStudents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
 
   // use effects
   useEffect(() => {
@@ -37,9 +38,10 @@ export const StudentsContainer = () => {
         url: "/api/commonRoute/getData",
         collectionName: "students",
         pageNumber: currentPage,
-        nPerPage: 3,
+        nPerPage: 100,
       })
         .then((result) => {
+          setUnModifiableOrignalList(result);
           setStudents(result);
           setRefresh(false);
         })
@@ -53,7 +55,7 @@ export const StudentsContainer = () => {
       url: "/api/commonRoute/getData",
       collectionName: "students",
       pageNumber: currentPage,
-      nPerPage: 3,
+      nPerPage: 100,
     })
       .then((result) => {
         setStudents(result);
@@ -63,6 +65,7 @@ export const StudentsContainer = () => {
         console.log(e);
       });
   }, [currentPage]);
+
 
   return (
     <div className="students">
@@ -85,13 +88,19 @@ export const StudentsContainer = () => {
         >
           Add Student
         </Button>
+        {students && (
+          <SearchComponentC
+          originalList={unModifiableOrignalList}
+          setOriginalList={setStudents}
+          ></SearchComponentC>
+        )}
         <Pagination
           itemClass="page-item"
           linkClass="page-link"
           firstPageText="First"
           lastPageText="Last"
           activePage={currentPage}
-          itemsCountPerPage={3}
+          itemsCountPerPage={100}
           totalItemsCount={totalPages}
           pageRangeDisplayed={3}
           onChange={(page) => {

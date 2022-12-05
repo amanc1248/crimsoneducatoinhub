@@ -7,6 +7,7 @@ import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { ShiftModal } from "./ShiftModal";
 import Pagination from "react-js-pagination";
 import { IndividualShift } from "./IndividualShift";
+import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 
 export const ShiftsContainer = () => {
   // data
@@ -17,6 +18,7 @@ export const ShiftsContainer = () => {
   const [refresh, setRefresh] = useState(true);
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [unModifiableOrignalList, setUnModifiableOrignalList] =useState([])
 
   // use effects
   useEffect(() => {
@@ -37,9 +39,10 @@ export const ShiftsContainer = () => {
         url: "/api/commonRoute/getData",
         collectionName: "shifts",
         pageNumber: currentPage,
-        nPerPage: 3,
+        nPerPage: 100,
       })
         .then((result) => {
+          setUnModifiableOrignalList(result);
           setShifts(result);
           setRefresh(false);
         })
@@ -53,7 +56,7 @@ export const ShiftsContainer = () => {
       url: "/api/commonRoute/getData",
       collectionName: "shifts",
       pageNumber: currentPage,
-      nPerPage: 3,
+      nPerPage: 100,
     })
       .then((result) => {
         setShifts(result);
@@ -85,13 +88,19 @@ export const ShiftsContainer = () => {
         >
           Add Shift
         </Button>
+        {shifts && (
+          <SearchComponentC
+          originalList={unModifiableOrignalList}
+          setOriginalList={setShifts}
+          ></SearchComponentC>
+        )}
         <Pagination
           itemClass="page-item"
           linkClass="page-link"
           firstPageText="First"
           lastPageText="Last"
           activePage={currentPage}
-          itemsCountPerPage={3}
+          itemsCountPerPage={100}
           totalItemsCount={totalPages}
           pageRangeDisplayed={3}
           onChange={(page) => {

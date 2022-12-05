@@ -39,7 +39,7 @@ setCurrentPage,
           firstPageText="First"
           lastPageText="Last"
           activePage={currentPage}
-          itemsCountPerPage={3}
+          itemsCountPerPage={100}
           totalItemsCount={totalPages}
           pageRangeDisplayed={3}
           onChange={(page) => {

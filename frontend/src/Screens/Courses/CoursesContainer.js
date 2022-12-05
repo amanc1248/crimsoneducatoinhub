@@ -7,15 +7,17 @@ import "../../styles/screens/home.css";
 import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { CourseModal } from "./CourseModal";
 import { IndividualCourse } from "./IndividualCourse";
+import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 
 export const CoursesContainer = () => {
 
   // use states
-  const [courses, setCourses]                    = useState();
+  const [courses, setCourses]                    = useState([]);
   const [showModal, setShowModal]                = useState(false);
   const [refresh, setRefresh]                    = useState(true);
   const [totalPages, setTotalPages]              = useState();
   const  [currentPage, setCurrentPage]           = useState(1);
+  const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
 
   // use effect
   useEffect(()=>{
@@ -28,6 +30,7 @@ export const CoursesContainer = () => {
   useEffect(() => {
     refresh && getAllData({ url: "/api/commonRoute/getData", collectionName: "courses", pageNumber:currentPage,nPerPage:3 })
       .then((result) => {
+        setUnModifiableOrignalList(result);
         setCourses(result);
         setRefresh(false)
       })
@@ -71,13 +74,19 @@ export const CoursesContainer = () => {
         >
           Add Course
         </Button>
+        {courses && (
+          <SearchComponentC
+          originalList={unModifiableOrignalList}
+          setOriginalList={setCourses}
+          ></SearchComponentC>
+        )}
         <Pagination
           itemClass="page-item"
           linkClass="page-link"
           firstPageText="First"
           lastPageText="Last"
           activePage={currentPage}
-          itemsCountPerPage={3}
+          itemsCountPerPage={100}
           totalItemsCount={totalPages}
           pageRangeDisplayed={3}
           onChange={(page) => {

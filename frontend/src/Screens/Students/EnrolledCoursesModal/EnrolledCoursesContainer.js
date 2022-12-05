@@ -72,7 +72,7 @@ export const EnrolledCoursesModalContainer = ({
       .then((result) => {
         const list = result.map((course, index) => {
           const obj = new EnrolledCourse({
-            enrolledCourseId: course._id,
+            id: course._id,
             courseId: course.courseId,
             courseName: course.courseName,
             year: course.year,
@@ -124,7 +124,7 @@ export const EnrolledCoursesModalContainer = ({
         doc: enrolledCourse,
       }).then((result) => {
         const enrolledCourseObject = new EnrolledCourse({
-          enrolledCourseId: result.insertedId,
+          id: result.insertedId,
           courseId: enrolledCourse.courseId,
           courseName: enrolledCourse.courseName,
           year: enrolledCourse.year,
@@ -166,7 +166,7 @@ export const EnrolledCoursesModalContainer = ({
    
    const handleOnUpdateCourse =(enrolledCourse,paymentStatus)=>{
     const enrolledCourseObject = new EnrolledCourse({
-      enrolledCourseId: enrolledCourse.enrolledCourseId,
+      id: enrolledCourse.id,
       courseId: enrolledCourse.courseId,
       courseName: enrolledCourse.courseName,
       year: enrolledCourse.year,
@@ -182,7 +182,7 @@ export const EnrolledCoursesModalContainer = ({
       url: "/api/commonRoute/updateData",
       collectionName: "enrolledCourses",
       updatedTo: enrolledCourseObject,
-      id: enrolledCourse.enrolledCourseId,
+      id: enrolledCourse.id,
     }).then((result) => {
 
     }).catch(err=>{console.log(err)})
