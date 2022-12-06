@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import Pagination from "react-js-pagination";
 
 import "../../styles/screens/home.css";
 import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
-import { TutorsPresentational } from "./TutorsPresentational";
+
+import { IndividualTutor } from "./IndividualTutor";
+import { TutorModal } from "./TutorModal/TutorModalContainer";
 
 export const TutorsContainer = () => {
   // use states
@@ -31,7 +36,7 @@ export const TutorsContainer = () => {
         url: "/api/commonRoute/getData",
         collectionName: "tutors",
         pageNumber: currentPage,
-        nPerPage: 100,
+        nPerPage: 3,
       })
         .then((result) => {
           setTutors(result);
@@ -47,7 +52,7 @@ export const TutorsContainer = () => {
       url: "/api/commonRoute/getData",
       collectionName: "tutors",
       pageNumber: currentPage,
-      nPerPage: 100,
+      nPerPage: 3,
     })
       .then((result) => {
         setTutors(result);
@@ -58,15 +63,70 @@ export const TutorsContainer = () => {
       });
   }, [currentPage]);
   return (
-    <TutorsPresentational
-    showModal={showModal}
-    setShowModal={setShowModal}
-    tutors={tutors} 
-    setTutors={setTutors} 
-    setRefresh={setRefresh}
-    currentPage={currentPage}
-    totalPages={totalPages} 
-    setCurrentPage={setCurrentPage}
-    ></TutorsPresentational>
+    <div className="tutors">
+      {showModal && (
+        <TutorModal
+          setShow={setShowModal}
+          tutors={tutors}
+          setTutors={setTutors}
+          courseModalType="Add"
+          setRefresh={setRefresh}
+        />
+      )}
+      <div className="action__buttons">
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          Add Tutor
+        </Button>
+        <Pagination
+          itemClass="page-item"
+          linkClass="page-link"
+          firstPageText="First"
+          lastPageText="Last"
+          activePage={currentPage}
+          itemsCountPerPage={3}
+          totalItemsCount={totalPages}
+          pageRangeDisplayed={3}
+          onChange={(page) => {
+            setCurrentPage(page);
+          }}
+        />
+      </div>
+      <br />
+      <div className="students__inside">
+        <Table striped hover size="sm" className="table__list">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Age</th>
+              <th>Qualification</th>
+              <th>Start Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tutors &&
+              tutors.map((tutor, index) => {
+                return (
+                  <IndividualTutor
+                    tutor={tutor}
+                    index={index}
+                    key={index}
+                    setRefresh={setRefresh}
+                  />
+                );
+              })}
+          </tbody>
+        </Table>
+      </div>
+    </div>
   );
 };

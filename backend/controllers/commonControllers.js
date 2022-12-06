@@ -243,17 +243,17 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
 });
 
 // find all documents by id
-const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
-  try {
-    const { collectionName, id } = req.body;
-    console.log(collectionName, id)
-    const result = await db.collection(collectionName).find({enrolledCourseId:id}).toArray();
-      if (result) {
-        return res.json(result);
-      }
-  } catch (err) {
-    console.log(err);
-  }});
+// const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
+//   try {
+//     const { collectionName, id } = req.body;
+//     console.log(collectionName, id)
+//     const result = await db.collection(collectionName).find({enrolledCourseId:id}).toArray();
+//       if (result) {
+//         return res.json(result);
+//       }
+//   } catch (err) {
+//     console.log(err);
+//   }});
   
 const verifyToken = asyncHandler(async (req, res, next) => {
   const { collectionName } = req.body;
