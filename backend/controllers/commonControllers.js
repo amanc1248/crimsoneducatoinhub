@@ -53,7 +53,9 @@ const getModalAllDocumentsController = asyncHandler(
 
 // get one document common data controller
 const getOneDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName, id } = req.body;
+  const { collectionName } = req.body;
+
+  const id = req.body.doc;
   try {
     const result = await db
       .collection(collectionName)
@@ -66,6 +68,8 @@ const getOneDataController = asyncHandler(async (req, res, callback) => {
 
 // insert one document common data controller
 const insertOneDataController = asyncHandler(async (req, res, callback) => {
+  console.log("HELLO");
+  console.log(req.body);
   const { collectionName, doc } = req.body;
   try {
     const result = await db.collection(collectionName).insertOne(doc);
@@ -197,22 +201,31 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
 const loginUserController = asyncHandler(async (req, res, callback) => {
   const { collectionName, doc } = req.body;
 
+  const code = process.env.LOGIN_CODE;
+
   try {
-    const result = await db
-      .collection(collectionName)
-      .findOne({ phoneNumber: doc.phoneNumber });
-    if (result) {
-      const validHashedPassword = await bcrypt.compare(
-        doc.password,
-        result.hashedPassword
-      );
-      if (validHashedPassword) {
-        const token = jwt.sign({ _id: result._id }, "secretcode");
-        return res.json({
-          token: token,
-          login: true,
-          result: result,
-        });
+    if (code == req.body.doc.code) {
+      const result = await db
+        .collection(collectionName)
+        .findOne({ phoneNumber: doc.phoneNumber });
+      if (result) {
+        const validHashedPassword = await bcrypt.compare(
+          doc.password,
+          result.hashedPassword
+        );
+        if (validHashedPassword) {
+          const token = jwt.sign({ _id: result._id }, "secretcode");
+          return res.json({
+            token: token,
+            login: true,
+            result: result,
+          });
+        } else {
+          return res.json({
+            login: false,
+            result: result,
+          });
+        }
       } else {
         return res.json({
           login: false,
@@ -221,8 +234,7 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
       }
     } else {
       return res.json({
-        login: false,
-        result: result,
+        code: false,
       });
     }
   } catch (err) {
@@ -269,6 +281,35 @@ const verifyToken = asyncHandler(async (req, res, next) => {
   }
 });
 
+const getUserId = asyncHandler(async (req, res, callback) => {
+  const { collectionName, doc } = req.body;
+
+  try {
+    const result = await db
+      .collection(collectionName)
+      .findOne({ _id: ObjectId(doc) });
+    return res.json(result);
+  } catch (error) {
+    return callback(error);
+  }
+});
+
+const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
+  try {
+    const { collectionName, id } = req.body;
+    console.log(collectionName, id);
+    const result = await db
+      .collection(collectionName)
+      .find({ assignedCourseId: id })
+      .toArray();
+    if (result) {
+      return res.json(result);
+    }
+  } catch (err) {
+    throw e;
+  }
+});
+
 module.exports = {
   getCommonDataController,
   updateCommonDataController,
@@ -283,4 +324,6 @@ module.exports = {
   loginUserController,
   getDocumentsByIdController,
   verifyToken,
+  getUserId,
+  getDocumentsByIdController,
 };

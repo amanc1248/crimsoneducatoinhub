@@ -32,6 +32,7 @@ export function getAllData(data) {
 
 // insert data
 export function insertData(data) {
+  console.log("HELLO", data);
   let url = data.url;
   const config = {
     header: {
@@ -262,10 +263,33 @@ export function getOneModalAllDocuments(data) {
       });
   });
 }
+// export function getOneModalAllDocumentsToken(data) {
+//   let url = data.url;
+//   const config = {
+//     header: {
+//       "Content-Type": "application/json",
+//     },
+//   };
+//   return new Promise((resolve, reject) => {
+//     axios
+//       .post(
+//         url,
+//         {
+//           collectionName: data.collectionName,
+//         },
+//         config
+//       )
+//       .then((result) => {
+//         console.log(result.data);
+//         resolve(result.data);
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//       });
+//   });
+// }
 
-
-
-//get one modal documents by id 
+//get one modal documents by id
 export function getOneModalDocumentsById(data) {
   let url = data.url;
   const config = {
@@ -279,7 +303,7 @@ export function getOneModalDocumentsById(data) {
         url,
         {
           collectionName: data.collectionName,
-          id:data.id
+          id: data.id,
         },
         config
       )

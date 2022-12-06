@@ -1,6 +1,11 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
+// import {eye}
+import { FiEye } from "react-icons/fi";
+import { FiEyeOff } from "react-icons/fi";
+import { IconBase } from "react-icons";
+
 import { getOneModalAllDocuments, insertData } from "../../actions/homeActions";
 import {
   MDBContainer,
@@ -14,6 +19,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [code, setCode] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
   const [password, setPassword] = useState();
   const phoneNumberRegex =
@@ -41,10 +47,11 @@ const Login = () => {
     const doc = {
       phoneNumber,
       password,
+      code,
     };
     if (!phoneNumberRegex.test(phoneNumber)) {
       alert("Phone Number Invalid");
-    } else if (phoneNumber && password) {
+    } else if (phoneNumber && password && code) {
       insertData({
         url: "/api/commonRoute/login",
         collectionName: "users",
@@ -52,13 +59,19 @@ const Login = () => {
       }).then((result) => {
         if (result.login === false) {
           alert("Username or password not found");
+        } else if (result.code === false) {
+          alert("Code not matched");
         } else if (result.login === true) {
           localStorage.setItem("token", result.token);
+          localStorage.setItem("userId", result.result._id);
           navigate("/");
         }
       });
     }
   };
+
+  const [icon, setIcon] = useState();
+
   return (
     <div style={{ marginTop: "100px" }}>
       <MDBContainer fluid className="p-3 my-5 h-custom">
@@ -91,27 +104,36 @@ const Login = () => {
               }}
               type="number"
             />
-            <MDBInput
-              wrapperClass="mb-4"
-              //   label="Password"
-              placeholder="Password"
-              id="formControlLg"
-              type="password"
-              size="lg"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-
-            {/* <div className="d-flex justify-content-between mb-4">
-              <MDBCheckbox
-                name="flexCheck"
-                value=""
-                id="flexCheckDefault"
-                label="Remember me"
-              />
-              <a href="!#">Forgot password?</a>
-            </div> */}
+            <div>
+              <MDBInput
+                wrapperClass="mb-4"
+                //   label="Password"
+                placeholder="Password"
+                id="formControlLg"
+                type="password"
+                size="lg"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              >
+                {" "}
+              </MDBInput>
+              {/* <IconBase icon={icon} /> */}
+            </div>
+            <div>
+              <MDBInput
+                wrapperClass="mb-4"
+                placeholder="Code"
+                id="formControlLg"
+                type="text"
+                size="lg"
+                onChange={(e) => {
+                  setCode(e.target.value);
+                }}
+              >
+                {" "}
+              </MDBInput>
+            </div>
 
             <div className="text-center text-md-start mt-4 pt-2">
               <MDBBtn
@@ -134,44 +156,6 @@ const Login = () => {
         <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
           <div className="text-white mb-3 mb-md-0">
             Crimson Education Hub © 2020. All rights reserved.
-          </div>
-
-          <div>
-            <MDBBtn
-              tag="a"
-              color="none"
-              className="mx-3"
-              style={{ color: "white" }}
-            >
-              <MDBIcon fab icon="facebook-f" size="md" />
-            </MDBBtn>
-
-            <MDBBtn
-              tag="a"
-              color="none"
-              className="mx-3"
-              style={{ color: "white" }}
-            >
-              <MDBIcon fab icon="twitter" size="md" />
-            </MDBBtn>
-
-            <MDBBtn
-              tag="a"
-              color="none"
-              className="mx-3"
-              style={{ color: "white" }}
-            >
-              <MDBIcon fab icon="google" size="md" />
-            </MDBBtn>
-
-            <MDBBtn
-              tag="a"
-              color="none"
-              className="mx-3"
-              style={{ color: "white" }}
-            >
-              <MDBIcon fab icon="linkedin-in" size="md" />
-            </MDBBtn>
           </div>
         </div>
       </MDBContainer>

@@ -16,15 +16,9 @@ export const Home = () => {
     })
       .then((result) => {
         if (result.login === false) {
-          //   setUserLoggedIn(false);
           navigate("/login");
-          // console.log(result);
-          // console.log("False");
         } else {
           navigate("/");
-          //   setUserLoggedIn(true);
-          // console.log("false");
-          // console.log("RUE");
         }
       })
       .catch((e) => console.log(e));

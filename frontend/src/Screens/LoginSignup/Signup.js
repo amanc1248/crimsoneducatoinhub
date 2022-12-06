@@ -79,8 +79,7 @@ const Signup = () => {
         if (result.signup === false) {
           alert("Number already used");
         } else if (result.signup === true) {
-          localStorage.setItem("token", result.token);
-          navigate("/");
+          alert("User Successfully Registered");
         }
       });
     }
