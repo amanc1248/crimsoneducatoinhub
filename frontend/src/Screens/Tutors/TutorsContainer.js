@@ -5,8 +5,9 @@ import Pagination from "react-js-pagination";
 
 import "../../styles/screens/home.css";
 import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
-import { TutorModal } from "./TutorModal";
+
 import { IndividualTutor } from "./IndividualTutor";
+import { TutorModal } from "./TutorModal/TutorModalContainer";
 
 export const TutorsContainer = () => {
   // use states

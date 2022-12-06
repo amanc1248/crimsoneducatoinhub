@@ -4,8 +4,11 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Select from "react-select";
 import { useEffect } from "react";
-import { getOneModalAllDocuments, updateData } from "../../actions/homeActions";
-import { SalaryHistoryModal } from "./SalaryHistoryModal.js";
+import {
+  getOneModalAllDocuments,
+  updateData,
+} from "../../../actions/homeActions";
+import { SalaryHistoryModal } from "../SalaryHistoryModal.js";
 
 export const AssignedCoursesModal = ({
   show,
