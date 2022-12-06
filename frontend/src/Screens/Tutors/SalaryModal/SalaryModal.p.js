@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+import { Image } from "cloudinary-react";
 
 import "../../../styles/screens/home.css";
 export const SalaryModalP = ({
@@ -16,6 +17,8 @@ export const SalaryModalP = ({
   checkTotalAmountAndSet,
   setTutorSalary,
   tutorSalary,
+  chequePhoto,
+  setChequePhoto,
 }) => {
   return (
     <>
@@ -63,6 +66,7 @@ export const SalaryModalP = ({
                 <th>Payment Date</th>
                 <th>Amount</th>
                 <th>Payment Details</th>
+                <th>Cheque Photo</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -75,6 +79,17 @@ export const SalaryModalP = ({
                       <td>{salary.salaryDate}</td>
                       <td>{salary.amount}</td>
                       <td>{salary.salaryDetails}</td>
+                      <td>
+                        {" "}
+                        <Image
+                          cloudName="gaurabcloudinary"
+                          publicId={salary.filename}
+                          variant="top"
+                          width="50%"
+                          height="70px"
+                        />
+                        {/* {salary.filename} */}
+                      </td>
                       <td>
                         {" "}
                         <Button
@@ -153,6 +168,22 @@ export const SalaryModalP = ({
                           salaryDetails: e.target.value,
                         };
                       });
+                    }}
+                  />
+                </div>
+                <div className="payment__date">
+                  <label htmlFor="paymentDetails">Cheque Photo</label>
+                  <input
+                    type="file"
+                    id="paymentDetails"
+                    onChange={(e) => {
+                      setTutorSalary((prevState) => {
+                        return {
+                          ...prevState,
+                          chequePhoto: e.target.files[0],
+                        };
+                      });
+                      // setChequePhoto(e.target.files[0]);
                     }}
                   />
                 </div>

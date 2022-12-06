@@ -125,7 +125,7 @@ const Login = () => {
                 wrapperClass="mb-4"
                 placeholder="Code"
                 id="formControlLg"
-                type="text"
+                type="password"
                 size="lg"
                 onChange={(e) => {
                   setCode(e.target.value);

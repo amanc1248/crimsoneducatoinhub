@@ -8,6 +8,7 @@ import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 
 import { IndividualTutor } from "./IndividualTutor";
 import { TutorModal } from "./TutorModal/TutorModalContainer";
+import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 
 export const TutorsContainer = () => {
   // use states
@@ -16,6 +17,7 @@ export const TutorsContainer = () => {
   const [refresh, setRefresh] = useState(true);
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
 
   // use effects
   useEffect(() => {
@@ -39,6 +41,7 @@ export const TutorsContainer = () => {
         nPerPage: 3,
       })
         .then((result) => {
+          setUnModifiableOrignalList(result);
           setTutors(result);
           setRefresh(false);
         })
@@ -83,6 +86,12 @@ export const TutorsContainer = () => {
         >
           Add Tutor
         </Button>
+        {tutors && (
+          <SearchComponentC
+            originalList={unModifiableOrignalList}
+            setOriginalList={setTutors}
+          ></SearchComponentC>
+        )}
         <Pagination
           itemClass="page-item"
           linkClass="page-link"
