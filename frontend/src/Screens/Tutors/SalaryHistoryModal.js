@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/esm/Table";
 import Modal from "react-bootstrap/Modal";
+import Axios from "axios";
+
+import { Image } from "cloudinary-react";
 
 import Select from "react-select";
 
@@ -10,6 +13,7 @@ import {
   getCourseData,
   insertData,
   updateData,
+  insertPhoto,
   getOneModalAllDocuments,
 } from "../../actions/homeActions";
 
@@ -39,6 +43,7 @@ export function SalaryHistoryModal({
   const [paySalary, setPaySalary] = useState(false);
   const [chequeNumber, setChequeNumber] = useState();
   const [payDate, setPayDate] = useState();
+  const [chequePhoto, setChequePhoto] = useState([]);
 
   const [tutorsSalary, setTutorsSalary] = useState([]);
 
@@ -47,33 +52,83 @@ export function SalaryHistoryModal({
   const [loader, setLoader] = useState(false);
 
   // functions
-  // 1. on paying salary
-  const handleOnPaySalary = () => {
-    const doc = {
-      chequeNumber,
-      payDate,
-    };
-    if ((chequeNumber, payDate)) {
-      setLoader(true);
-      setTutorsSalary((prevState) => {
-        return [...prevState, doc];
-      });
 
-      insertData({
-        url: "/api/commonRoute/insertData",
-        collectionName: "salary",
-        doc,
-      })
-        .then((result) => {
-          setRefresh(true);
-          setLoader(false);
-          handleClose();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-      console.log(doc);
+  // 1. on paying salary
+  const handleOnPaySalary = async () => {
+    if (chequePhoto) {
+      const formData = new FormData();
+
+      formData.append("file", chequePhoto[0]);
+      formData.append("upload_preset", "farmersfrienduploadpreset");
+
+      await Axios.post(
+        "https://api.cloudinary.com/v1_1/gaurabcloudinary/image/upload",
+        formData
+      ).then((response) => {
+        const filename = response.data.public_id;
+        const doc = {
+          chequeNumber,
+          payDate,
+          filename,
+        };
+        if ((chequeNumber, payDate)) {
+          setLoader(true);
+          setTutorsSalary((prevState) => {
+            return [...prevState, doc];
+          });
+
+          insertData({
+            url: "/api/commonRoute/insertData",
+            collectionName: "salary",
+            doc,
+          })
+            .then((result) => {
+              setRefresh(true);
+              setLoader(false);
+              handleClose();
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+          console.log(doc);
+        }
+      });
     }
+
+    // insertPhoto({
+    //   url: "https://api.cloudinary.com/v1_1/gaurabcloudinary/image/upload",
+    //   formData,
+    // }).then((response) => {
+    //   const filename = response.data.public_id;
+    //   console.log(`This is file name ${filename}`);
+    //   console.log(response);
+    //   console.log("HELLOOO");
+    //   // const doc = {
+    //   //   chequeNumber,
+    //   //   payDate,
+    //   // };
+    //   // if ((chequeNumber, payDate)) {
+    //   //   setLoader(true);
+    //   //   setTutorsSalary((prevState) => {
+    //   //     return [...prevState, doc];
+    //   //   });
+
+    //   //   insertData({
+    //   //     url: "/api/commonRoute/insertData",
+    //   //     collectionName: "salary",
+    //   //     doc,
+    //   //   })
+    //   //     .then((result) => {
+    //   //       setRefresh(true);
+    //   //       setLoader(false);
+    //   //       handleClose();
+    //   //     })
+    //   //     .catch((e) => {
+    //   //       console.log(e);
+    //   //     });
+    //   //   console.log(doc);
+    //   // }
+    // });
   };
 
   const hidePaySalary = () => {
@@ -158,8 +213,9 @@ export function SalaryHistoryModal({
               <tr>
                 <th>#</th>
                 <th>Cheque Number</th>
-                <th>Pay Date</th>
                 <th>Cheque</th>
+                <th>Pay Date</th>
+
                 <th>Actions</th>
               </tr>
             </thead>
@@ -170,6 +226,16 @@ export function SalaryHistoryModal({
                     <tr key={salary._id}>
                       <td>{index + 1}</td>
                       <td>{salary.chequeNumber}</td>
+                      <td>
+                        {" "}
+                        <Image
+                          cloudName="gaurabcloudinary"
+                          publicId={salary.filename}
+                          variant="top"
+                          width="50%"
+                          height="100px"
+                        />
+                      </td>
                       <td>{salary.payDate}</td>
 
                       <td>
@@ -236,16 +302,16 @@ export function SalaryHistoryModal({
                   <div class="learning__form__group ">
                     <label for="photo">Cheque Photo</label>
                     <input
-                      type="text"
+                      type="file"
                       class="form-control selecting__divs"
                       id="photo"
                       name="photo "
                       rows="4"
                       cols="50"
                       placeholder="Select starting date"
-                      // onChange={(e) => {
-                      //   endDate = e.target.value;
-                      // }}
+                      onChange={(e) => {
+                        setChequePhoto(e.target.files);
+                      }}
                     ></input>
                   </div>
                 </div>

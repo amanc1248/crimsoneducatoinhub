@@ -4,6 +4,8 @@ const { Promise, Schema } = require("mongoose");
 
 const { db } = require("../database");
 const courseModel = require("../schemas/Course");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // get number of documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
@@ -152,12 +154,19 @@ const calulateDateDataController = asyncHandler(async (req, res) => {
 });
 
 const signupNewUserController = asyncHandler(async (req, res, callback) => {
-  const { collectionName, doc } = req.body;
+  const { collectionName } = req.body;
+
+  const name = req.body.doc.name;
+  const email = req.body.doc.email;
+  const position = req.body.doc.position;
+  const phoneNumber = req.body.doc.phoneNumber;
+  const address = req.body.doc.address;
+  const password = req.body.doc.password;
 
   try {
     const result = await db
       .collection(collectionName)
-      .findOne({ phoneNumber: doc.phoneNumber });
+      .findOne({ phoneNumber: phoneNumber });
 
     if (result) {
       return res.json({
@@ -165,8 +174,20 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
         result: result,
       });
     } else {
-      const newUser = await db.collection(collectionName).insertOne(doc);
-      return res.json({ signup: true, result: newUser });
+      const hashedPassword = await bcrypt.hash(password, 8);
+      const token = jwt.sign({ _id: phoneNumber }, "secretcode");
+
+      const newDoc = {
+        name,
+        email,
+        position,
+        phoneNumber,
+        address,
+        hashedPassword,
+      };
+
+      const newUser = await db.collection(collectionName).insertOne(newDoc);
+      return res.json({ signup: true, result: newUser, token: token });
     }
   } catch (err) {
     return callback(err);
@@ -179,12 +200,25 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
   try {
     const result = await db
       .collection(collectionName)
-      .findOne({ phoneNumber: doc.phoneNumber, password: doc.password });
+      .findOne({ phoneNumber: doc.phoneNumber });
     if (result) {
-      return res.json({
-        login: true,
-        result: result,
-      });
+      const validHashedPassword = await bcrypt.compare(
+        doc.password,
+        result.hashedPassword
+      );
+      if (validHashedPassword) {
+        const token = jwt.sign({ _id: result._id }, "secretcode");
+        return res.json({
+          token: token,
+          login: true,
+          result: result,
+        });
+      } else {
+        return res.json({
+          login: false,
+          result: result,
+        });
+      }
     } else {
       return res.json({
         login: false,
@@ -206,6 +240,31 @@ const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
         return res.json(result);
       }
   } catch (err) {
+    console.log(err);
+  }});
+  
+const verifyToken = asyncHandler(async (req, res, next) => {
+  const { collectionName } = req.body;
+  const token = req.body.token;
+
+  try {
+    if (token === null) {
+      return res.json({
+        login: false,
+      });
+    }
+    const userData = jwt.verify(token, "secretcode", function (err, decoded) {
+      if (err) {
+        return res.json({
+          login: false,
+        });
+      } else {
+        return res.json({
+          login: true,
+        });
+      }
+    });
+  } catch (e) {
     throw e;
   }
 });
@@ -222,5 +281,6 @@ module.exports = {
   getModalAllDocumentsController,
   signupNewUserController,
   loginUserController,
-  getDocumentsByIdController
+  getDocumentsByIdController,
+  verifyToken,
 };

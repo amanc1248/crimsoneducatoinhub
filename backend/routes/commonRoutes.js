@@ -10,7 +10,11 @@ const {
   getModalAllDocumentsController,
   signupNewUserController,
   loginUserController,
+<<<<<<< HEAD
   getDocumentsByIdController
+=======
+  verifyToken,
+>>>>>>> origin/development_gaurab_4
 } = require("../controllers/commonControllers");
 const router = express.Router();
 
@@ -25,4 +29,5 @@ router.route("/getAllDocuments").post(getModalAllDocumentsController);
 router.route("/signup").post(signupNewUserController);
 router.route("/login").post(loginUserController);
 router.route("/getDocumentsById").post(getDocumentsByIdController);
+router.route("/verifyToken").post(verifyToken);
 module.exports = router;

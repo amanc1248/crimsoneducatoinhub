@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 
-
 // fetching all data
 export function getAllData(data) {
   let url = data.url;
@@ -17,7 +16,7 @@ export function getAllData(data) {
         {
           collectionName: data.collectionName,
           pageNumber: data.pageNumber,
-          nPerPage: data.nPerPage
+          nPerPage: data.nPerPage,
         },
         config
       )
@@ -49,6 +48,30 @@ export function insertData(data) {
         },
         config
       )
+      .then((result) => {
+        console.log(result.data);
+        resolve(result.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+}
+
+//insert photo into cloudinary
+export function insertPhoto(data) {
+  let url = data.url;
+  let formData = data.formData;
+
+  const config = {
+    header: {
+      "Content-Type": "application/json",
+    },
+  };
+  return new Promise((resolve, reject) => {
+    console.log(url);
+    axios
+      .post(url, config)
       .then((result) => {
         console.log(result.data);
         resolve(result.data);
@@ -97,10 +120,7 @@ export function deleteData(data) {
   };
   return new Promise((resolve, reject) => {
     axios
-      .delete(
-        url,
-        config
-      )
+      .delete(url, config)
       .then((result) => {
         resolve(result.data);
       })
@@ -187,7 +207,6 @@ export function getCourseData(data) {
   });
 }
 
-
 //get one modal total count
 export function getOneModalTotalCount(data) {
   let url = data.url;
@@ -215,6 +234,7 @@ export function getOneModalTotalCount(data) {
   });
 }
 
+//yaha maile token add grya xu yesma token add grda kai farak prxa prdaina?
 //get one modal all documents
 export function getOneModalAllDocuments(data) {
   let url = data.url;
@@ -229,6 +249,7 @@ export function getOneModalAllDocuments(data) {
         url,
         {
           collectionName: data.collectionName,
+          token: data.token,
         },
         config
       )
