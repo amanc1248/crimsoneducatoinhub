@@ -57,7 +57,7 @@ export const SalaryModalC = ({
             amount: salary.amount,
             salaryDetails: salary.salaryDetails,
             tutorId: salary.tutorId,
-            filename: salary.filename,
+            filename: salary.chequePhoto,
           });
           return obj;
         });
@@ -85,6 +85,7 @@ export const SalaryModalC = ({
         ...obj,
         assignedCourseId: course.assignedCourseId,
         tutorId: course.tutorId,
+        chequePhoto:filename
       };
       if (
         tutorSalary.salaryDate &&
