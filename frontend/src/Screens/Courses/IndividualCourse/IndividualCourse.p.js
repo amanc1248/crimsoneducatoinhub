@@ -1,36 +1,26 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { CourseModal } from "./CourseModal";
+import { CourseModalContainer } from "../CoursesModal/CourseModal.c";
 
-export const IndividualCourse = ({
+export const IndividualCoursePresentational = ({
   course,
   index,
-  setRefresh
+  setRefresh,
+  showModal,
+  setShowModal,
+  onHandleUpdate,
+  onHandleDelete,
+  courseModalType
 }) => {
-
-  // usestates
-  const [showModal, setShowModal]            = useState(false);
-  const [courseModalType, setCourseModalType]      = useState();
-  
-
-  // functions
-  const onHandleUpdate = () => {
-    setCourseModalType("Update")
-    setShowModal(true)
-  };
-  const onHandleDelete = () => {
-    setCourseModalType("delete")
-    setShowModal(true)
-  };
   return (
     <>
-    {showModal &&  <CourseModal show={true} setShow={setShowModal}  individualCourse={course} courseModalType={courseModalType} setRefresh={setRefresh} ></CourseModal>}
+    {showModal &&  <CourseModalContainer show={true} setShow={setShowModal}  individualCourse={course} courseModalType={courseModalType} setRefresh={setRefresh} ></CourseModalContainer>}
       <tr>
         <td>{index + 1}</td>
         <td>{course.courseName}</td>
-        <td>{course.time}</td>
+        <td>{course.courseDuration}</td>
 
-        <td>{course.fee}</td>
+        <td>{course.courseFee}</td>
 
         <td style={{ width: "300px", textAlign: "center" }}>
           {" "}

@@ -1,60 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Pagination from "react-js-pagination";
 
 import "../../styles/screens/home.css";
-import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
-import { CourseModal } from "./CourseModal";
-import { IndividualCourse } from "./IndividualCourse";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { IndividualCourseContainer } from "./IndividualCourse/IndividualCourse.c";
+import { CourseModalContainer } from "./CoursesModal/CourseModal.c";
 
-export const CoursesContainer = () => {
-
-  // use states
-  const [courses, setCourses]                    = useState([]);
-  const [showModal, setShowModal]                = useState(false);
-  const [refresh, setRefresh]                    = useState(true);
-  const [totalPages, setTotalPages]              = useState();
-  const  [currentPage, setCurrentPage]           = useState(1);
-  const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
-
-  // use effect
-  useEffect(()=>{
-    getOneModalTotalCount({url:"/api/commonRoute/getOneModalTotalCount", collectionName:"courses"}).then((result)=>{
-      console.log("total documents: ", result)
-      setTotalPages(result)
-    }).catch((e)=>console.log(e));
-  },[])
-
-  useEffect(() => {
-    refresh && getAllData({ url: "/api/commonRoute/getData", collectionName: "courses", pageNumber:currentPage,nPerPage:3 })
-      .then((result) => {
-        setUnModifiableOrignalList(result);
-        setCourses(result);
-        setRefresh(false)
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [refresh]);
-
-  useEffect(() => {
-    getAllData({ url: "/api/commonRoute/getData", collectionName: "courses", pageNumber:currentPage, nPerPage:3  })
-      .then((result) => {
-        setCourses(result);
-        setRefresh(false)
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [currentPage]);
-
+export const CoursesPresentational = ({
+  showModal,
+  setShowModal,
+  courses,
+  setCourses,
+  setRefresh,
+  unModifiableOrignalList,
+  currentPage,
+  totalPages,
+  setCurrentPage,
+}) => {
   return (
     <div className="courses">
       {/* course modal */}
       {showModal && (
-        <CourseModal
+        <CourseModalContainer
           setShow={setShowModal}
           courses={courses}
           setCourses={setCourses}
@@ -76,8 +45,8 @@ export const CoursesContainer = () => {
         </Button>
         {courses && (
           <SearchComponentC
-          originalList={unModifiableOrignalList}
-          setOriginalList={setCourses}
+            originalList={unModifiableOrignalList}
+            setOriginalList={setCourses}
           ></SearchComponentC>
         )}
         <Pagination
@@ -111,7 +80,7 @@ export const CoursesContainer = () => {
             {courses &&
               courses.map((course, index) => {
                 return (
-                  <IndividualCourse
+                  <IndividualCourseContainer
                     course={course}
                     index={index}
                     key={index}

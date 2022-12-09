@@ -1,76 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
 import "../../styles/screens/home.css";
-import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
-import { ShiftModal } from "./ShiftModal";
 import Pagination from "react-js-pagination";
-import { IndividualShift } from "./IndividualShift";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { IndividualShiftC } from "./IndividualShift/IndividualShift.c";
+import { ShiftModalContainer } from "./ShiftModal/ShiftModa.c";
 
-export const ShiftsContainer = () => {
-  // data
-
-  // use states
-  const [shifts, setShifts] = useState();
-  const [showModal, setShowModal] = useState(false);
-  const [refresh, setRefresh] = useState(true);
-  const [totalPages, setTotalPages] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [unModifiableOrignalList, setUnModifiableOrignalList] =useState([])
-
-  // use effects
-  useEffect(() => {
-    getOneModalTotalCount({
-      url: "/api/commonRoute/getOneModalTotalCount",
-      collectionName: "shifts",
-    })
-      .then((result) => {
-        console.log("total documents: ", result);
-        setTotalPages(result);
-      })
-      .catch((e) => console.log(e));
-  }, []);
-
-  useEffect(() => {
-    refresh &&
-      getAllData({
-        url: "/api/commonRoute/getData",
-        collectionName: "shifts",
-        pageNumber: currentPage,
-        nPerPage: 100,
-      })
-        .then((result) => {
-          setUnModifiableOrignalList(result);
-          setShifts(result);
-          setRefresh(false);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-  }, [refresh]);
-
-  useEffect(() => {
-    getAllData({
-      url: "/api/commonRoute/getData",
-      collectionName: "shifts",
-      pageNumber: currentPage,
-      nPerPage: 100,
-    })
-      .then((result) => {
-        setShifts(result);
-        setRefresh(false);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [currentPage]);
-
+export const ShiftsPresentational = ({
+  showModal,
+  setShowModal,
+  shifts,
+  setShifts,
+  setRefresh,
+  unModifiableOrignalList,
+  currentPage,
+  totalPages,
+  setCurrentPage,
+}) => {
   return (
     <div className="students">
       {showModal && (
-        <ShiftModal
+        <ShiftModalContainer
           setShow={setShowModal}
           shifts={shifts}
           setShifts={setShifts}
@@ -90,8 +42,8 @@ export const ShiftsContainer = () => {
         </Button>
         {shifts && (
           <SearchComponentC
-          originalList={unModifiableOrignalList}
-          setOriginalList={setShifts}
+            originalList={unModifiableOrignalList}
+            setOriginalList={setShifts}
           ></SearchComponentC>
         )}
         <Pagination
@@ -124,7 +76,7 @@ export const ShiftsContainer = () => {
             {shifts &&
               shifts.map((shift, index) => {
                 return (
-                  <IndividualShift
+                  <IndividualShiftC
                     shift={shift}
                     index={index}
                     key={index}
