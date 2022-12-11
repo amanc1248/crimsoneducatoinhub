@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/esm/Table";
-import Modal from "react-bootstrap/Modal";
 import Axios from "axios";
-
-import { Image } from "cloudinary-react";
-
-import Select from "react-select";
 
 import {
   deleteData,
-  getCourseData,
   insertData,
-  updateData,
-  insertPhoto,
-  getOneModalAllDocuments,
   getOneModalDocumentsById,
 } from "../../../actions/homeActions";
 
@@ -39,8 +28,6 @@ export const SalaryModalC = ({
     chequePhoto: "",
   });
 
-  // const [chequePhoto, setChequePhoto] = useState([]);
-
   // use effects
   useEffect(() => {
     getOneModalDocumentsById({
@@ -57,7 +44,7 @@ export const SalaryModalC = ({
             amount: salary.amount,
             salaryDetails: salary.salaryDetails,
             tutorId: salary.tutorId,
-            filename: salary.filename,
+            filename: salary.chequePhoto,
           });
           return obj;
         });
@@ -85,11 +72,13 @@ export const SalaryModalC = ({
         ...obj,
         assignedCourseId: course.assignedCourseId,
         tutorId: course.tutorId,
+        chequePhoto: filename
       };
       if (
         tutorSalary.salaryDate &&
         tutorSalary.amount &&
-        tutorSalary.salaryDetails
+        tutorSalary.salaryDetails &&
+        filename
       ) {
         insertData({
           url: "/api/commonRoute/insertData",

@@ -6,9 +6,10 @@ import { SalaryModalC } from "../../SalaryModal/SalaryModal.c";
 export const IndividualAssignedCourseC = ({
   course,
   index,
-  handleOnDeleteAssignedCourse,
+  onHandleCourseDelete,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  console.log("assigned course: ", course)
   return (
     <>
       {showModal && (
@@ -48,7 +49,7 @@ export const IndividualAssignedCourseC = ({
             className="button__size"
             onClick={() => {
               // onHandleCourseDelete(course._id);
-              // handleOnDeleteAssignedCourse(course.assignedCourseId);
+              onHandleCourseDelete(course.assignedCourseId);
             }}
           >
             Delete

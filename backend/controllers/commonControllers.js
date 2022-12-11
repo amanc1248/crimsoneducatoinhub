@@ -296,17 +296,17 @@ const getUserId = asyncHandler(async (req, res, callback) => {
 
 const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
   try {
-    const { collectionName, id } = req.body;
+    const { collectionName, id,filter } = req.body;
     console.log(collectionName, id);
     const result = await db
       .collection(collectionName)
-      .find({ assignedCourseId: id })
+      .find(filter)
       .toArray();
     if (result) {
       return res.json(result);
     }
   } catch (err) {
-    throw e;
+    throw err;
   }
 });
 

@@ -304,6 +304,7 @@ export function getOneModalDocumentsById(data) {
         {
           collectionName: data.collectionName,
           id: data.id,
+          filter:data.filter
         },
         config
       )

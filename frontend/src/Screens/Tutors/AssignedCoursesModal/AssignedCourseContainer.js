@@ -3,11 +3,11 @@ import { AssignedCoursesPresentational } from "./AssignedCoursesPresentational";
 import {
   deleteData,
   getOneModalAllDocuments,
+  getOneModalDocumentsById,
   insertData,
-  updateData,
 } from "../../../actions/homeActions";
 import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
-import AssignedCourse from "./AssignedCoursesClass";
+import AssignedCourse from "../../../classes/AssignedCourses.Class";
 
 export const AssignedCoursesContainer = ({
   show,
@@ -15,6 +15,8 @@ export const AssignedCoursesContainer = ({
   individualTutor,
   setRefresh,
 }) => {
+  console.log("individual tutor: ", individualTutor)
+
   const assignedCourse = {};
 
   // usestates
@@ -55,8 +57,8 @@ export const AssignedCoursesContainer = ({
         const list = result.map((shift, index) => {
           const obj = {
             _id: shift._id,
-            label: shift.shiftName,
-            value: shift.shiftName,
+            label: shift.name,
+            value: shift.name,
           };
           return obj;
         });
@@ -65,9 +67,10 @@ export const AssignedCoursesContainer = ({
       .catch((e) => console.log(e));
 
     // for fetching enrolled courses
-    getOneModalAllDocuments({
-      url: "/api/commonRoute/getAllDocuments",
+    getOneModalDocumentsById({
+      url: "/api/commonRoute/getDocumentsById",
       collectionName: "assignedCourses",
+      filter: {tutorId:individualTutor._id}
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -96,11 +99,6 @@ export const AssignedCoursesContainer = ({
   // functions
   const handleClose = () => {
     setShow(false);
-  };
-  const onHandleCourseDelete = (id) => {
-    setAssignedCourses((prevState) => {
-      return [...prevState.filter((d) => id !== d._id)];
-    });
   };
 
   const showAddCourse = () => {
@@ -153,14 +151,15 @@ export const AssignedCoursesContainer = ({
       });
     }
   };
+  
   const handleOnDeleteAssignedCourse = (id) => {
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${id}&collectionName=enrolledCourses`,
+      url: `/api/commonRoute/deleteData?id=${id}&collectionName=assignedCourses`,
     })
       .then((result) => {
         setAssignedCourses((prevState) => {
           return prevState.filter((course) => {
-            return course.enrolledCourseId !== id;
+            return course.assignedCourseId !== id;
           });
         });
         hideAddCourse();
@@ -168,27 +167,6 @@ export const AssignedCoursesContainer = ({
       .catch((e) => {
         console.log(e);
       });
-  };
-
-  const handleOnAddAssignedCourses = (id) => {
-    const theDoc = { assignedCourses: assignedCourses };
-    updateData({
-      url: "/api/commonRoute/updateData",
-      collectionName: "tutors",
-      updatedTo: theDoc,
-      id: id,
-    })
-      .then((result) => {
-        setRefresh(true);
-        handleClose();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const handleOnSalaryHistory = () => {
-    setSalaryHistoryModal(true);
   };
 
   return (
@@ -210,10 +188,7 @@ export const AssignedCoursesContainer = ({
       assignedCourses={assignedCourses}
       assignedCourse={assignedCourse}
       handleOnDeleteAssignedCourse={handleOnDeleteAssignedCourse}
-      // handleOnDeleteCourse={handleOnDeleteCourse}
-      // handleOnUpdateCourse={handleOnUpdateCourse}
-      //   showPaymentModal={showPaymentModal}
-      //   setShowPaymentModal={setShowPaymentModal}
+      onHandleCourseDelete={handleOnDeleteAssignedCourse}
     ></AssignedCoursesPresentational>
   );
 };

@@ -33,7 +33,7 @@ export const PaymentModalC = ({
     getOneModalDocumentsById({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "studentsCoursePayment",
-      id: course.enrolledCourseId,
+      filter: {enrolledCourseId: course.id},
     })
       .then((result) => {
         const list = result.map((payment, index) => {
@@ -61,7 +61,7 @@ export const PaymentModalC = ({
     let studentObj = studentPayment;
     studentObj = {
       ...studentObj,
-      enrolledCourseId: course.enrolledCourseId,
+      enrolledCourseId: course.id,
       studentId: course.studentId,
     };
     if (

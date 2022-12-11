@@ -20,6 +20,7 @@ export const AssignedCoursesPresentational = ({
   assignedCourse,
   assignedCourses,
   handleOnAddCourse,
+  onHandleCourseDelete
 }) => {
   return (
     <>
@@ -61,6 +62,7 @@ export const AssignedCoursesPresentational = ({
                       key={course.assignedCourseId}
                       course={course}
                       index={index}
+                      onHandleCourseDelete={onHandleCourseDelete}
                     ></IndividualAssignedCourseC>
                   );
                 })}

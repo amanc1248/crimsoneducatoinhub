@@ -4,13 +4,14 @@ import { useEffect } from "react";
 import {
   deleteData,
   getOneModalAllDocuments,
+  getOneModalDocumentsById,
   insertData,
   updateData,
 } from "../../../actions/homeActions";
 import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
-import EnrolledCourse from "./EnrolledCoursesClass";
 import { EnrolledCoursesPresentataional } from "./EnrolledCoursesPresentational";
 import "../../../styles/screens/home.css"
+import EnrolledCourse from "../../../classes/EnrolledCourses.class";
 export const EnrolledCoursesModalContainer = ({
   show,
   setShow,
@@ -55,8 +56,8 @@ export const EnrolledCoursesModalContainer = ({
         const list = result.map((shift, index) => {
           const obj = {
             _id: shift._id,
-            label: shift.shiftName,
-            value: shift.shiftName,
+            label: shift.name,
+            value: shift.name,
           };
           return obj;
         });
@@ -65,9 +66,10 @@ export const EnrolledCoursesModalContainer = ({
       .catch((e) => console.log(e));
 
     // for fetching enrolled courses
-    getOneModalAllDocuments({
-      url: "/api/commonRoute/getAllDocuments",
+    getOneModalDocumentsById({
+      url: "/api/commonRoute/getDocumentsById",
       collectionName: "enrolledCourses",
+      filter: {studentId:individualStudent._id}
     })
       .then((result) => {
         const list = result.map((course, index) => {
