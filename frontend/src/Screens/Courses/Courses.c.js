@@ -33,7 +33,7 @@ export const CoursesContainer = () => {
         url: "/api/commonRoute/getData",
         collectionName: "courses",
         pageNumber: currentPage,
-        nPerPage: 3,
+        nPerPage: 100,
       })
         .then((result) => {
           setUnModifiableOrignalList(result);
@@ -60,7 +60,7 @@ export const CoursesContainer = () => {
       url: "/api/commonRoute/getData",
       collectionName: "courses",
       pageNumber: currentPage,
-      nPerPage: 3,
+      nPerPage: 100,
     })
       .then((result) => {
         setUnModifiableOrignalList(result);

@@ -1,5 +1,5 @@
+const { ObjectId } = require("mongodb");
 const { AssignedCourse } = require("../schemas/AssignedCourse.schema");
-const { Course } = require("../schemas/Course.schema");
 const { EnrolledCourse } = require("../schemas/EnrolledCourse.schema");
 const { Shift } = require("../schemas/Shift.schema");
 const { Student } = require("../schemas/Student.schema");
@@ -37,6 +37,17 @@ const { User } = require("../schemas/User.schema");
   console.log(model);
   return model;
 };
+
+ const convertToObjectIDs = (obj) => {
+  for (let data of Object.keys(obj)) {
+    console.log(obj[data]);
+    if (data.toLowerCase().includes("id")) {
+      obj[data] = ObjectId(obj[data]);
+    }
+  }
+  return obj;
+};
 module.exports={
-  modelMapper
+  modelMapper,
+  convertToObjectIDs
 }

@@ -9,8 +9,26 @@ import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { IndividualTutor } from "./IndividualTutor";
 import { TutorModal } from "./TutorModal/TutorModalContainer";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { FilterC } from "../../components/Filter/Filter.c";
 
 export const TutorsContainer = () => {
+// data
+const aggregateArray = [
+  {
+    $lookup: {
+      from: "tutors",
+      localField: "tutorId",
+      foreignField: "_id",
+      as: "tutor",
+    },
+  },
+];
+const wantedDBList = [
+  { collectionName: "courses",collectionTitleValue:'courseName', title: "Course", titleValue: "courseName" },
+  { collectionName: "shifts", collectionTitleValue:'name',title: "Shifts", titleValue: "shift" },
+];
+const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
+
   // use states
   const [tutors, setTutors] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +36,7 @@ export const TutorsContainer = () => {
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
+  const [showFilter, setShowFilter] = useState(false);
 
   // use effects
   useEffect(() => {
@@ -38,7 +57,7 @@ export const TutorsContainer = () => {
         url: "/api/commonRoute/getData",
         collectionName: "tutors",
         pageNumber: currentPage,
-        nPerPage: 3,
+        nPerPage: 100,
       })
         .then((result) => {
           setUnModifiableOrignalList(result);
@@ -55,7 +74,7 @@ export const TutorsContainer = () => {
       url: "/api/commonRoute/getData",
       collectionName: "tutors",
       pageNumber: currentPage,
-      nPerPage: 3,
+      nPerPage: 100,
     })
       .then((result) => {
         setTutors(result);
@@ -65,6 +84,13 @@ export const TutorsContainer = () => {
         console.log(e);
       });
   }, [currentPage]);
+
+
+  const closeFilter = () => {
+    setShowFilter(false); 
+  };
+
+  console.log("Tutors: ", tutors)
   return (
     <div className="tutors">
       {showModal && (
@@ -107,6 +133,17 @@ export const TutorsContainer = () => {
         />
       </div>
       <br />
+      <div className="filter__div">
+        <FilterC
+          handleClose={closeFilter}
+          aggregateArray={aggregateArray}
+          returnAs="tutor"
+          collectionName="assignedCourses"
+          setResult={setTutors}
+          wantedDBList={wantedDBList}
+          wantedLocalList={wantedLocalList}
+        ></FilterC>
+      </div>
       <div className="students__inside">
         <Table striped hover size="sm" className="table__list">
           <thead>

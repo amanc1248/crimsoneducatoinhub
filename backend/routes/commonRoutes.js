@@ -13,6 +13,7 @@ const {
   verifyToken,
   getUserId,
   getDocumentsByIdController,
+  getDocumentsByFilterController
 } = require("../controllers/commonControllers");
 const router = express.Router();
 
@@ -31,5 +32,6 @@ router.route("/verifyToken").post(verifyToken);
 router.route("/getUserId").post(getUserId);
 
 router.route("/getDocumentsById").post(getDocumentsByIdController);
+router.route("/getDocumnetsByFilter").post(getDocumentsByFilterController);
 
 module.exports = router;

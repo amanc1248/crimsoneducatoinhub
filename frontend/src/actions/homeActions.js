@@ -317,3 +317,34 @@ export function getOneModalDocumentsById(data) {
       });
   });
 }
+
+
+//get document by filter
+export function getDocumentByFilter(data) {
+  let url = data.url;
+  const config = {
+    header: {
+      "Content-Type": "application/json",
+    },
+  };
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        url,
+        {
+          collectionName: data.collectionName,
+          filter:data.filter,
+          aggregateArray:data.aggregateArray,
+          returnAs: data.returnAs,
+        },
+        config
+      )
+      .then((result) => {
+        console.log(result.data);
+        resolve(result.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+}
