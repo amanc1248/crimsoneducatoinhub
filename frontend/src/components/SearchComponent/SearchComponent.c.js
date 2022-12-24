@@ -10,7 +10,6 @@ export const SearchComponentC = ({
   // functions
 
   const onChangeHandle = (filteringValue) => {
-    console.log("FIltering value: ", filteringValue);
     if(filteringValue!=="" && madeUpList.length>0){
         let filteredMadeUpList = [];
       filteredMadeUpList = madeUpList.filter((m, i) => {

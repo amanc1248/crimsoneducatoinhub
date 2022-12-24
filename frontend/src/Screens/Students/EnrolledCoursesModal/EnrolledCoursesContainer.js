@@ -4,13 +4,14 @@ import { useEffect } from "react";
 import {
   deleteData,
   getOneModalAllDocuments,
+  getOneModalDocumentsById,
   insertData,
   updateData,
 } from "../../../actions/homeActions";
 import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
-import EnrolledCourse from "./EnrolledCoursesClass";
 import { EnrolledCoursesPresentataional } from "./EnrolledCoursesPresentational";
-import "../../../styles/screens/home.css"
+import "../../../styles/screens/home.css";
+import EnrolledCourse from "../../../classes/EnrolledCourses.class";
 export const EnrolledCoursesModalContainer = ({
   show,
   setShow,
@@ -55,8 +56,8 @@ export const EnrolledCoursesModalContainer = ({
         const list = result.map((shift, index) => {
           const obj = {
             _id: shift._id,
-            label: shift.shiftName,
-            value: shift.shiftName,
+            label: shift.name,
+            value: shift.name,
           };
           return obj;
         });
@@ -65,9 +66,10 @@ export const EnrolledCoursesModalContainer = ({
       .catch((e) => console.log(e));
 
     // for fetching enrolled courses
-    getOneModalAllDocuments({
-      url: "/api/commonRoute/getAllDocuments",
+    getOneModalDocumentsById({
+      url: "/api/commonRoute/getDocumentsById",
       collectionName: "enrolledCourses",
+      filter: { studentId: individualStudent._id },
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -82,12 +84,12 @@ export const EnrolledCoursesModalContainer = ({
             shiftId: course.shiftId,
             shift: course.shift,
             paymentStatus: course.paymentStatus,
-            actualCoursePrice:course.actualCoursePrice,
-            studentId:course.studentId
+            actualCoursePrice: course.actualCoursePrice,
+            studentId: course.studentId,
           });
           return obj;
         });
-        console.log("The list of courses: ", list[0])
+        console.log("The list of courses: ", list[0]);
         setEnrolledCourses(list);
       })
       .catch((e) => console.log(e));
@@ -134,11 +136,11 @@ export const EnrolledCoursesModalContainer = ({
           shiftId: enrolledCourse.shiftId,
           shift: enrolledCourse.shift,
           paymentStatus: enrolledCourse.paymentStatus,
-          actualCoursePrice:enrolledCourse.actualCoursePrice,
-          studentId:individualStudent._id
+          actualCoursePrice: enrolledCourse.actualCoursePrice,
+          studentId: individualStudent._id,
         });
-        console.log("studentId: " + individualStudent)
-        console.log("studentId: " + individualStudent._id)
+        console.log("studentId: " + individualStudent);
+        console.log("studentId: " + individualStudent._id);
         setEnrolledCourses((prevState) => {
           return [...prevState, enrolledCourseObject];
         });
@@ -152,19 +154,19 @@ export const EnrolledCoursesModalContainer = ({
       url: `/api/commonRoute/deleteData?id=${id}&collectionName=enrolledCourses`,
     })
       .then((result) => {
-        setEnrolledCourses((prevState)=>{
-          return prevState.filter((course)=>{
-            return course.enrolledCourseId!== id})
+        setEnrolledCourses((prevState) => {
+          return prevState.filter((course) => {
+            return course.enrolledCourseId !== id;
+          });
         });
         hideAddCourse();
       })
       .catch((e) => {
         console.log(e);
       });
-    
-   }
-   
-   const handleOnUpdateCourse =(enrolledCourse,paymentStatus)=>{
+  };
+
+  const handleOnUpdateCourse = (enrolledCourse, paymentStatus) => {
     const enrolledCourseObject = new EnrolledCourse({
       id: enrolledCourse.id,
       courseId: enrolledCourse.courseId,
@@ -176,18 +178,20 @@ export const EnrolledCoursesModalContainer = ({
       shiftId: enrolledCourse.shiftId,
       shift: enrolledCourse.shift,
       paymentStatus: paymentStatus,
-      studentId:enrolledCourse.studentId
+      studentId: enrolledCourse.studentId,
     });
     updateData({
       url: "/api/commonRoute/updateData",
       collectionName: "enrolledCourses",
       updatedTo: enrolledCourseObject,
       id: enrolledCourse.id,
-    }).then((result) => {
-
-    }).catch(err=>{console.log(err)})
-   }
-      return (
+    })
+      .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  return (
     <EnrolledCoursesPresentataional
       show={show}
       setShow={setShow}

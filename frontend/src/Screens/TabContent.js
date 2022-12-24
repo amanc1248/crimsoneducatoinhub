@@ -1,9 +1,9 @@
 import React from "react";
 
 import "../styles/screens/home.css";
-import { CoursesContainer } from "./Courses/CoursesContainer";
+import { CoursesContainer } from "./Courses/Courses.c";
 import { DashboardContainer } from "./Dashboard/DashboardContainer";
-import { ShiftsContainer } from "./Shifts/ShiftContainer";
+import { ShiftsContainer } from "./Shifts/Shifts.c";
 import { StudentsContainer } from "./Students/StudentsContainer";
 import { TutorsContainer } from "./Tutors/TutorsContainer";
 
@@ -12,7 +12,7 @@ export const TabContent = ({ tabIndex }) => {
   // 1. tabs
   const tabs = [
     <DashboardContainer />,
-    <CoursesContainer />,
+    <CoursesContainer/>,
     <TutorsContainer />,
     <StudentsContainer />,
     <ShiftsContainer />,

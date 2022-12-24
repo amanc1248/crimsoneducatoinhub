@@ -18,7 +18,7 @@ export const Logout = () => {
       <div className="logout__icon">
         <LogoutIcon />
       </div>
-      <div className="logout__text">Exit</div>
+      <div className="logout__text">LOGOUT</div>
     </div>
   );
 };

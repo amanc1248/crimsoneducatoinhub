@@ -86,7 +86,7 @@ export const EnrolledCoursesPresentataional = ({
                     onChange={(e) => {
                       enrolledCourse.courseId = e._id;
                       enrolledCourse.courseName = e.value;
-                      enrolledCourse.studentId = individualStudent._id;
+                      enrolledCourse.studentId =individualStudent._id
                     }}
                   />
                 </div>

@@ -1,37 +1,32 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
-import { ShiftModal } from "./ShiftModal";
+import { ShiftModalContainer } from "../ShiftModal/ShiftModa.c";
 
-export const IndividualShift = ({ shift, index, setRefresh }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [courseModalType, setCourseModalType] = useState();
-  const [showAssignedCourse, setShowAssignedCourse] = useState(false);
-
-  // functions
-  const onHandleUpdate = () => {
-    setCourseModalType("Update");
-    setShowModal(true);
-  };
-  const onHandleDelete = () => {
-    setCourseModalType("delete");
-    setShowModal(true);
-  };
-
+export const IndividualShiftP = ({
+  shift,
+  index,
+  setRefresh,
+  showModal,
+  setShowModal,
+  courseModalType,
+  onHandleUpdate,
+  onHandleDelete,
+}) => {
   return (
     <>
       {showModal && (
-        <ShiftModal
+        <ShiftModalContainer
           show={true}
           setShow={setShowModal}
           individualShift={shift}
           courseModalType={courseModalType}
           setRefresh={setRefresh}
-        ></ShiftModal>
+        ></ShiftModalContainer>
       )}
 
       <tr key={index}>
         <td>{index + 1}</td>
-        <td>{shift.shiftName}</td>
+        <td>{shift.name}</td>
         <td>{shift.startTime}</td>
         <td>{shift.endTime}</td>
 

@@ -8,9 +8,25 @@ import { IndividualStudent } from "./IndividualStudent";
 import Pagination from "react-js-pagination";
 import { StudentModal } from "./StudentModal/StudentModalContainer";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { FilterC } from "../../components/Filter/Filter.c";
 
+
+const aggregateArray = [
+  {
+    $lookup: {
+      from: "students",
+      localField: "studentId",
+      foreignField: "_id",
+      as: "student",
+    },
+  },
+];
+const wantedDBList = [
+  { collectionName: "courses",collectionTitleValue:'courseName', title: "Course", titleValue: "courseName" },
+  { collectionName: "shifts", collectionTitleValue:'name',title: "Shifts", titleValue: "shift" },
+];
+const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
 export const StudentsContainer = () => {
-  
   // use states
   const [students, setStudents] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -18,7 +34,7 @@ export const StudentsContainer = () => {
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
-
+  const [showFilter, setShowFilter] = useState(false);
   // use effects
   useEffect(() => {
     getOneModalTotalCount({
@@ -66,7 +82,11 @@ export const StudentsContainer = () => {
       });
   }, [currentPage]);
 
-
+  // close filter
+  const closeFilter = () => {
+    setShowFilter(false);
+  };
+  console.log("Students: ", students)
   return (
     <div className="students">
       {showModal && (
@@ -90,10 +110,11 @@ export const StudentsContainer = () => {
         </Button>
         {students && (
           <SearchComponentC
-          originalList={unModifiableOrignalList}
-          setOriginalList={setStudents}
+            originalList={unModifiableOrignalList}
+            setOriginalList={setStudents}
           ></SearchComponentC>
         )}
+
         <Pagination
           itemClass="page-item"
           linkClass="page-link"
@@ -109,6 +130,17 @@ export const StudentsContainer = () => {
         />
       </div>
       <br />
+      <div className="filter__div">
+        <FilterC
+          handleClose={closeFilter}
+          aggregateArray={aggregateArray}
+          returnAs="student"
+          collectionName="enrolledCourses"
+          setResult={setStudents}
+          wantedDBList={wantedDBList}
+          wantedLocalList={wantedLocalList}
+        ></FilterC>
+      </div>
       <div className="students__inside">
         <Table striped hover size="sm" className="table__list">
           <thead>

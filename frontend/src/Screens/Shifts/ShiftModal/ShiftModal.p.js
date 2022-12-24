@@ -1,116 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import Select from "react-select";
 import {
   deleteData,
-  getCourseData,
   insertData,
   updateData,
-} from "../../actions/homeActions";
+} from "../../../actions/homeActions";
 
-export function ShiftModal({
-  show,
-  setShow,
-  shifts,
-  setShifts,
-  individualShift,
+export function ShiftModalPresentational({
+  shift,
+  setShift,
   courseModalType,
   setRefresh,
+  handleClose,
+  handleOnClickDelete,
+  handleOnClickSubmit,
+  handleOnClickUpdate
 }) {
-  //   usestates
-  // USESTATES
-
-  const [shiftName, setShiftName] = useState(
-    individualShift && individualShift.shiftName
-  );
-
-  const [startTime, setStartTime] = useState(
-    individualShift && individualShift.startTime
-  );
-  const [endTime, setEndTime] = useState(
-    individualShift && individualShift.endTime
-  );
-
-  const [loader, setLoader] = useState(false);
-
-  // functions
-  // 1. on adding shifts
-  const handleOnClickSubmit = () => {
-    const doc = {
-      shiftName,
-      startTime,
-      endTime,
-    };
-    if ((shiftName, startTime, endTime)) {
-      let list = shifts;
-      setLoader(true);
-      insertData({
-        url: "/api/commonRoute/insertData",
-        collectionName: "shifts",
-        doc,
-      })
-        .then((result) => {
-          setShifts(list);
-          setRefresh(true);
-          setLoader(false);
-          handleClose();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  };
-
-  // 2. closing course modal
-  const handleClose = () => {
-    setShiftName("");
-    setStartTime("");
-    setEndTime("");
-    setShow(false);
-  };
-
-  // 3. on updating course
-  const handleOnClickUpdate = () => {
-    const doc = {
-      shiftName,
-      startTime,
-      endTime,
-    };
-    if ((shiftName, startTime, endTime)) {
-      setLoader(true);
-      updateData({
-        url: "/api/commonRoute/updateData",
-        collectionName: "shifts",
-        updatedTo: doc,
-        id: individualShift._id,
-      })
-        .then((result) => {
-          setRefresh(true);
-          setLoader(false);
-          handleClose();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  };
-
-  // 4. on deleting course
-  const handleOnClickDelete = () => {
-    setLoader(true);
-    deleteData({
-      url: `/api/commonRoute/deleteData?id=${individualShift._id}&collectionName=shifts`,
-    })
-      .then((result) => {
-        setRefresh(true);
-        setLoader(false);
-        handleClose();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
   return (
     <>
       <Modal
@@ -142,9 +47,14 @@ export function ShiftModal({
                 rows="4"
                 cols="50"
                 placeholder="Enter Shift Name"
-                value={shiftName}
+                value={shift.name}
                 onChange={(e) => {
-                  setShiftName(e.target.value);
+                  setShift((prevState) => {
+                    return {
+                      ...prevState,
+                      name: e.target.value,
+                    };
+                  });
                 }}
               ></input>
             </div>
@@ -159,9 +69,11 @@ export function ShiftModal({
                   rows="4"
                   cols="50"
                   placeholder="Enter Start Time"
-                  value={startTime}
+                  value={shift.startTime}
                   onChange={(e) => {
-                    setStartTime(e.target.value);
+                    setShift((prevState) => {
+                      return { ...prevState, startTime: e.target.value };
+                    });
                   }}
                   type="time"
                   pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$"
@@ -180,9 +92,14 @@ export function ShiftModal({
                   // placeholder="hrs:mins"
                   // pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$"
                   // required
-                  value={endTime}
+                  value={shift.endTime}
                   onChange={(e) => {
-                    setEndTime(e.target.value);
+                    setShift((prevState) => {
+                      return {
+                        ...prevState,
+                        endTime: e.target.value,
+                      };
+                    });
                   }}
                   type="time"
                 ></input>

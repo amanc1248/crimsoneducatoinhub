@@ -3,9 +3,9 @@ const { ObjectId } = require("mongodb");
 const { Promise, Schema } = require("mongoose");
 
 const { db } = require("../database");
-const courseModel = require("../schemas/Course");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { convertToObjectIDs } = require("../utils/controllers.utils");
 
 // get number of documents common data controller
 const getCommonDataController = asyncHandler(async (req, res, callback) => {
@@ -68,10 +68,16 @@ const getOneDataController = asyncHandler(async (req, res, callback) => {
 
 // insert one document common data controller
 const insertOneDataController = asyncHandler(async (req, res, callback) => {
-  console.log("HELLO");
-  console.log(req.body);
-  const { collectionName, doc } = req.body;
   try {
+    const { collectionName, doc } = req.body;
+    for (let data of Object.keys(doc)) {
+      console.log(doc[data]);
+      if (data.toLowerCase().includes("id")) {
+        doc[data] = ObjectId(doc[data]);
+      }
+    }
+    console.log("The doc: ", doc);
+
     const result = await db.collection(collectionName).insertOne(doc);
     return res.json(result);
   } catch (error) {
@@ -81,12 +87,13 @@ const insertOneDataController = asyncHandler(async (req, res, callback) => {
 
 // update one document common data controller
 const updateCommonDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName, id, updateTo } = req.body;
   console.log(req.body);
   try {
+    const { collectionName, id, updateTo } = req.body;
+    const madeUpdateTo = convertToObjectIDs(updateTo)
     const filter = { _id: ObjectId(id) };
     const updateDoc = {
-      $set: updateTo,
+      $set: madeUpdateTo,
     };
 
     const result = await db
@@ -121,9 +128,8 @@ const updateCommonDataControllerWithSet = asyncHandler(
 
 // delete one document common data controller
 const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
-  const { collectionName, id } = req.query;
-  console.log(req.query);
   try {
+    const { collectionName, id } = req.query;
     const query = { _id: ObjectId(id) };
     const result = await db.collection(collectionName).deleteOne(query);
     if (result.deletedCount === 1) {
@@ -199,11 +205,8 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
 });
 
 const loginUserController = asyncHandler(async (req, res, callback) => {
-  const { collectionName, doc } = req.body;
-
-  const code = process.env.LOGIN_CODE;
-
   try {
+    const { collectionName, doc } = req.body;
     if (code == req.body.doc.code) {
       const result = await db
         .collection(collectionName)
@@ -254,12 +257,10 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
 //   } catch (err) {
 //     console.log(err);
 //   }});
-  
-const verifyToken = asyncHandler(async (req, res, next) => {
-  const { collectionName } = req.body;
-  const token = req.body.token;
 
+const verifyToken = asyncHandler(async (req, res, next) => {
   try {
+    const token = req.body.token;
     if (token === null) {
       return res.json({
         login: false,
@@ -296,20 +297,45 @@ const getUserId = asyncHandler(async (req, res, callback) => {
 
 const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
   try {
-    const { collectionName, id } = req.body;
+    const { collectionName, id, filter } = req.body;
+    const madeFilter = convertToObjectIDs(filter)
     console.log(collectionName, id);
-    const result = await db
-      .collection(collectionName)
-      .find({ assignedCourseId: id })
-      .toArray();
+    const result = await db.collection(collectionName).find(madeFilter).toArray();
     if (result) {
       return res.json(result);
     }
   } catch (err) {
-    throw e;
+    throw err;
   }
 });
 
+const getDocumentsByFilterController = asyncHandler(async (req, res) => {
+  try {
+    const { collectionName, filter,aggregateArray, returnAs } = req.body;
+    console.log("collectionName: ", collectionName);
+    console.log("filter: ", filter);
+    console.log("aggregate array: ", aggregateArray);
+    // console.log("Filter: ", JSON.stringify(filter, null, 2));
+    
+    // console.log("OriginFiler: ", originalFilter);
+    // const result = await db.collection(collectionName).find(originalFilter).populate({path: '_id', model: 'students'}).toArray();
+    const result = await db
+      .collection(collectionName)
+      .aggregate(aggregateArray,)
+      .toArray();
+    if (result) {
+      const list = result.map((value,index)=>{
+        console.log("here: ", value[returnAs][0])
+        return value[returnAs][0]
+      });
+      console.log("list:::::::", list)
+      return res.json(list);
+    }
+    console.log(result);
+  } catch (err) {
+    console.log(err);
+  }
+});
 module.exports = {
   getCommonDataController,
   updateCommonDataController,
@@ -326,4 +352,5 @@ module.exports = {
   verifyToken,
   getUserId,
   getDocumentsByIdController,
+  getDocumentsByFilterController,
 };

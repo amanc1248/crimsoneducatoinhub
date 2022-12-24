@@ -75,7 +75,7 @@
     height: 100%;
 }
 .students__inside{
-    height: 90%;
+    height: 75%;
     overflow: auto;
 }
 .table__list{
@@ -238,4 +238,20 @@
   .searching__component{
     border-radius: 8px;
     /* height: 50px; */
+  }
+  .filters__div{
+    display: flex;
+    overflow: auto;
+  }
+  .filter__div__single{
+    margin-right: 10px;
+  }
+  .filter__div{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+  }
+  .filter__button{
+      border: 1px solid black;
+      background-color: white;
   }
