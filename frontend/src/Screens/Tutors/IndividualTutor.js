@@ -42,6 +42,7 @@ export const IndividualTutor = ({ tutor, index, setRefresh }) => {
           setRefresh={setRefresh}
         />
       )}
+
       <tr key={index}>
         <td>{index}</td>
         <td>{tutor.name}</td>

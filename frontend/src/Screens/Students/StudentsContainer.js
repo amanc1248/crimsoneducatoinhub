@@ -8,9 +8,9 @@ import { IndividualStudent } from "./IndividualStudent";
 import Pagination from "react-js-pagination";
 import { StudentModal } from "./StudentModal/StudentModalContainer";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export const StudentsContainer = () => {
-  
   // use states
   const [students, setStudents] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -66,7 +66,6 @@ export const StudentsContainer = () => {
       });
   }, [currentPage]);
 
-
   return (
     <div className="students">
       {showModal && (
@@ -88,10 +87,15 @@ export const StudentsContainer = () => {
         >
           Add Student
         </Button>
+        <div className="mt-3">
+          <CSVLink data={students}>
+            <Button>Download Student Details </Button>
+          </CSVLink>
+        </div>
         {students && (
           <SearchComponentC
-          originalList={unModifiableOrignalList}
-          setOriginalList={setStudents}
+            originalList={unModifiableOrignalList}
+            setOriginalList={setStudents}
           ></SearchComponentC>
         )}
         <Pagination

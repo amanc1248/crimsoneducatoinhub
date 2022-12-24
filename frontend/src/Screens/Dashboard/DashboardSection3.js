@@ -19,6 +19,10 @@ export const DashboardSection3 = () => {
       icon: <MenuBookIcon sx={{ fontSize: 15 }} />,
       title: "Courses",
     },
+    {
+      icon: <MenuBookIcon sx={{ fontSize: 15 }} />,
+      title: "Shifts",
+    },
   ];
 
   const [totalNumbers, setTotalNumbers] = useState();
@@ -26,7 +30,7 @@ export const DashboardSection3 = () => {
   useEffect(() => {
     getTotalCount({
       url: "/api/commonRoute/getTotalDocument",
-      collectionNames: ["students", "tutors", "courses"],
+      collectionNames: ["students", "tutors", "courses", "shifts"],
     })
       .then((result) => {
         setTotalNumbers(result);
@@ -42,9 +46,9 @@ export const DashboardSection3 = () => {
     <div className="dashboard__section3 col-12">
       <div className="dashboard__section3__content row g-0">
         <div className="section3__title col-3">
-          <h5 style={{ fontWeight: 600 }}>Engagement</h5>
+          <h5 style={{ fontWeight: 600 }}>Dashboard</h5>
           <div className="section3__description">
-            General static of user engagement process
+            Total Numbers of Students, Tutors, Courses and Shifts
           </div>
         </div>
         <div className="cards__list col-9 row g-0">

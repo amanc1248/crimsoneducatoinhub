@@ -9,10 +9,12 @@ import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { IndividualTutor } from "./IndividualTutor";
 import { TutorModal } from "./TutorModal/TutorModalContainer";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export const TutorsContainer = () => {
   // use states
-  const [tutors, setTutors] = useState();
+  const [tutors, setTutors] = useState([]);
+  // const [downloadTutors, setDownloadTutors] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const [totalPages, setTotalPages] = useState();
@@ -59,6 +61,7 @@ export const TutorsContainer = () => {
     })
       .then((result) => {
         setTutors(result);
+
         setRefresh(false);
       })
       .catch((e) => {
@@ -86,6 +89,11 @@ export const TutorsContainer = () => {
         >
           Add Tutor
         </Button>
+        <div className="mt-3">
+          <CSVLink data={tutors}>
+            <Button>Download Tutors Details </Button>
+          </CSVLink>
+        </div>
         {tutors && (
           <SearchComponentC
             originalList={unModifiableOrignalList}
@@ -106,6 +114,7 @@ export const TutorsContainer = () => {
           }}
         />
       </div>
+
       <br />
       <div className="students__inside">
         <Table striped hover size="sm" className="table__list">

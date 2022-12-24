@@ -8,17 +8,18 @@ import { ShiftModal } from "./ShiftModal";
 import Pagination from "react-js-pagination";
 import { IndividualShift } from "./IndividualShift";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export const ShiftsContainer = () => {
   // data
 
   // use states
-  const [shifts, setShifts] = useState();
+  const [shifts, setShifts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [unModifiableOrignalList, setUnModifiableOrignalList] =useState([])
+  const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
 
   // use effects
   useEffect(() => {
@@ -88,10 +89,15 @@ export const ShiftsContainer = () => {
         >
           Add Shift
         </Button>
+        <div className="mt-3">
+          <CSVLink data={shifts}>
+            <Button>Download Shift Details </Button>
+          </CSVLink>
+        </div>
         {shifts && (
           <SearchComponentC
-          originalList={unModifiableOrignalList}
-          setOriginalList={setShifts}
+            originalList={unModifiableOrignalList}
+            setOriginalList={setShifts}
           ></SearchComponentC>
         )}
         <Pagination

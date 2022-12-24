@@ -8,42 +8,58 @@ import { getAllData, getOneModalTotalCount } from "../../actions/homeActions";
 import { CourseModal } from "./CourseModal";
 import { IndividualCourse } from "./IndividualCourse";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export const CoursesContainer = () => {
-
   // use states
-  const [courses, setCourses]                    = useState([]);
-  const [showModal, setShowModal]                = useState(false);
-  const [refresh, setRefresh]                    = useState(true);
-  const [totalPages, setTotalPages]              = useState();
-  const  [currentPage, setCurrentPage]           = useState(1);
+  const [courses, setCourses] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [refresh, setRefresh] = useState(true);
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
   const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
 
   // use effect
-  useEffect(()=>{
-    getOneModalTotalCount({url:"/api/commonRoute/getOneModalTotalCount", collectionName:"courses"}).then((result)=>{
-      console.log("total documents: ", result)
-      setTotalPages(result)
-    }).catch((e)=>console.log(e));
-  },[])
+  useEffect(() => {
+    getOneModalTotalCount({
+      url: "/api/commonRoute/getOneModalTotalCount",
+      collectionName: "courses",
+    })
+      .then((result) => {
+        console.log("total documents: ", result);
+        setTotalPages(result);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   useEffect(() => {
-    refresh && getAllData({ url: "/api/commonRoute/getData", collectionName: "courses", pageNumber:currentPage,nPerPage:3 })
-      .then((result) => {
-        setUnModifiableOrignalList(result);
-        setCourses(result);
-        setRefresh(false)
+    refresh &&
+      getAllData({
+        url: "/api/commonRoute/getData",
+        collectionName: "courses",
+        pageNumber: currentPage,
+        nPerPage: 3,
       })
-      .catch((e) => {
-        console.log(e);
-      });
+        .then((result) => {
+          setUnModifiableOrignalList(result);
+          setCourses(result);
+          setRefresh(false);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   }, [refresh]);
 
   useEffect(() => {
-    getAllData({ url: "/api/commonRoute/getData", collectionName: "courses", pageNumber:currentPage, nPerPage:3  })
+    getAllData({
+      url: "/api/commonRoute/getData",
+      collectionName: "courses",
+      pageNumber: currentPage,
+      nPerPage: 3,
+    })
       .then((result) => {
         setCourses(result);
-        setRefresh(false)
+        setRefresh(false);
       })
       .catch((e) => {
         console.log(e);
@@ -74,10 +90,15 @@ export const CoursesContainer = () => {
         >
           Add Course
         </Button>
+        <div className="mt-3">
+          <CSVLink data={courses}>
+            <Button>Download Course Details </Button>
+          </CSVLink>
+        </div>
         {courses && (
           <SearchComponentC
-          originalList={unModifiableOrignalList}
-          setOriginalList={setCourses}
+            originalList={unModifiableOrignalList}
+            setOriginalList={setCourses}
           ></SearchComponentC>
         )}
         <Pagination

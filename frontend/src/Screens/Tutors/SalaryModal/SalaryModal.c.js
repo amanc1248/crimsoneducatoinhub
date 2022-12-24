@@ -85,6 +85,7 @@ export const SalaryModalC = ({
         ...obj,
         assignedCourseId: course.assignedCourseId,
         tutorId: course.tutorId,
+        filename: filename,
       };
       if (
         tutorSalary.salaryDate &&
