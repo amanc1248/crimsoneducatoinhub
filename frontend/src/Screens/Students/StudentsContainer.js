@@ -132,13 +132,13 @@ export const StudentsContainer = () => {
       <br />
       <div className="filter__div">
         <FilterC
-          handleClose={closeFilter}
           aggregateArray={aggregateArray}
           returnAs="student"
           collectionName="enrolledCourses"
           setResult={setStudents}
           wantedDBList={wantedDBList}
           wantedLocalList={wantedLocalList}
+          filterType="normal"
         ></FilterC>
       </div>
       <div className="students__inside">

@@ -2,6 +2,7 @@ import React from "react";
 
 import "../styles/screens/home.css";
 import { CoursesContainer } from "./Courses/Courses.c";
+import {  CustomFilterC } from "./CustomFilter/CustomFilter.c";
 import { DashboardContainer } from "./Dashboard/DashboardContainer";
 import { ShiftsContainer } from "./Shifts/Shifts.c";
 import { StudentsContainer } from "./Students/StudentsContainer";
@@ -16,6 +17,7 @@ export const TabContent = ({ tabIndex }) => {
     <TutorsContainer />,
     <StudentsContainer />,
     <ShiftsContainer />,
+    <CustomFilterC></CustomFilterC>
   ];
   return (
     <div className="tab__content">

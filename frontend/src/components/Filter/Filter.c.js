@@ -4,13 +4,13 @@ import { getAllData, getDocumentByFilter } from "../../actions/homeActions";
 import { removeDuplicates } from "../../utils/utils";
 import { FilterP } from "./Filter.p";
 export const FilterC = ({
-  handleClose,
   collectionName,
   aggregateArray,
   returnAs,
   setResult,
   wantedDBList,
-  wantedLocalList
+  wantedLocalList,
+  filterType
 
 }) => {
   console.log("Wanted db list: ", wantedDBList)
@@ -227,6 +227,7 @@ export const FilterC = ({
         filter: filterState,
         aggregateArray: aggregateArray,
         returnAs,
+        filterType:filterType
       }).then((result) => {
         aggregateArray.shift();
         const list = removeDuplicates(result,result.length)
@@ -239,7 +240,6 @@ export const FilterC = ({
   return (
     // <div></div>
    <FilterP
-      handleClose={handleClose}
       filteringObject={filterState}
       changeFilterState={changeFilterState}
       applyFilter={applyFilter}

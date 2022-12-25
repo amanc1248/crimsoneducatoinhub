@@ -321,6 +321,7 @@ export function getOneModalDocumentsById(data) {
 
 //get document by filter
 export function getDocumentByFilter(data) {
+  console.log("Data........", data)
   let url = data.url;
   const config = {
     header: {
@@ -336,6 +337,7 @@ export function getDocumentByFilter(data) {
           filter:data.filter,
           aggregateArray:data.aggregateArray,
           returnAs: data.returnAs,
+          filterType:data.filterType
         },
         config
       )

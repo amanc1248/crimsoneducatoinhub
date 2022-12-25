@@ -5,7 +5,6 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import "../../styles/screens/home.css";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 export const FilterP = ({
-  handleClose,
   filteringObject,
   changeFilterState,
   applyFilter,
@@ -25,7 +24,7 @@ export const FilterP = ({
       </button>
       <Modal
         show={showFilterModal}
-        onHide={handleClose}
+        // onHide={handleClose}
         backdrop="static"
         keyboard={false}
         size="lg"

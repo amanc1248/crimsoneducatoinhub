@@ -135,13 +135,13 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
       <br />
       <div className="filter__div">
         <FilterC
-          handleClose={closeFilter}
           aggregateArray={aggregateArray}
           returnAs="tutor"
           collectionName="assignedCourses"
           setResult={setTutors}
           wantedDBList={wantedDBList}
           wantedLocalList={wantedLocalList}
+          filterType="normal"
         ></FilterC>
       </div>
       <div className="students__inside">

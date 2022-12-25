@@ -28,6 +28,8 @@ export const SalaryModalC = ({
     chequePhoto: "",
   });
 
+
+  console.log("course id: ", course)
   // use effects
   useEffect(() => {
     getOneModalDocumentsById({
