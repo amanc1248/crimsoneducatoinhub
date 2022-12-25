@@ -5,10 +5,12 @@ import {
   deleteData,
   insertData,
   getOneModalDocumentsById,
+  updateData,
 } from "../../../actions/homeActions";
 
 import TutorSalaryClass from "../TutorsSalary/TutorSalaryClass";
 import { SalaryModalP } from "./SalaryModal.p";
+import { toast } from "react-toastify";
 
 export const SalaryModalC = ({
   course,
@@ -21,6 +23,7 @@ export const SalaryModalC = ({
   // use states
   const [addSalary, setAddSalary] = useState();
   const [allSalarys, setAllSalarys] = useState([]);
+  const [addedOrDeletedSalary, setAddedOrDeletedSalary] = useState(false);
   const [tutorSalary, setTutorSalary] = useState({
     salaryDate: "",
     amount: "",
@@ -28,15 +31,15 @@ export const SalaryModalC = ({
     chequePhoto: "",
   });
 
-
-  console.log("course id: ", course)
+  // console.log("Assigned course:  ", course)
+  console.log("Assigned single course:  ", course);
   // use effects
   useEffect(() => {
     getOneModalDocumentsById({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "tutorsCoursePayment",
       id: course.assignedCourseId,
-      filter: {assignedCourseId:course.assignedCourseId}
+      filter: { assignedCourseId: course.assignedCourseId },
     })
       .then((result) => {
         const list = result.map((salary, index) => {
@@ -57,6 +60,38 @@ export const SalaryModalC = ({
       .catch((e) => console.log(e));
   }, []);
 
+  // for updating the payment status
+  useEffect(() => {
+    if (addedOrDeletedSalary) {
+      course.paymentStatus =
+        salaryCalculations?.paidAmount === salaryCalculations?.totalAmount
+          ? "paid"
+          : "not paid";
+      const newObj = JSON.parse(JSON.stringify(course));
+
+      const _id = course.assignedCourseId;
+      delete newObj["assignedCourseId"];
+      newObj._id = _id;
+      console.log("New obj: ", newObj);
+      updateData({
+        url: "/api/commonRoute/updateData",
+        collectionName: "assignedCourses",
+        updatedTo: newObj,
+        id: course.assignedCourseId,
+      })
+        .then((result) => {
+          toast.success("Payment Status updated Successfully", {
+            autoClose: 5000,
+          });
+          setAddedOrDeletedSalary(false);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [addedOrDeletedSalary]);
+
+  // on adding salary
   const handleAddSalary = async () => {
     console.log(tutorSalary);
     const formData = new FormData();
@@ -75,7 +110,7 @@ export const SalaryModalC = ({
         ...obj,
         assignedCourseId: course.assignedCourseId,
         tutorId: course.tutorId,
-        chequePhoto:filename
+        chequePhoto: filename,
       };
       if (
         tutorSalary.salaryDate &&
@@ -83,6 +118,7 @@ export const SalaryModalC = ({
         tutorSalary.salaryDetails &&
         filename
       ) {
+        console.log("Final Object: ", obj);
         insertData({
           url: "/api/commonRoute/insertData",
           collectionName: "tutorsCoursePayment",
@@ -100,8 +136,10 @@ export const SalaryModalC = ({
           setAllSalarys((prevState) => {
             return [...prevState, tutorSalaryObject];
           });
+
           setTutorSalary({});
           setAddSalary(false);
+          setAddedOrDeletedSalary(true);
         });
       }
     });
@@ -122,6 +160,7 @@ export const SalaryModalC = ({
             return salary.salaryId !== id;
           });
         });
+        setAddedOrDeletedSalary(true);
       })
       .catch((e) => {
         console.log(e);
@@ -138,6 +177,7 @@ export const SalaryModalC = ({
     salaryCalculations.totalAmount = parseInt(course.salary);
     salaryCalculations.paidAmount = paid;
     salaryCalculations.remainingAmount = remainingAmount;
+    // console.log("salary calculations: ", salaryCalculations)
   };
   calculatePayments();
 

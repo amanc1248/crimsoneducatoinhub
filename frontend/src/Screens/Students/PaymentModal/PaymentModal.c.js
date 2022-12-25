@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import {
   deleteData,
   getOneModalDocumentsById,
@@ -21,6 +22,7 @@ export const PaymentModalC = ({
   // use states
   const [addPayment, setAddPayment] = useState();
   const [allPayments, setAllPayments] = useState([]);
+  const [addedOrDeletedSalary, setAddedOrDeletedSalary] = useState(false);
   const [studentPayment, setStudentPayment] = useState({
     paymentDate: "",
     amount: "",
@@ -53,6 +55,37 @@ export const PaymentModalC = ({
       .catch((e) => console.log(e));
   }, []);
 
+    // for updating the payment status
+    useEffect(() => {
+      if (addedOrDeletedSalary) {
+        course.paymentStatus =
+        paymentCalculations?.paidAmount === paymentCalculations?.totalAmount
+            ? "paid"
+            : "not paid";
+        const newObj = JSON.parse(JSON.stringify(course));
+  
+        const _id = course.id;
+        delete newObj["id"];
+        newObj._id = _id;
+        console.log("New obj: ", newObj);
+        updateData({
+          url: "/api/commonRoute/updateData",
+          collectionName: "enrolledCourses",
+          updatedTo: newObj,
+          id: course.id,
+        })
+          .then((result) => {
+            toast.success("Payment Status updated Successfully", {
+              autoClose: 5000,
+            });
+            setAddedOrDeletedSalary(false);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    }, [addedOrDeletedSalary]);
+  
   // functions
   const handleOnShow = () => {
     setAddPayment(true);
@@ -88,6 +121,7 @@ export const PaymentModalC = ({
         });
         setStudentPayment({});
         setAddPayment(false);
+        setAddedOrDeletedSalary(true);
       }else{
         console.log("error")
       }
@@ -108,6 +142,7 @@ export const PaymentModalC = ({
             return payment.paymentId !== id;
           });
         });
+        setAddedOrDeletedSalary(true);
       })
       .catch((e) => {
         console.log(e);
