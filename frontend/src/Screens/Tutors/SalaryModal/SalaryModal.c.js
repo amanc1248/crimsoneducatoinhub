@@ -36,6 +36,7 @@ export const SalaryModalC = ({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "tutorsCoursePayment",
       id: course.assignedCourseId,
+      filter: {assignedCourseId:course.assignedCourseId}
     })
       .then((result) => {
         const list = result.map((salary, index) => {
