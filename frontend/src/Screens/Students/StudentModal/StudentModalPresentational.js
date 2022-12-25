@@ -19,7 +19,8 @@ export function StudentModalPresentational({
   handleOnClickUpdate,
   setParentPhoneNumber,
   handleOnClickDelete,
-  name
+  name,
+  qualification
 }) {
   return (
     <>
@@ -123,6 +124,7 @@ export function StudentModalPresentational({
                 placeholder="Select qualification"
                 className="select__learning__module"
                 options={qualificationList}
+                value={{label:qualification, value:qualification}}
                 onChange={(e) => {
                   setQualification(e.label);
                 }}

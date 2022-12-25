@@ -299,7 +299,6 @@ const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
   try {
     const { collectionName, id, filter } = req.body;
     const madeFilter = convertToObjectIDs(filter?filter:{})
-    console.log(collectionName, id);
     const result = await db.collection(collectionName).find(madeFilter).toArray();
     if (result) {
       return res.json(result);
@@ -312,15 +311,6 @@ const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
 const getDocumentsByFilterController = asyncHandler(async (req, res) => {
   try {
     const { collectionName, filter,aggregateArray, returnAs, filterType } = req.body;
-    console.log("REd body: ", req.body)
-    // console.log("collectionName: ", collectionName);
-    // console.log("filter: ", filter);
-    // console.log("aggregate array: ", aggregateArray);
-    console.log("FIlter type: ", filterType);
-    // console.log("Filter: ", JSON.stringify(filter, null, 2));
-    
-    // console.log("OriginFiler: ", originalFilter);
-    // const result = await db.collection(collectionName).find(originalFilter).populate({path: '_id', model: 'students'}).toArray();
     const result = await db
       .collection(collectionName)
       .aggregate(aggregateArray,)

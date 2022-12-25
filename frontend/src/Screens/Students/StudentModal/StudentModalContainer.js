@@ -154,6 +154,7 @@ export function StudentModal({
       setParentPhoneNumber={setParentPhoneNumber}
       handleOnClickDelete={handleOnClickDelete}
       name={name}
+      qualification={qualification}
     ></StudentModalPresentational>
   );
 }

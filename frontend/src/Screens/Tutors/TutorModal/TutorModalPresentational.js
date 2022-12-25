@@ -22,6 +22,7 @@ export function TutorModalPresentational({
   startDate,
   setAge,
   setStartDate,
+  qualification
 }) {
   return (
     <>
@@ -118,7 +119,7 @@ export function TutorModalPresentational({
                 placeholder="Select qualification"
                 className="select__learning__module"
                 options={qualificationList}
-                // value={individualTutor.qualification}
+                value={{label:qualification, value:qualification}}
                 onChange={(e) => {
                   setQualification(e.label);
                 }}

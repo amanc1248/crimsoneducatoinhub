@@ -15,6 +15,7 @@ export function TutorModal({
   courseModalType,
   setRefresh,
 }) {
+  console.log("Individudal tutor: ", individualTutor);
   const qualificationList = [
     { label: "Japanese Language Instructor", value: "exp1" },
     { label: "Korean Language", value: "exp2" },
@@ -162,6 +163,9 @@ export function TutorModal({
       name={name}
       setAge={setAge}
       setStartDate={setStartDate}
+      age={age}
+      qualification={qualification}
+      startDate={startDate}
     ></TutorModalPresentational>
   );
 }
