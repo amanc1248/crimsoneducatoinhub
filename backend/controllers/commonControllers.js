@@ -207,7 +207,7 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
 const loginUserController = asyncHandler(async (req, res, callback) => {
   try {
     const { collectionName, doc } = req.body;
-    if (code == req.body.doc.code) {
+    if (process.env.LOGIN_CODE == req.body.doc.code) {
       const result = await db
         .collection(collectionName)
         .findOne({ phoneNumber: doc.phoneNumber });
