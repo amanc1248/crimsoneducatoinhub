@@ -31,7 +31,7 @@ export const IndividualAssignedCourseC = ({
         <td>{course.salary}</td>{" "}
         <td>
           <div>
-            <div>{course.paymentStatus}</div>
+          <div className={`${course.paymentStatus==='not paid' ? 'payment__not__paide': 'payment__paide'} `}> <strong>{course.paymentStatus}</strong> </div>
             <div
               className="see__details__link"
               onClick={() => {

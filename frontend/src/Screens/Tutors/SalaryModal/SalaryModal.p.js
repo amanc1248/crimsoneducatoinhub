@@ -148,10 +148,6 @@ export const SalaryModalP = ({
                       checkTotalAmountAndSet(e.target.value);
                     }}
                     value={tutorSalary.amount}
-                    // onChange={(e) => {
-                    //   checkTotalAmount();
-                    //   studentPayment.amount = e.target.value;
-                    // }}
                   />
                 </div>
 
@@ -183,7 +179,6 @@ export const SalaryModalP = ({
                           chequePhoto: e.target.files[0],
                         };
                       });
-                      // setChequePhoto(e.target.files[0]);
                     }}
                   />
                 </div>
