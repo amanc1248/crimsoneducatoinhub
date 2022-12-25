@@ -32,6 +32,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.5",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "react-html-table-to-excel": "^2.0.0"
   }
 }
