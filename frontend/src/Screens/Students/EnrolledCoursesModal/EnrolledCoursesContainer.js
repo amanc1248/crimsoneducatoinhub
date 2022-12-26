@@ -86,6 +86,8 @@ export const EnrolledCoursesModalContainer = ({
             paymentStatus: course.paymentStatus,
             actualCoursePrice: course.actualCoursePrice,
             studentId: course.studentId,
+            padeAmount: course.padeAmount,
+            remainingAmount: course.remainingAmount
           });
           return obj;
         });
@@ -109,6 +111,8 @@ export const EnrolledCoursesModalContainer = ({
   };
   const handleOnAddCourse = () => {
     enrolledCourse.paymentStatus = "not paid";
+    enrolledCourse.padeAmount = 0;
+    enrolledCourse.remainingAmount = enrolledCourse.actualCoursePrice;
     if (
       enrolledCourse.courseId &&
       enrolledCourse.courseName &&
@@ -138,9 +142,9 @@ export const EnrolledCoursesModalContainer = ({
           paymentStatus: enrolledCourse.paymentStatus,
           actualCoursePrice: enrolledCourse.actualCoursePrice,
           studentId: individualStudent._id,
+          padeAmount:0,
+          remainingAmount:enrolledCourse.actualCoursePrice
         });
-        console.log("studentId: " + individualStudent);
-        console.log("studentId: " + individualStudent._id);
         setEnrolledCourses((prevState) => {
           return [...prevState, enrolledCourseObject];
         });
@@ -156,7 +160,7 @@ export const EnrolledCoursesModalContainer = ({
       .then((result) => {
         setEnrolledCourses((prevState) => {
           return prevState.filter((course) => {
-            return course.enrolledCourseId !== id;
+            return course.id !== id;
           });
         });
         hideAddCourse();

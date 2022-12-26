@@ -1,12 +1,19 @@
 import React from "react";
+import { TailSpin } from "react-loader-spinner";
 
 export const Loader = () => {
   return (
     <div className="loader">
-      <div className="loader__content">
-        <h3>Crimson Education Hub</h3>
-        <h5>Loading...</h5>
-      </div>
+      <TailSpin
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="tail-spin-loading"
+              radius="0.5"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
     </div>
   );
 };

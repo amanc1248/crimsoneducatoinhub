@@ -33,11 +33,6 @@ export const SalaryModalP = ({
       >
         <Modal.Header>
           <Modal.Title>Salary Details</Modal.Title>
-          {console.log(
-            salaryCalculations.totalAmount,
-            salaryCalculations.paidAmount
-          )}
-
           <div>
             <div>Total: {salaryCalculations.totalAmount}</div>
             <div>Paid: {salaryCalculations.paidAmount}</div>

@@ -87,6 +87,8 @@ export const AssignedCoursesContainer = ({
             paymentStatus: course.paymentStatus,
             salary: course.salary,
             tutorId: course.tutorId,
+            padeAmount:course.padeAmount,
+            remainingAmount: course.remainingAmount
           });
           return obj;
         });
@@ -113,6 +115,8 @@ export const AssignedCoursesContainer = ({
     console.log(assignedCourse);
     // alert(assignedCourse);
     assignedCourse.paymentStatus = "not paid";
+    assignedCourse.padeAmount = 0;
+    assignedCourse.remainingAmount = assignedCourse.salary;
     if (
       assignedCourse.courseId &&
       assignedCourse.courseName &&
@@ -142,6 +146,8 @@ export const AssignedCoursesContainer = ({
           paymentStatus: assignedCourse.paymentStatus,
           salary: assignedCourse.salary,
           tutorId: individualTutor._id,
+          padeAmount:0,
+          remainingAmount:assignedCourse.salary
         });
         setAssignedCourses((prevState) => {
           return [...prevState, assignedCourseObject];

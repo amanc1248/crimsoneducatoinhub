@@ -50,6 +50,8 @@ export const AssignedCoursesPresentational = ({
                 <th>End Date</th>
                 <th>Shift</th>
                 <th>Actual Price</th>
+                <th>Paid Amount</th>
+                <th>Remaining Amount</th>
                 <th>Payment Status</th>
                 <th>Actions</th>
               </tr>

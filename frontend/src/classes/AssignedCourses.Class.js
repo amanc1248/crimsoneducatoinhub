@@ -12,6 +12,8 @@ class AssignedCourse {
     paymentStatus,
     salary,
     tutorId,
+    padeAmount,
+    remainingAmount
   }) {
     this.assignedCourseId = assignedCourseId;
     this.courseId = courseId;
@@ -25,6 +27,8 @@ class AssignedCourse {
     this.paymentStatus = paymentStatus;
     this.salary = salary;
     this.tutorId = tutorId;
+    this.padeAmount = padeAmount;
+    this.remainingAmount = remainingAmount;
   }
 }
 export default AssignedCourse;

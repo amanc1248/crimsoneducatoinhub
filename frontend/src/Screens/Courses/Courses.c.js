@@ -13,7 +13,7 @@ export const CoursesContainer = () => {
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
-
+  const [loader, setLoader] = useState(false);
   // use effect
   useEffect(() => {
     getOneModalTotalCount({
@@ -21,7 +21,6 @@ export const CoursesContainer = () => {
       collectionName: "courses",
     })
       .then((result) => {
-        console.log("total documents: ", result);
         setTotalPages(result);
       })
       .catch((e) => console.log(e));

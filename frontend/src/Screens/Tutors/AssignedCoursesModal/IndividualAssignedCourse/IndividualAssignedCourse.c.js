@@ -28,7 +28,9 @@ export const IndividualAssignedCourseC = ({
         <td>{course.startDate}</td>
         <td>{course.endDate}</td>
         <td>{course.shift}</td>
-        <td>{course.salary}</td>{" "}
+        <td>Rs. {course.salary}</td>
+        <td>Rs. {course.padeAmount}</td>
+        <td>Rs. {course.remainingAmount}</td>
         <td>
           <div>
           <div className={`${course.paymentStatus==='not paid' ? 'payment__not__paide': 'payment__paide'} `}> <strong>{course.paymentStatus}</strong> </div>

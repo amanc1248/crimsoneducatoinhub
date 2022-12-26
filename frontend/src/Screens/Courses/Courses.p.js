@@ -7,6 +7,8 @@ import "../../styles/screens/home.css";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 import { IndividualCourseContainer } from "./IndividualCourse/IndividualCourse.c";
 import { CourseModalContainer } from "./CoursesModal/CourseModal.c";
+import { Loader } from "../../components/Loader";
+import { TailSpin } from "react-loader-spinner";
 
 export const CoursesPresentational = ({
   showModal,
@@ -64,7 +66,7 @@ export const CoursesPresentational = ({
         />
       </div>
       <br />
-      <div className="students__inside">
+      {courses.length>0 ? <div className="students__inside">
         <Table striped hover size="sm" className="table__list">
           <thead>
             <tr>
@@ -77,20 +79,19 @@ export const CoursesPresentational = ({
             </tr>
           </thead>
           <tbody>
-            {courses &&
-              courses.map((course, index) => {
-                return (
-                  <IndividualCourseContainer
-                    course={course}
-                    index={index}
-                    key={index}
-                    setRefresh={setRefresh}
-                  />
-                );
-              })}
+            {courses.map((course, index) => {
+              return (
+                <IndividualCourseContainer
+                  course={course}
+                  index={index}
+                  key={index}
+                  setRefresh={setRefresh}
+                />
+              );
+            })}
           </tbody>
         </Table>
-      </div>
+      </div>: <Loader></Loader>}
     </div>
   );
 };

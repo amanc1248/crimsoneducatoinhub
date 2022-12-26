@@ -20,6 +20,7 @@ export const EnrolledCoursesPresentataional = ({
   enrolledCourse,
   handleOnAddCourse,
   enrolledCourses,
+  handleOnDeleteCourse
 }) => {
   return (
     <>
@@ -48,6 +49,8 @@ export const EnrolledCoursesPresentataional = ({
                 <th>End Date</th>
                 <th>Shift</th>
                 <th>Actual Price</th>
+                <th>Paid Amount</th>
+                <th>Remaining Amount</th>
                 <th>Payment Status</th>
                 <th>Actions</th>
               </tr>
@@ -60,6 +63,7 @@ export const EnrolledCoursesPresentataional = ({
                     key={course.id}
                     course={course}
                     index={index}
+                    handleOnDeleteCourse={handleOnDeleteCourse}
                     ></IndividualEnrolledCourseC>
                   );
                 })}

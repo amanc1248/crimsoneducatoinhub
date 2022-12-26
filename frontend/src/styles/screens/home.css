@@ -180,12 +180,15 @@
     font-size: 15px;
   }
   .loader{
-    background-color: white;
+    /* background-color: white;
     height: 100%;
     width: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 0; */
+    display: flex;
+    text-align: center;
+    justify-content: center;
   }
   .loader__content{
     margin-top: 20%;
