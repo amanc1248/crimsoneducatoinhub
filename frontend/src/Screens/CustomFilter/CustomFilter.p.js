@@ -146,6 +146,7 @@ export const CustomFilterP = ({
             size="sm"
             className="table__list"
             id="detailed-view-filter"
+            responsive
           >
             <thead>
               <tr>
@@ -168,7 +169,7 @@ export const CustomFilterP = ({
                               hover
                               size="sm"
                               className="table__list"
-                              // id="detailed-view-filter-inside"
+                              responsive
                             >
                               <thead>
                                 <tr>

@@ -20,6 +20,7 @@ export const CoursesPresentational = ({
   currentPage,
   totalPages,
   setCurrentPage,
+  loader
 }) => {
   return (
     <div className="courses">
@@ -66,8 +67,8 @@ export const CoursesPresentational = ({
         />
       </div>
       <br />
-      {courses.length>0 ? <div className="students__inside">
-        <Table striped hover size="sm" className="table__list">
+      {loader ? <Loader></Loader> :  <div className="students__inside">
+        <Table striped hover size="sm" className="table__list" responsive>
           <thead>
             <tr>
               <th>#</th>
@@ -91,7 +92,7 @@ export const CoursesPresentational = ({
             })}
           </tbody>
         </Table>
-      </div>: <Loader></Loader>}
+      </div>}
     </div>
   );
 };

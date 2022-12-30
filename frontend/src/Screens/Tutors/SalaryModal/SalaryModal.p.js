@@ -54,7 +54,7 @@ export const SalaryModalP = ({
           </div>
         </Modal.Header>
         <Modal.Body>
-          <Table striped hover size="sm" className="table__list">
+          <Table striped hover size="sm" className="table__list" responsive>
             <thead>
               <tr>
                 <th>#</th>

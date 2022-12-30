@@ -8,6 +8,7 @@ import {
 } from "../../../actions/homeActions";
 import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
 import AssignedCourse from "../../../classes/AssignedCourses.Class";
+import { toast } from "react-toastify";
 
 export const AssignedCoursesContainer = ({
   show,
@@ -18,7 +19,6 @@ export const AssignedCoursesContainer = ({
   console.log("individual tutor: ", individualTutor)
 
   const assignedCourse = {};
-
   // usestates
 
   const [addCourse, setAddCourse] = useState(false);
@@ -27,9 +27,8 @@ export const AssignedCoursesContainer = ({
   const [allCourses, setAllCourses] = useState();
 
   const [allShifts, setAllShifts] = useState();
-
-  const [showSalaryHistoryModal, setSalaryHistoryModal] = useState(false);
-
+  const [loading, setLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false);
   useEffect(() => {
     getOneModalAllDocuments({
       url: "/api/commonRoute/getAllDocuments",
@@ -78,10 +77,12 @@ export const AssignedCoursesContainer = ({
             assignedCourseId: course._id,
             courseId: course.courseId,
             courseName: course.courseName,
-            year: course.year,
-            month: course.month,
+            startYear: course.startYear,
+            startMonth: course.startMonth,
             startDate: course.startDate,
             endDate: course.endDate,
+            endMonth: course.endMonth,
+            endYear: course.endYear,
             shiftId: course.shiftId,
             shift: course.shift,
             paymentStatus: course.paymentStatus,
@@ -112,22 +113,23 @@ export const AssignedCoursesContainer = ({
   };
 
   const handleOnAddCourse = () => {
-    console.log(assignedCourse);
-    // alert(assignedCourse);
     assignedCourse.paymentStatus = "not paid";
     assignedCourse.padeAmount = 0;
     assignedCourse.remainingAmount = assignedCourse.salary;
     if (
       assignedCourse.courseId &&
       assignedCourse.courseName &&
-      assignedCourse.month &&
-      assignedCourse.year &&
+      assignedCourse.startMonth &&
+      assignedCourse.startYear &&
       assignedCourse.startDate &&
       assignedCourse.endDate &&
+      assignedCourse.endMonth &&
       assignedCourse.shift &&
       assignedCourse.shiftId &&
+      assignedCourse.endYear &&
       assignedCourse.salary
     ) {
+      setLoading(true);
       insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "assignedCourses",
@@ -152,13 +154,21 @@ export const AssignedCoursesContainer = ({
         setAssignedCourses((prevState) => {
           return [...prevState, assignedCourseObject];
         });
-
         setAddCourse(false);
+        setLoading(false)
+        toast.success("Course assigned successfully", {
+          autoClose: 5000,
+        });
+      });
+    }else{
+      toast.error("Please add the required fields", {
+        autoClose: 5000,
       });
     }
   };
   
   const handleOnDeleteAssignedCourse = (id) => {
+    setDeleteLoading(true);
     deleteData({
       url: `/api/commonRoute/deleteData?id=${id}&collectionName=assignedCourses`,
     })
@@ -169,6 +179,10 @@ export const AssignedCoursesContainer = ({
           });
         });
         hideAddCourse();
+        setDeleteLoading(false);
+        toast.success("Assigned course deleted successfully", {
+          autoClose: 5000,
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -195,6 +209,8 @@ export const AssignedCoursesContainer = ({
       assignedCourse={assignedCourse}
       handleOnDeleteAssignedCourse={handleOnDeleteAssignedCourse}
       onHandleCourseDelete={handleOnDeleteAssignedCourse}
+      loading = {loading}
+      deleteLoading={deleteLoading}
     ></AssignedCoursesPresentational>
   );
 };

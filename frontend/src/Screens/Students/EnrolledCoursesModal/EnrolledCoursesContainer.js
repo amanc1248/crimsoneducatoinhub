@@ -77,9 +77,11 @@ export const EnrolledCoursesModalContainer = ({
             id: course._id,
             courseId: course.courseId,
             courseName: course.courseName,
-            year: course.year,
-            month: course.month,
+            startYear: course.startYear,
+            startMonth: course.startMonth,
             startDate: course.startDate,
+            endYear: course.endYear,
+            endMonth: course.endMonth,
             endDate: course.endDate,
             shiftId: course.shiftId,
             shift: course.shift,
@@ -116,9 +118,11 @@ export const EnrolledCoursesModalContainer = ({
     if (
       enrolledCourse.courseId &&
       enrolledCourse.courseName &&
-      enrolledCourse.month &&
-      enrolledCourse.year &&
+      enrolledCourse.startMonth &&
+      enrolledCourse.startYear &&
       enrolledCourse.startDate &&
+      enrolledCourse.endYear &&
+      enrolledCourse.endMonth &&
       enrolledCourse.endDate &&
       enrolledCourse.shift &&
       enrolledCourse.shiftId &&
@@ -133,9 +137,11 @@ export const EnrolledCoursesModalContainer = ({
           id: result.insertedId,
           courseId: enrolledCourse.courseId,
           courseName: enrolledCourse.courseName,
-          year: enrolledCourse.year,
-          month: enrolledCourse.month,
+          startYear: enrolledCourse.startYear,
+          startMonth: enrolledCourse.startMonth,
           startDate: enrolledCourse.startDate,
+          endYear:enrolledCourse.endYear,
+          endMonth: enrolledCourse.endMonth,
           endDate: enrolledCourse.endDate,
           shiftId: enrolledCourse.shiftId,
           shift: enrolledCourse.shift,

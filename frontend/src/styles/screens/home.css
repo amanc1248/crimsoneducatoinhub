@@ -201,7 +201,8 @@
     /* width: 33%; */
     height: 30px;
     font-size: small;
-    width: 100px;
+    width: 150px;
+    margin-bottom: 20px;
   }
   .adding__course__div{
     font-size: smaller;
@@ -209,6 +210,7 @@
     flex-direction: row;
     gap: 10px;
     justify-content: space-between;
+    /* overflow: auto; */
   }
   .add__button__size{
     font-size: 10px;
@@ -276,4 +278,7 @@
   .selected_customFilter__tab{
     background-color: white;
     font-weight: 800;
+  }
+  .input__div{
+    width: 150px;
   }

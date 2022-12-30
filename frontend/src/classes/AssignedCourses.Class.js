@@ -3,9 +3,11 @@ class AssignedCourse {
     assignedCourseId,
     courseId,
     courseName,
-    year,
-    month,
+    startYear,
+    startMonth,
     startDate,
+    endYear,
+    endMonth,
     endDate,
     shiftId,
     shift,
@@ -18,9 +20,11 @@ class AssignedCourse {
     this.assignedCourseId = assignedCourseId;
     this.courseId = courseId;
     this.courseName = courseName;
-    this.year = year;
-    this.month = month;
+    this.startYear = startYear;
+    this.startMonth = startMonth;
     this.startDate = startDate;
+    this.endYear = endYear;
+    this.endMonth = endMonth;
     this.endDate = endDate;
     this.shiftId = shiftId;
     this.shift = shift;

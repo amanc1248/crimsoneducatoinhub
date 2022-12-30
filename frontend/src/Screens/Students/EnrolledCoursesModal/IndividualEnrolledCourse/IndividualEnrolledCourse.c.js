@@ -10,11 +10,13 @@ export const IndividualEnrolledCourseC = ({ course, index, handleOnDeleteCourse 
 
       <tr>
         <td>{index + 1}</td>
-        <td>{course.courseName}</td>
-        <td>{course.year}</td>
-        <td>{course.month}</td>
-        <td>{course.startDate}</td>
-        <td>{course.endDate}</td>
+        <td>{course?.courseName}</td>
+        <td>{course?.startYear}</td>
+        <td>{course?.startMonth}</td>
+        <td>{course?.startDate}</td>
+        <td>{course?.endYear}</td>
+        <td>{course?.endMonth}</td>
+        <td>{course?.endDate}</td>
         <td>{course.shift}</td>
         <td>Rs. {course.actualCoursePrice}</td>
         <td>Rs. {course.padeAmount}</td>
