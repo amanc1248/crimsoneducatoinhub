@@ -67,11 +67,14 @@ export const SalaryModalC = ({
         salaryCalculations?.paidAmount === salaryCalculations?.totalAmount
           ? "paid"
           : "not paid";
+          course.padeAmount = salaryCalculations.paidAmount;
+          course.remainingAmount = salaryCalculations.remainingAmount;
       const newObj = JSON.parse(JSON.stringify(course));
-
       const _id = course.assignedCourseId;
       delete newObj["assignedCourseId"];
       newObj._id = _id;
+      newObj.padeAmount = salaryCalculations.paidAmount;
+      newObj.remainingAmount = salaryCalculations.remainingAmount;
       console.log("New obj: ", newObj);
       updateData({
         url: "/api/commonRoute/updateData",

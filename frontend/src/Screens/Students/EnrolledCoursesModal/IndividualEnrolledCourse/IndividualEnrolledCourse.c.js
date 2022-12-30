@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { PaymentModalC } from "../../PaymentModal/PaymentModal.c";
 
-export const IndividualEnrolledCourseC = ({ course, index }) => {
+export const IndividualEnrolledCourseC = ({ course, index, handleOnDeleteCourse }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
@@ -10,13 +10,17 @@ export const IndividualEnrolledCourseC = ({ course, index }) => {
 
       <tr>
         <td>{index + 1}</td>
-        <td>{course.courseName}</td>
-        <td>{course.year}</td>
-        <td>{course.month}</td>
-        <td>{course.startDate}</td>
-        <td>{course.endDate}</td>
+        <td>{course?.courseName}</td>
+        <td>{course?.startYear}</td>
+        <td>{course?.startMonth}</td>
+        <td>{course?.startDate}</td>
+        <td>{course?.endYear}</td>
+        <td>{course?.endMonth}</td>
+        <td>{course?.endDate}</td>
         <td>{course.shift}</td>
-        <td>{course.actualCoursePrice}</td>
+        <td>Rs. {course.actualCoursePrice}</td>
+        <td>Rs. {course.padeAmount}</td>
+        <td>Rs. {course.remainingAmount}</td>
         <td>
           <div>
             <div className={`${course.paymentStatus==='not paid' ? 'payment__not__paide': 'payment__paide'} `}> <strong>{course.paymentStatus}</strong> </div>
@@ -36,7 +40,7 @@ export const IndividualEnrolledCourseC = ({ course, index }) => {
             size="sm"
             className="button__size"
             onClick={() => {
-              // handleOnDeleteCourse(course.enrolledCourseId);
+              handleOnDeleteCourse(course.id);
             }}
           >
             Delete

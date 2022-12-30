@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
+import { Loader } from "../../../components/Loader";
 
 export function TutorModalPresentational({
   courseModalType,
-  setRefresh,
   setName,
   email,
   setEmail,
@@ -22,7 +22,8 @@ export function TutorModalPresentational({
   startDate,
   setAge,
   setStartDate,
-  qualification
+  qualification,
+  loader,
 }) {
   return (
     <>
@@ -119,7 +120,7 @@ export function TutorModalPresentational({
                 placeholder="Select qualification"
                 className="select__learning__module"
                 options={qualificationList}
-                value={{label:qualification, value:qualification}}
+                value={{ label: qualification, value: qualification }}
                 onChange={(e) => {
                   setQualification(e.label);
                 }}
@@ -148,21 +149,27 @@ export function TutorModalPresentational({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-close" onClick={handleClose}>
-            Cancel
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={
-              courseModalType === "Add"
-                ? handleOnClickSubmit
-                : courseModalType === "Update"
-                ? handleOnClickUpdate
-                : handleOnClickDelete
-            }
-          >
-            {courseModalType}
-          </button>
+          {loader ? (
+            <Loader></Loader>
+          ) : (
+            <div>
+              <button className="btn btn-close" onClick={handleClose}>
+                Cancel
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={
+                  courseModalType === "Add"
+                    ? handleOnClickSubmit
+                    : courseModalType === "Update"
+                    ? handleOnClickUpdate
+                    : handleOnClickDelete
+                }
+              >
+                {courseModalType}
+              </button>
+            </div>
+          )}
         </Modal.Footer>
       </Modal>
     </>

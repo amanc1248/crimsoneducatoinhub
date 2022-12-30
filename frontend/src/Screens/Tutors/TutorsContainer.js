@@ -10,6 +10,7 @@ import { IndividualTutor } from "./IndividualTutor";
 import { TutorModal } from "./TutorModal/TutorModalContainer";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 import { FilterC } from "../../components/Filter/Filter.c";
+import { Loader } from "../../components/Loader";
 
 export const TutorsContainer = () => {
 // data
@@ -28,7 +29,6 @@ const wantedDBList = [
   { collectionName: "shifts", collectionTitleValue:'name',title: "Shifts", titleValue: "shift" },
 ];
 const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
-
   // use states
   const [tutors, setTutors] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -37,6 +37,7 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
   const [currentPage, setCurrentPage] = useState(1);
   const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   // use effects
   useEffect(() => {
@@ -52,24 +53,28 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
   }, []);
 
   useEffect(() => {
-    refresh &&
-      getAllData({
-        url: "/api/commonRoute/getData",
-        collectionName: "tutors",
-        pageNumber: currentPage,
-        nPerPage: 100,
-      })
-        .then((result) => {
-          setUnModifiableOrignalList(result);
-          setTutors(result);
-          setRefresh(false);
+      if(refresh){
+        setLoader(true);
+        getAllData({
+          url: "/api/commonRoute/getData",
+          collectionName: "tutors",
+          pageNumber: currentPage,
+          nPerPage: 100,
         })
-        .catch((e) => {
-          console.log(e);
-        });
+          .then((result) => {
+            setUnModifiableOrignalList(result);
+            setTutors(result);
+            setRefresh(false);
+            setLoader(false);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
   }, [refresh]);
 
   useEffect(() => {
+    setLoader(true);
     getAllData({
       url: "/api/commonRoute/getData",
       collectionName: "tutors",
@@ -79,6 +84,7 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
       .then((result) => {
         setTutors(result);
         setRefresh(false);
+        setLoader(false);
       })
       .catch((e) => {
         console.log(e);
@@ -90,7 +96,6 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
     setShowFilter(false); 
   };
 
-  console.log("Tutors: ", tutors)
   return (
     <div className="tutors">
       {showModal && (
@@ -133,6 +138,7 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
         />
       </div>
       <br />
+     {loader ? <Loader></Loader> :  <div>
       <div className="filter__div">
         <FilterC
           aggregateArray={aggregateArray}
@@ -145,7 +151,7 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
         ></FilterC>
       </div>
       <div className="students__inside">
-        <Table striped hover size="sm" className="table__list">
+        <Table striped hover size="sm" className="table__list" responsive>
           <thead>
             <tr>
               <th>#</th>
@@ -173,6 +179,7 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
           </tbody>
         </Table>
       </div>
+      </div> }
     </div>
   );
 };

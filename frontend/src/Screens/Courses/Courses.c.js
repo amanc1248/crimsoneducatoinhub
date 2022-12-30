@@ -13,7 +13,7 @@ export const CoursesContainer = () => {
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
-
+  const [loader, setLoader] = useState(false);
   // use effect
   useEffect(() => {
     getOneModalTotalCount({
@@ -21,14 +21,14 @@ export const CoursesContainer = () => {
       collectionName: "courses",
     })
       .then((result) => {
-        console.log("total documents: ", result);
         setTotalPages(result);
       })
       .catch((e) => console.log(e));
   }, []);
 
   useEffect(() => {
-    refresh &&
+    if(refresh){
+      setLoader(true)
       getAllData({
         url: "/api/commonRoute/getData",
         collectionName: "courses",
@@ -45,6 +45,7 @@ export const CoursesContainer = () => {
               courseFee: course.courseFee,
               courseDetails: course.courseDetails,
             });
+            setLoader(false)
             return courseObj;
           });
           setCourses(list);
@@ -53,9 +54,11 @@ export const CoursesContainer = () => {
         .catch((e) => {
           console.log(e);
         });
+    }
   }, [refresh]);
 
   useEffect(() => {
+    setLoader(true);
     getAllData({
       url: "/api/commonRoute/getData",
       collectionName: "courses",
@@ -76,6 +79,7 @@ export const CoursesContainer = () => {
         });
         setCourses(list);
         setRefresh(false);
+        setLoader(false)
       })
       .catch((e) => {
         console.log(e);
@@ -93,6 +97,7 @@ export const CoursesContainer = () => {
       currentPage={currentPage}
       totalPages={totalPages}
       setCurrentPage={setCurrentPage}
+      loader={loader}
     ></CoursesPresentational>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   deleteData,
   insertData,
@@ -15,7 +16,6 @@ export function TutorModal({
   courseModalType,
   setRefresh,
 }) {
-  console.log("Individudal tutor: ", individualTutor);
   const qualificationList = [
     { label: "Japanese Language Instructor", value: "exp1" },
     { label: "Korean Language", value: "exp2" },
@@ -48,8 +48,6 @@ export function TutorModal({
   );
   const [loader, setLoader] = useState(false);
 
-  const [tutorsList, setTutorsList] = useState();
-
   // functions
   // 1. on adding course
   const handleOnClickSubmit = () => {
@@ -59,11 +57,19 @@ export function TutorModal({
       age,
       qualification,
       startDate,
-      salary,
       phoneNumber,
       date: new Date(),
     };
-    if ((name, email, age, qualification, startDate, salary, phoneNumber)) {
+    console.log("Doc: ", doc);
+
+    if (
+      name &&
+      email &&
+      age &&
+      qualification &&
+      startDate &&
+      phoneNumber
+    ) {
       let list = tutors;
       setLoader(true);
       insertData({
@@ -76,10 +82,17 @@ export function TutorModal({
           setRefresh(true);
           setLoader(false);
           handleClose();
+          toast.success("Tutor added successfully", {
+            autoClose: 5000,
+          });
         })
         .catch((e) => {
           console.log(e);
         });
+    } else {
+      toast.error("Please fill the required fields", {
+        autoClose: 5000,
+      });
     }
   };
 
@@ -102,10 +115,17 @@ export function TutorModal({
       age,
       qualification,
       startDate,
-      salary,
       phoneNumber,
     };
-    if ((name, email, age, qualification, startDate, salary, phoneNumber)) {
+    console.log("Doc: ", doc);
+    if (
+      name &&
+      email &&
+      age &&
+      qualification &&
+      startDate &&
+      phoneNumber
+    ) {
       setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
@@ -117,10 +137,17 @@ export function TutorModal({
           setRefresh(true);
           setLoader(false);
           handleClose();
+          toast.success("Tutor data updated successfully", {
+            autoClose: 5000,
+          });
         })
         .catch((e) => {
           console.log(e);
         });
+    } else {
+      toast.error("Fill all the fields to update successfully", {
+        autoClose: 5000,
+      });
     }
   };
 
@@ -134,8 +161,14 @@ export function TutorModal({
         setRefresh(true);
         setLoader(false);
         handleClose();
+        toast.success("Tutor deleted successfully", {
+          autoClose: 5000,
+        });
       })
       .catch((e) => {
+        toast.success("Something went wrong", {
+          autoClose: 5000,
+        });
         console.log(e);
       });
   };
@@ -166,6 +199,7 @@ export function TutorModal({
       age={age}
       qualification={qualification}
       startDate={startDate}
+      loader={loader}
     ></TutorModalPresentational>
   );
 }

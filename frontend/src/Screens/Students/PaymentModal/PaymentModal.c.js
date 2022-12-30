@@ -62,11 +62,15 @@ export const PaymentModalC = ({
         paymentCalculations?.paidAmount === paymentCalculations?.totalAmount
             ? "paid"
             : "not paid";
+            course.padeAmount = paymentCalculations.paidAmount;
+          course.remainingAmount = paymentCalculations.remainingAmount;
         const newObj = JSON.parse(JSON.stringify(course));
   
         const _id = course.id;
         delete newObj["id"];
         newObj._id = _id;
+        newObj.padeAmount = paymentCalculations?.paidAmount;
+        newObj.remainingAmount = paymentCalculations?.remainingAmount;
         console.log("New obj: ", newObj);
         updateData({
           url: "/api/commonRoute/updateData",

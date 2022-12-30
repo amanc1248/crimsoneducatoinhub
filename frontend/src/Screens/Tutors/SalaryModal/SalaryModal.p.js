@@ -33,11 +33,6 @@ export const SalaryModalP = ({
       >
         <Modal.Header>
           <Modal.Title>Salary Details</Modal.Title>
-          {console.log(
-            salaryCalculations.totalAmount,
-            salaryCalculations.paidAmount
-          )}
-
           <div>
             <div>Total: {salaryCalculations.totalAmount}</div>
             <div>Paid: {salaryCalculations.paidAmount}</div>
@@ -59,7 +54,7 @@ export const SalaryModalP = ({
           </div>
         </Modal.Header>
         <Modal.Body>
-          <Table striped hover size="sm" className="table__list">
+          <Table striped hover size="sm" className="table__list" responsive>
             <thead>
               <tr>
                 <th>#</th>

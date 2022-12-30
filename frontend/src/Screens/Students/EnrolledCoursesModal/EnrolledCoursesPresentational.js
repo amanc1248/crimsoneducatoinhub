@@ -20,6 +20,7 @@ export const EnrolledCoursesPresentataional = ({
   enrolledCourse,
   handleOnAddCourse,
   enrolledCourses,
+  handleOnDeleteCourse,
 }) => {
   return (
     <>
@@ -37,17 +38,21 @@ export const EnrolledCoursesPresentataional = ({
           <Modal.Title>Enrolled Courses</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Table striped hover size="sm" className="table__list">
+          <Table striped hover size="sm" className="table__list" responsive>
             <thead>
               <tr>
                 <th>#</th>
                 <th>Course Name</th>
-                <th>Year</th>
-                <th>Month</th>
+                <th>Start Year</th>
+                <th>Start Month</th>
                 <th>Start Date</th>
+                <th>End Year</th>
+                <th>End Month</th>
                 <th>End Date</th>
                 <th>Shift</th>
                 <th>Actual Price</th>
+                <th>Paid Amount</th>
+                <th>Remaining Amount</th>
                 <th>Payment Status</th>
                 <th>Actions</th>
               </tr>
@@ -57,9 +62,10 @@ export const EnrolledCoursesPresentataional = ({
                 enrolledCourses.map((course, index) => {
                   return (
                     <IndividualEnrolledCourseC
-                    key={course.id}
-                    course={course}
-                    index={index}
+                      key={course.id}
+                      course={course}
+                      index={index}
+                      handleOnDeleteCourse={handleOnDeleteCourse}
                     ></IndividualEnrolledCourseC>
                   );
                 })}
@@ -78,7 +84,7 @@ export const EnrolledCoursesPresentataional = ({
               <div className="adding__course__div">
                 {/* 1. selecting course */}
                 <div>
-                  <label htmlFor="">Select a course</label>
+                  <label htmlFor="">Select course</label>
                   <Select
                     placeholder="course"
                     className="selecting__divs"
@@ -86,33 +92,33 @@ export const EnrolledCoursesPresentataional = ({
                     onChange={(e) => {
                       enrolledCourse.courseId = e._id;
                       enrolledCourse.courseName = e.value;
-                      enrolledCourse.studentId =individualStudent._id
+                      enrolledCourse.studentId = individualStudent._id;
                     }}
                   />
                 </div>
 
                 {/* select year */}
                 <div>
-                  <label htmlFor="">Select an year</label>
+                  <label htmlFor="">Select start year</label>
                   <Select
                     placeholder="year"
                     className="selecting__divs"
                     options={yearsList}
                     onChange={(e) => {
-                      enrolledCourse.year = e.value;
+                      enrolledCourse.startYear = e.value;
                     }}
                   />
                 </div>
 
                 {/* select month */}
                 <div>
-                  <label htmlFor="">Select a month</label>
+                  <label htmlFor="">Select start month</label>
                   <Select
                     placeholder="month"
                     className="selecting__divs"
                     options={monthsList}
                     onChange={(e) => {
-                      enrolledCourse.month = e.value;
+                      enrolledCourse.startMonth = e.value;
                     }}
                   />
                 </div>
@@ -129,8 +135,35 @@ export const EnrolledCoursesPresentataional = ({
                     }}
                   />
                 </div>
+              </div>
+              <div className="adding__course__div">
+                {/* select year */}
+                <div>
+                  <label htmlFor="">Select end year</label>
+                  <Select
+                    placeholder="year"
+                    className="selecting__divs"
+                    options={yearsList}
+                    onChange={(e) => {
+                      enrolledCourse.endYear = e.value;
+                    }}
+                  />
+                </div>
 
-                {/* select end date */}
+                {/* select month */}
+                <div>
+                  <label htmlFor="">Select end month</label>
+                  <Select
+                    placeholder="month"
+                    className="selecting__divs"
+                    options={monthsList}
+                    onChange={(e) => {
+                      enrolledCourse.endMonth = e.value;
+                    }}
+                  />
+                </div>
+
+                {/* select start date */}
                 <div>
                   <label htmlFor="">Select end date</label>
                   <Select
@@ -155,12 +188,13 @@ export const EnrolledCoursesPresentataional = ({
                     }}
                   />
                 </div>
-
+              </div>
+              <div className="adding__course__div">
                 <div>
                   <label htmlFor="">Enter actual course price</label>
                   <input
                     type="number"
-                    className="selecting__divs"
+                    className="form-control input__div"
                     placeHolder="price"
                     onChange={(e) => {
                       enrolledCourse.actualCoursePrice = e.target.value;

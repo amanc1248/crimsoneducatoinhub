@@ -77,15 +77,19 @@ export const EnrolledCoursesModalContainer = ({
             id: course._id,
             courseId: course.courseId,
             courseName: course.courseName,
-            year: course.year,
-            month: course.month,
+            startYear: course.startYear,
+            startMonth: course.startMonth,
             startDate: course.startDate,
+            endYear: course.endYear,
+            endMonth: course.endMonth,
             endDate: course.endDate,
             shiftId: course.shiftId,
             shift: course.shift,
             paymentStatus: course.paymentStatus,
             actualCoursePrice: course.actualCoursePrice,
             studentId: course.studentId,
+            padeAmount: course.padeAmount,
+            remainingAmount: course.remainingAmount
           });
           return obj;
         });
@@ -109,12 +113,16 @@ export const EnrolledCoursesModalContainer = ({
   };
   const handleOnAddCourse = () => {
     enrolledCourse.paymentStatus = "not paid";
+    enrolledCourse.padeAmount = 0;
+    enrolledCourse.remainingAmount = enrolledCourse.actualCoursePrice;
     if (
       enrolledCourse.courseId &&
       enrolledCourse.courseName &&
-      enrolledCourse.month &&
-      enrolledCourse.year &&
+      enrolledCourse.startMonth &&
+      enrolledCourse.startYear &&
       enrolledCourse.startDate &&
+      enrolledCourse.endYear &&
+      enrolledCourse.endMonth &&
       enrolledCourse.endDate &&
       enrolledCourse.shift &&
       enrolledCourse.shiftId &&
@@ -129,18 +137,20 @@ export const EnrolledCoursesModalContainer = ({
           id: result.insertedId,
           courseId: enrolledCourse.courseId,
           courseName: enrolledCourse.courseName,
-          year: enrolledCourse.year,
-          month: enrolledCourse.month,
+          startYear: enrolledCourse.startYear,
+          startMonth: enrolledCourse.startMonth,
           startDate: enrolledCourse.startDate,
+          endYear:enrolledCourse.endYear,
+          endMonth: enrolledCourse.endMonth,
           endDate: enrolledCourse.endDate,
           shiftId: enrolledCourse.shiftId,
           shift: enrolledCourse.shift,
           paymentStatus: enrolledCourse.paymentStatus,
           actualCoursePrice: enrolledCourse.actualCoursePrice,
           studentId: individualStudent._id,
+          padeAmount:0,
+          remainingAmount:enrolledCourse.actualCoursePrice
         });
-        console.log("studentId: " + individualStudent);
-        console.log("studentId: " + individualStudent._id);
         setEnrolledCourses((prevState) => {
           return [...prevState, enrolledCourseObject];
         });
@@ -156,7 +166,7 @@ export const EnrolledCoursesModalContainer = ({
       .then((result) => {
         setEnrolledCourses((prevState) => {
           return prevState.filter((course) => {
-            return course.enrolledCourseId !== id;
+            return course.id !== id;
           });
         });
         hideAddCourse();

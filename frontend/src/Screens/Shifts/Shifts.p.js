@@ -62,7 +62,7 @@ export const ShiftsPresentational = ({
       </div>
       <br />
       <div className="students__inside">
-        <Table striped hover size="sm" className="table__list">
+        <Table striped hover size="sm" className="table__list" responsive>
           <thead>
             <tr>
               <th>#</th>
