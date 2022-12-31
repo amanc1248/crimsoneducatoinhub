@@ -45,7 +45,7 @@ export const DashboardSection3 = () => {
   const [cardsList, setCardsList] = useState(list);
   return (
     <div className="dashboard__section3 col-12">
-      {/* <div className="dashboard__section3__content row g-0">
+      <div className="dashboard__section3__content row g-0">
         <div className="section3__title col-3">
           <h5 style={{ fontWeight: 600 }}>Engagement</h5>
           <div className="section3__description">
@@ -65,10 +65,10 @@ export const DashboardSection3 = () => {
               </div>
             ))}
         </div>
-      </div> */}
-      <div>
-        <Invoice />
       </div>
+      {/* <div>
+        <Invoice />
+      </div> */}
     </div>
   );
 };
