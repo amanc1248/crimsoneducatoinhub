@@ -28,10 +28,10 @@ export const PaymentModalC = ({
     amount: "",
     paymentDetails: "",
   });
-  const [paymentStatus, setPaymentStatus] = useState();
-
+  const [loading, setLoading] = useState(false);
   // use effects
   useEffect(() => {
+    setLoading(true);
     getOneModalDocumentsById({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "studentsCoursePayment",
@@ -50,7 +50,7 @@ export const PaymentModalC = ({
           return obj;
         });
         setAllPayments(list);
-        console.log(list);
+        setLoading(false);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -71,7 +71,6 @@ export const PaymentModalC = ({
         newObj._id = _id;
         newObj.padeAmount = paymentCalculations?.paidAmount;
         newObj.remainingAmount = paymentCalculations?.remainingAmount;
-        console.log("New obj: ", newObj);
         updateData({
           url: "/api/commonRoute/updateData",
           collectionName: "enrolledCourses",
@@ -79,9 +78,6 @@ export const PaymentModalC = ({
           id: course.id,
         })
           .then((result) => {
-            toast.success("Payment Status updated Successfully", {
-              autoClose: 5000,
-            });
             setAddedOrDeletedSalary(false);
           })
           .catch((e) => {
@@ -95,6 +91,7 @@ export const PaymentModalC = ({
     setAddPayment(true);
   };
   const handleAddPayment = async () => {
+    console.log("course: ", course)
     let studentObj = studentPayment;
     studentObj = {
       ...studentObj,
@@ -106,29 +103,36 @@ export const PaymentModalC = ({
       studentPayment.amount &&
       studentPayment.paymentDetails
     ) {
+      setLoading(true);
      const insertedData = await insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "studentsCoursePayment",
         doc: studentObj,
       });
       if(insertedData){
+        console.log(insertedData);
         const studentPaymentObject = new StudentPaymentClass({
-          enrolledCourseId: studentPayment.enrolledCourseId,
-          studentId: studentPayment.studentId,
+          enrolledCourseId: studentObj.enrolledCourseId,
+          studentId: studentObj.studentId,
           amount: studentPayment.amount,
           paymentDate: studentPayment.paymentDate,
           paymentDetails: studentPayment.paymentDetails,
-          paymentId: insertData.insertedId,
+          paymentId: insertedData.insertedId,
         });
+        console.log(studentPaymentObject);
         setAllPayments((prevState) => {
           return [...prevState, studentPaymentObject];
         });
         setStudentPayment({});
         setAddPayment(false);
         setAddedOrDeletedSalary(true);
+        setLoading(false);
+        toast.success("Payment added successfully", {autoClose:5000})
       }else{
         console.log("error")
       }
+    }else{
+      toast.error("Add required fields to add payment", {autoClose:5000})
     }
   };
 
@@ -193,6 +197,7 @@ export const PaymentModalC = ({
       checkTotalAmountAndSet={checkTotalAmountAndSet}
       studentPayment={studentPayment}
       setStudentPayment={setStudentPayment}
+      loading={loading}
     ></PaymentModalP>
   );
 };

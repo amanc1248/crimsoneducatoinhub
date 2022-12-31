@@ -1,5 +1,5 @@
 import React from "react";
-import { FallingLines, TailSpin } from "react-loader-spinner";
+import { FallingLines, RotatingSquare, TailSpin } from "react-loader-spinner";
 
 export const Loader = () => {
   return (
@@ -25,6 +25,21 @@ export const LoaderFallingLines = () => {
       width="100"
       visible={true}
       ariaLabel="falling-lines-loading"
+    />
+  );
+};
+
+export const LoaderRotatingSquare = () => {
+  return (
+    <RotatingSquare
+      height="100"
+      width="100"
+      color="#4fa94d"
+      ariaLabel="rotating-square-loading"
+      strokeWidth="4"
+      wrapperStyle={{}}
+      wrapperClass=""
+      visible={true}
     />
   );
 };

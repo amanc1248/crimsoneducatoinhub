@@ -93,7 +93,6 @@ export const AssignedCoursesContainer = ({
           });
           return obj;
         });
-        console.log("The list of courses: ", list[0]);
         setAssignedCourses(list);
       })
       .catch((e) => console.log(e));
@@ -139,9 +138,11 @@ export const AssignedCoursesContainer = ({
           assignedCourseId: result.insertedId,
           courseId: assignedCourse.courseId,
           courseName: assignedCourse.courseName,
-          year: assignedCourse.year,
-          month: assignedCourse.month,
+          startYear: assignedCourse.startYear,
+          startMonth: assignedCourse.startMonth,
           startDate: assignedCourse.startDate,
+          endYear: assignedCourse.endYear,
+          endMonth: assignedCourse.endMonth,
           endDate: assignedCourse.endDate,
           shiftId: assignedCourse.shiftId,
           shift: assignedCourse.shift,

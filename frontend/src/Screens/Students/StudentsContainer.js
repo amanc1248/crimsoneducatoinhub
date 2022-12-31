@@ -9,6 +9,7 @@ import Pagination from "react-js-pagination";
 import { StudentModal } from "./StudentModal/StudentModalContainer";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 import { FilterC } from "../../components/Filter/Filter.c";
+import { Loader } from "../../components/Loader";
 
 
 const aggregateArray = [
@@ -35,6 +36,8 @@ export const StudentsContainer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [unModifiableOrignalList, setUnModifiableOrignalList] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   // use effects
   useEffect(() => {
     getOneModalTotalCount({
@@ -49,24 +52,28 @@ export const StudentsContainer = () => {
   }, []);
 
   useEffect(() => {
-    refresh &&
-      getAllData({
-        url: "/api/commonRoute/getData",
-        collectionName: "students",
-        pageNumber: currentPage,
-        nPerPage: 100,
-      })
-        .then((result) => {
-          setUnModifiableOrignalList(result);
-          setStudents(result);
-          setRefresh(false);
+      if(refresh){
+        setLoading(true)
+        getAllData({
+          url: "/api/commonRoute/getData",
+          collectionName: "students",
+          pageNumber: currentPage,
+          nPerPage: 100,
         })
-        .catch((e) => {
-          console.log(e);
-        });
+          .then((result) => {
+            setUnModifiableOrignalList(result);
+            setStudents(result);
+            setRefresh(false);
+            setLoading(false);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
   }, [refresh]);
 
   useEffect(() => {
+    setLoading(true);
     getAllData({
       url: "/api/commonRoute/getData",
       collectionName: "students",
@@ -76,6 +83,7 @@ export const StudentsContainer = () => {
       .then((result) => {
         setStudents(result);
         setRefresh(false);
+        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -86,7 +94,6 @@ export const StudentsContainer = () => {
   const closeFilter = () => {
     setShowFilter(false);
   };
-  console.log("Students: ", students)
   return (
     <div className="students">
       {showModal && (
@@ -141,7 +148,7 @@ export const StudentsContainer = () => {
           filterType="normal"
         ></FilterC>
       </div>
-      <div className="students__inside">
+      {loading ? <Loader></Loader> : <div className="students__inside">
         <Table striped hover size="sm" className="table__list" responsive>
           <thead>
             <tr>
@@ -168,7 +175,7 @@ export const StudentsContainer = () => {
               })}
           </tbody>
         </Table>
-      </div>
+      </div>}
     </div>
   );
 };
