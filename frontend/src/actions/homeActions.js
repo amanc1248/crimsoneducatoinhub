@@ -85,6 +85,7 @@ export function insertPhoto(data) {
 
 // update data
 export function updateData(data) {
+  console.log("data updated", data);
   let url = data.url;
   const config = {
     header: {

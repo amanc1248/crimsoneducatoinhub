@@ -4,6 +4,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { getTotalCount } from "../../actions/homeActions";
+import Invoice from "../../components/Invoice";
 export const DashboardSection3 = () => {
   // data
   const list = [
@@ -19,6 +20,10 @@ export const DashboardSection3 = () => {
       icon: <MenuBookIcon sx={{ fontSize: 15 }} />,
       title: "Courses",
     },
+    {
+      icon: <MenuBookIcon sx={{ fontSize: 15 }} />,
+      title: "Shifts",
+    },
   ];
 
   const [totalNumbers, setTotalNumbers] = useState();
@@ -26,7 +31,7 @@ export const DashboardSection3 = () => {
   useEffect(() => {
     getTotalCount({
       url: "/api/commonRoute/getTotalDocument",
-      collectionNames: ["students", "tutors", "courses"],
+      collectionNames: ["students", "tutors", "courses", "shifts"],
     })
       .then((result) => {
         setTotalNumbers(result);
@@ -61,6 +66,9 @@ export const DashboardSection3 = () => {
             ))}
         </div>
       </div>
+      {/* <div>
+        <Invoice />
+      </div> */}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { DashboardTab } from "./DashboardTab";
-
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
   // DATA
   const tabsList = [
@@ -16,6 +16,7 @@ export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
     { label: "Students", icon: <PersonIcon sx={{ fontSize: 18 }} /> },
     { label: "Shifts", icon: <AccessTimeFilledIcon sx={{ fontSize: 18 }} /> },
     { label: "Custom Filter", icon: <FilterAltIcon sx={{ fontSize: 18 }} /> },
+    { label: "Users", icon: <PeopleAltIcon sx={{ fontSize: 18 }} /> },
   ];
 
   // usestate

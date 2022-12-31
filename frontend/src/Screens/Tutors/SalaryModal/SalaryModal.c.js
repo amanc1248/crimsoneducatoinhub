@@ -25,7 +25,9 @@ export const SalaryModalC = ({
   const [allSalarys, setAllSalarys] = useState([]);
   const [addedOrDeletedSalary, setAddedOrDeletedSalary] = useState(false);
   const [tutorSalary, setTutorSalary] = useState({
-    salaryDate: "",
+    year: "",
+    month:"",
+    date:"",
     amount: "",
     salaryDetails: "",
     chequePhoto: "",
@@ -47,7 +49,9 @@ export const SalaryModalC = ({
           const obj = new TutorSalaryClass({
             salaryId: salary._id,
             assignedCourseId: salary.assignedCourseId,
-            salaryDate: salary.salaryDate,
+            year: salary.year,
+            month:salary.month,
+            date: salary.date,
             amount: salary.amount,
             salaryDetails: salary.salaryDetails,
             tutorId: salary.tutorId,
@@ -97,11 +101,13 @@ export const SalaryModalC = ({
 
   // on adding salary
   const handleAddSalary = async () => {
-    console.log(tutorSalary);
+    console.log("TutorSalary: ", tutorSalary);
     if (
       tutorSalary.amount &&
       tutorSalary.chequePhoto &&
-      tutorSalary.salaryDate &&
+      tutorSalary.year &&
+      tutorSalary.month &&
+      tutorSalary.date &&
       tutorSalary.salaryDetails
     ) {
       setAddSalaryLoading(true);
@@ -124,7 +130,7 @@ export const SalaryModalC = ({
             chequePhoto: filename,
           };
           if (
-            tutorSalary.salaryDate &&
+            tutorSalary.year &&
             tutorSalary.amount &&
             tutorSalary.salaryDetails &&
             filename
@@ -139,7 +145,9 @@ export const SalaryModalC = ({
                 assignedCourseId: tutorSalary.assignedCourseId,
                 tutorId: tutorSalary.tutorId,
                 amount: tutorSalary.amount,
-                salaryDate: tutorSalary.salaryDate,
+                year: tutorSalary.year,
+                month:tutorSalary.month,
+                date: tutorSalary.date,
                 salaryDetails: tutorSalary.salaryDetails,
                 salaryId: result.insertedId,
                 filename: filename,

@@ -11,7 +11,6 @@ import { SearchComponentC } from "../../components/SearchComponent/SearchCompone
 import { FilterC } from "../../components/Filter/Filter.c";
 import { Loader } from "../../components/Loader";
 
-
 const aggregateArray = [
   {
     $lookup: {
@@ -23,10 +22,20 @@ const aggregateArray = [
   },
 ];
 const wantedDBList = [
-  { collectionName: "courses",collectionTitleValue:'courseName', title: "Course", titleValue: "courseName" },
-  { collectionName: "shifts", collectionTitleValue:'name',title: "Shifts", titleValue: "shift" },
+  {
+    collectionName: "courses",
+    collectionTitleValue: "courseName",
+    title: "Course",
+    titleValue: "courseName",
+  },
+  {
+    collectionName: "shifts",
+    collectionTitleValue: "name",
+    title: "Shifts",
+    titleValue: "shift",
+  },
 ];
-const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
+const wantedLocalList = ["paymentStatus", "months", "year", "startDate"];
 export const StudentsContainer = () => {
   // use states
   const [students, setStudents] = useState([]);
@@ -52,24 +61,24 @@ export const StudentsContainer = () => {
   }, []);
 
   useEffect(() => {
-      if(refresh){
-        setLoading(true)
-        getAllData({
-          url: "/api/commonRoute/getData",
-          collectionName: "students",
-          pageNumber: currentPage,
-          nPerPage: 100,
+    if (refresh) {
+      setLoading(true);
+      getAllData({
+        url: "/api/commonRoute/getData",
+        collectionName: "students",
+        pageNumber: currentPage,
+        nPerPage: 100,
+      })
+        .then((result) => {
+          setUnModifiableOrignalList(result);
+          setStudents(result);
+          setRefresh(false);
+          setLoading(false);
         })
-          .then((result) => {
-            setUnModifiableOrignalList(result);
-            setStudents(result);
-            setRefresh(false);
-            setLoading(false);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }, [refresh]);
 
   useEffect(() => {
@@ -148,34 +157,44 @@ export const StudentsContainer = () => {
           filterType="normal"
         ></FilterC>
       </div>
-      {loading ? <Loader></Loader> : <div className="students__inside">
-        <Table striped hover size="sm" className="table__list" responsive>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Your Phone Number</th>
-              <th>Parent Phone Number</th>
-              <th>Qualification</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students &&
-              students.map((student, index) => {
-                return (
-                  <IndividualStudent
-                    student={student}
-                    index={index}
-                    key={index}
-                    setRefresh={setRefresh}
-                  />
-                );
-              })}
-          </tbody>
-        </Table>
-      </div>}
+      {loading ? (
+        <Loader></Loader>
+      ) : (
+        <div className="students__inside">
+          <Table striped hover size="sm" className="table__list" responsive>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>DOB</th>
+
+                <th>Your Phone Number</th>
+                <th>Qualification</th>
+                <th>Address</th>
+                <th>Parents name</th>
+                <th>Parent Phone Number</th>
+                <th>Counsellor Name</th>
+                <th>Class</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {students &&
+                students.map((student, index) => {
+                  return (
+                    <IndividualStudent
+                      student={student}
+                      index={index}
+                      key={index}
+                      setRefresh={setRefresh}
+                    />
+                  );
+                })}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 };

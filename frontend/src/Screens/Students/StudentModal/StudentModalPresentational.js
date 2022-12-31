@@ -22,6 +22,17 @@ export function StudentModalPresentational({
   name,
   qualification,
   loader,
+  dob,
+  setDOB,
+  parentsName,
+  setParentsName,
+  typeClass,
+  typeClassList,
+  setTypeClass,
+  address,
+  setAddress,
+  counsellorName,
+  setCounsellorName,
 }) {
   return (
     <>
@@ -45,7 +56,7 @@ export function StudentModalPresentational({
         </Modal.Header>
         <Modal.Body>
           <div className="new__feature__request__form">
-            <div className="firstname__lastname row">
+            <div className="firstname__email row">
               {/* 1. First name */}
               <div class="learning__form__group col-lg-6 col-12">
                 <label for="name">Name</label>
@@ -81,7 +92,24 @@ export function StudentModalPresentational({
                 ></input>
               </div>
             </div>
-            <div className="parent_your_phone row">
+            <div className="dob_your_phone_number row">
+              {/* 1. Date of Birth */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="dateofbirth">DOB</label>
+                <input
+                  class="form-control"
+                  id="dateofbirth"
+                  name="dateofbirth"
+                  rows="4"
+                  cols="50"
+                  placeholder="Enter your DOB"
+                  value={dob}
+                  onChange={(e) => {
+                    setDOB(e.target.value);
+                  }}
+                  type="date"
+                ></input>
+              </div>
               {/* 1. Your Phone Number */}
               <div class="learning__form__group col-lg-6 col-12">
                 <label for="yourPhnNumber">Your Phone Number</label>
@@ -97,6 +125,57 @@ export function StudentModalPresentational({
                     setPhoneNumber(e.target.value);
                   }}
                   type="number"
+                ></input>
+              </div>
+            </div>
+
+            <div className="qualification_address row">
+              {/* 1. Qualification */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="qualification">Qualification</label>
+                <Select
+                  placeholder="Select qualification"
+                  className="select__learning__module"
+                  options={qualificationList}
+                  value={{ label: qualification, value: qualification }}
+                  onChange={(e) => {
+                    setQualification(e.label);
+                  }}
+                />
+              </div>
+              {/* 2. Address */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="name">Address</label>
+                <input
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  rows="4"
+                  cols="50"
+                  placeholder="Enter your address"
+                  value={address}
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                ></input>
+              </div>
+            </div>
+            <div className="parent_your_name_phone row">
+              {/* 1. Your Parents Name */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="parentsName">Parents Name</label>
+                <input
+                  class="form-control"
+                  id="parentsName"
+                  name="parentsName"
+                  rows="4"
+                  cols="50"
+                  placeholder="Enter your Parents Name"
+                  value={parentsName}
+                  onChange={(e) => {
+                    setParentsName(e.target.value);
+                  }}
+                  type="text"
                 ></input>
               </div>
 
@@ -118,18 +197,36 @@ export function StudentModalPresentational({
                 ></input>
               </div>
             </div>
-
-            <div className="learning__form__group">
-              <label for="qualification">Qualification</label>
-              <Select
-                placeholder="Select qualification"
-                className="select__learning__module"
-                options={qualificationList}
-                value={{ label: qualification, value: qualification }}
-                onChange={(e) => {
-                  setQualification(e.label);
-                }}
-              />
+            <div className="class_counsellorName row">
+              {/* 1. Counsellor Name */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="name">Counsellor Name</label>
+                <input
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  rows="4"
+                  cols="50"
+                  placeholder="Enter Counsellor name"
+                  value={counsellorName}
+                  onChange={(e) => {
+                    setCounsellorName(e.target.value);
+                  }}
+                ></input>
+              </div>
+              {/* 2. Type Class */}
+              <div class="learning__form__group col-lg-6 col-12">
+                <label for="typeClass">Class</label>
+                <Select
+                  placeholder="Select Class"
+                  className="select__learning__module"
+                  options={typeClassList}
+                  value={{ label: typeClass, value: typeClass }}
+                  onChange={(e) => {
+                    setTypeClass(e.label);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </Modal.Body>

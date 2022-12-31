@@ -24,7 +24,9 @@ export const PaymentModalC = ({
   const [allPayments, setAllPayments] = useState([]);
   const [addedOrDeletedSalary, setAddedOrDeletedSalary] = useState(false);
   const [studentPayment, setStudentPayment] = useState({
-    paymentDate: "",
+    year: "",
+    month: "",
+    date: "",
     amount: "",
     paymentDetails: "",
   });
@@ -99,7 +101,9 @@ export const PaymentModalC = ({
       studentId: course.studentId,
     };
     if (
-      studentPayment.paymentDate &&
+      studentPayment.year &&
+      studentPayment.month &&
+      studentPayment.date &&
       studentPayment.amount &&
       studentPayment.paymentDetails
     ) {
@@ -115,7 +119,9 @@ export const PaymentModalC = ({
           enrolledCourseId: studentObj.enrolledCourseId,
           studentId: studentObj.studentId,
           amount: studentPayment.amount,
-          paymentDate: studentPayment.paymentDate,
+          year: studentPayment.year,
+          month: studentPayment.month,
+          date: studentPayment.date,
           paymentDetails: studentPayment.paymentDetails,
           paymentId: insertedData.insertedId,
         });
