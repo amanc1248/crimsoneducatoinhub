@@ -12,6 +12,7 @@ import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
 import { EnrolledCoursesPresentataional } from "./EnrolledCoursesPresentational";
 import "../../../styles/screens/home.css";
 import EnrolledCourse from "../../../classes/EnrolledCourses.class";
+import { toast } from "react-toastify";
 export const EnrolledCoursesModalContainer = ({
   show,
   setShow,
@@ -26,7 +27,8 @@ export const EnrolledCoursesModalContainer = ({
   const [addCourse, setAddCourse] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-
+  const [loading, setLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false);
   // USE EFFECTS
   useEffect(() => {
     getOneModalAllDocuments({
@@ -128,6 +130,7 @@ export const EnrolledCoursesModalContainer = ({
       enrolledCourse.shiftId &&
       enrolledCourse.actualCoursePrice
     ) {
+      setLoading(true);
       insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "enrolledCourses",
@@ -155,11 +158,16 @@ export const EnrolledCoursesModalContainer = ({
           return [...prevState, enrolledCourseObject];
         });
         setAddCourse(false);
+        setLoading(false);
+      toast.success('Course enrolled to student successfully', {autoClose:5000});
       });
+    }else{
+      toast.error('Add required fields to add course', {autoClose:5000});
     }
   };
 
   const handleOnDeleteCourse = (id) => {
+    setDeleteLoading(true);
     deleteData({
       url: `/api/commonRoute/deleteData?id=${id}&collectionName=enrolledCourses`,
     })
@@ -170,37 +178,13 @@ export const EnrolledCoursesModalContainer = ({
           });
         });
         hideAddCourse();
+        setDeleteLoading(false);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const handleOnUpdateCourse = (enrolledCourse, paymentStatus) => {
-    const enrolledCourseObject = new EnrolledCourse({
-      id: enrolledCourse.id,
-      courseId: enrolledCourse.courseId,
-      courseName: enrolledCourse.courseName,
-      year: enrolledCourse.year,
-      month: enrolledCourse.month,
-      startDate: enrolledCourse.startDate,
-      endDate: enrolledCourse.endDate,
-      shiftId: enrolledCourse.shiftId,
-      shift: enrolledCourse.shift,
-      paymentStatus: paymentStatus,
-      studentId: enrolledCourse.studentId,
-    });
-    updateData({
-      url: "/api/commonRoute/updateData",
-      collectionName: "enrolledCourses",
-      updatedTo: enrolledCourseObject,
-      id: enrolledCourse.id,
-    })
-      .then((result) => {})
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   return (
     <EnrolledCoursesPresentataional
       show={show}
@@ -220,9 +204,10 @@ export const EnrolledCoursesModalContainer = ({
       handleOnAddCourse={handleOnAddCourse}
       enrolledCourses={enrolledCourses}
       handleOnDeleteCourse={handleOnDeleteCourse}
-      handleOnUpdateCourse={handleOnUpdateCourse}
       showPaymentModal={showPaymentModal}
       setShowPaymentModal={setShowPaymentModal}
+      loading={loading}
+      deleteLoading={deleteLoading}
     ></EnrolledCoursesPresentataional>
   );
 };

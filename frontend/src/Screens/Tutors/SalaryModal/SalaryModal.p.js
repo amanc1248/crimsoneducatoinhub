@@ -5,6 +5,7 @@ import Table from "react-bootstrap/Table";
 import { Image } from "cloudinary-react";
 
 import "../../../styles/screens/home.css";
+import { LoaderRotatingSquare } from "../../../components/Loader";
 export const SalaryModalP = ({
   addSalary,
   handleOnShow,
@@ -19,6 +20,7 @@ export const SalaryModalP = ({
   tutorSalary,
   chequePhoto,
   setChequePhoto,
+  addSalaryLoading
 }) => {
   return (
     <>
@@ -162,7 +164,10 @@ export const SalaryModalP = ({
                     }}
                   />
                 </div>
-                <div className="payment__date">
+              </div>
+
+              <div className="adding__course__div">
+              <div className="payment__date">
                   <label htmlFor="paymentDetails">Cheque Photo</label>
                   <input
                     type="file"
@@ -179,6 +184,7 @@ export const SalaryModalP = ({
                 </div>
               </div>
 
+              {addSalaryLoading ? <LoaderRotatingSquare></LoaderRotatingSquare>: <div>
               <Button
                 variant="btn-close"
                 size="sm"
@@ -195,6 +201,7 @@ export const SalaryModalP = ({
               >
                 Save
               </Button>
+              </div>}
             </div>
           )}
         </Modal.Body>

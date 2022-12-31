@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-
+import {LoaderRotatingSquare} from "../../../components/Loader"
 import "../../../styles/screens/home.css";
 export const PaymentModalP = ({
   addPayment,
@@ -15,7 +15,8 @@ export const PaymentModalP = ({
   paymentCalculations,
   checkTotalAmountAndSet,
   setStudentPayment,
-  studentPayment
+  studentPayment,
+  loading,
 }) => {
   return (
     <>
@@ -30,13 +31,24 @@ export const PaymentModalP = ({
       >
         <Modal.Header>
           <Modal.Title>Payment Details</Modal.Title>
-          {console.log(paymentCalculations.totalAmount,  paymentCalculations.paidAmount)}
-
           <div>
             <div>Total: {paymentCalculations.totalAmount}</div>
             <div>Paid: {paymentCalculations.paidAmount}</div>
             <div>Remaining: {paymentCalculations.remainingAmount}</div>
-            {paymentCalculations.totalAmount === paymentCalculations.paidAmount ? <div className="payment__paid"> <strong>FULLY PAID</strong> </div> : <div>  <strong className="payment__not__paid">NOT FULLY PAID</strong> </div>}
+            {paymentCalculations.totalAmount ===
+            paymentCalculations.paidAmount ? (
+              <div className="payment__paid">
+                {" "}
+                <strong>FULLY PAID</strong>{" "}
+              </div>
+            ) : (
+              <div>
+                {" "}
+                <strong className="payment__not__paid">
+                  NOT FULLY PAID
+                </strong>{" "}
+              </div>
+            )}
           </div>
         </Modal.Header>
         <Modal.Body>
@@ -45,7 +57,7 @@ export const PaymentModalP = ({
               <tr>
                 <th>#</th>
                 <th>Payment Date</th>
-                <th>Amount</th>  
+                <th>Amount</th>
                 <th>Payment Details</th>
                 <th>Actions</th>
               </tr>
@@ -77,14 +89,17 @@ export const PaymentModalP = ({
                 })}
             </tbody>
           </Table>
-          {paymentCalculations.totalAmount !== paymentCalculations.paidAmount && <Button
-            variant="success"
-            size="sm"
-            className="add__button__size"
-            onClick={handleOnShow}
-          >
-            + Add Payment
-          </Button>}
+          {paymentCalculations.totalAmount !==
+            paymentCalculations.paidAmount && (
+            <Button
+              variant="success"
+              size="sm"
+              className="add__button__size"
+              onClick={handleOnShow}
+            >
+              + Add Payment
+            </Button>
+          )}
           {addPayment && (
             <div>
               <div className="adding__course__div">
@@ -111,7 +126,9 @@ export const PaymentModalP = ({
                   <input
                     type="number"
                     id="amount"
-                    onChange={(e)=>{checkTotalAmountAndSet(e.target.value)}}
+                    onChange={(e) => {
+                      checkTotalAmountAndSet(e.target.value);
+                    }}
                     value={studentPayment.amount}
                     // onChange={(e) => {
                     //   checkTotalAmount()
@@ -138,22 +155,28 @@ export const PaymentModalP = ({
                 </div>
               </div>
 
-              <Button
-                variant="btn-close"
-                size="sm"
-                className="add__button__size"
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                className="add__button__size"
-                onClick={handleAddPayment}
-              >
-                Save
-              </Button>
+              {loading ? (
+                <LoaderRotatingSquare></LoaderRotatingSquare>
+              ) : (
+                <div>
+                  <Button
+                    variant="btn-close"
+                    size="sm"
+                    className="add__button__size"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="add__button__size"
+                    onClick={handleAddPayment}
+                  >
+                    Save
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </Modal.Body>

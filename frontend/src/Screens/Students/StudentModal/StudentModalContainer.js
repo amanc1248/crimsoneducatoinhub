@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   deleteData,
   insertData,
@@ -17,9 +18,11 @@ export function StudentModal({
   setRefresh,
 }) {
   const qualificationList = [
-    { label: "SLC", value: "slc" },
+    { label: "Under SEE", value: "Under SEE" },
+    { label: "SEE", value: "SEE" },
     { label: "+2", value: "+2" },
     { label: "Bachelors", value: "bachelors" },
+    { label: "Masters", value: "Masters" },
   ];
   const feeStatusList = [
     { label: "Paid", value: "paid" },
@@ -70,10 +73,13 @@ export function StudentModal({
           setRefresh(true);
           setLoader(false);
           handleClose();
+          toast.success("Student added successfully", {autoClose:5000});
         })
         .catch((e) => {
           console.log(e);
         });
+    }else{
+      toast.error("Please add the required fields", {autoClose:5000});
     }
   };
 
@@ -109,10 +115,13 @@ export function StudentModal({
           setRefresh(true);
           setLoader(false);
           handleClose();
+          toast.success("Student details updated successfully", {autoClose:5000});
         })
         .catch((e) => {
           console.log(e);
         });
+    }else{
+      toast.error("Please add the required fields", {autoClose:5000});
     }
   };
 
@@ -126,6 +135,7 @@ export function StudentModal({
         setRefresh(true);
         setLoader(false);
         handleClose();
+        toast.success("Student deleted successfully", {autoClose:5000});
       })
       .catch((e) => {
         console.log(e);
@@ -155,6 +165,7 @@ export function StudentModal({
       handleOnClickDelete={handleOnClickDelete}
       name={name}
       qualification={qualification}
+      loader = {loader}
     ></StudentModalPresentational>
   );
 }

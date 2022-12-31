@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Select from "react-select";
 import { IndividualEnrolledCourseC } from "./IndividualEnrolledCourse/IndividualEnrolledCourse.c";
+import { Loader } from "../../../components/Loader";
 
 export const EnrolledCoursesPresentataional = ({
   setShow,
@@ -21,6 +22,8 @@ export const EnrolledCoursesPresentataional = ({
   handleOnAddCourse,
   enrolledCourses,
   handleOnDeleteCourse,
+  loading,
+  setDeleteLoading,
 }) => {
   return (
     <>
@@ -223,17 +226,23 @@ export const EnrolledCoursesPresentataional = ({
           )}
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-close" onClick={handleClose}>
-            Cancel
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setShow(false);
-            }}
-          >
-            Save
-          </button>
+          {loading ? (
+            <Loader></Loader>
+          ) : (
+            <div>
+              <button className="btn btn-close" onClick={handleClose}>
+                Cancel
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setShow(false);
+                }}
+              >
+                Save
+              </button>
+            </div>
+          )}
         </Modal.Footer>
       </Modal>
     </>
