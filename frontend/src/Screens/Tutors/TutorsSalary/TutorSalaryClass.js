@@ -4,7 +4,9 @@ class TutorSalaryClass {
     tutorId,
     salaryId,
     amount,
-    salaryDate,
+    year,
+    month,
+    date,
     salaryDetails,
     filename,
   }) {
@@ -12,7 +14,9 @@ class TutorSalaryClass {
     this.tutorId = tutorId;
     this.salaryId = salaryId;
     this.amount = amount;
-    this.salaryDate = salaryDate;
+    this.year = year;
+    this.month = month;
+    this.date = date;
     this.salaryDetails = salaryDetails;
     this.filename = filename;
   }

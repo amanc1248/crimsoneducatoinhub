@@ -4,6 +4,9 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import {LoaderRotatingSquare} from "../../../components/Loader"
 import "../../../styles/screens/home.css";
+import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
+import Select from "react-select";
+
 export const PaymentModalP = ({
   addPayment,
   handleOnShow,
@@ -56,7 +59,9 @@ export const PaymentModalP = ({
             <thead>
               <tr>
                 <th>#</th>
-                <th>Payment Date</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Date</th>
                 <th>Amount</th>
                 <th>Payment Details</th>
                 <th>Actions</th>
@@ -68,7 +73,9 @@ export const PaymentModalP = ({
                   return (
                     <tr key={payment.paymentId}>
                       <td>{index + 1}</td>
-                      <td>{payment.paymentDate}</td>
+                      <td>{payment.year}</td>
+                      <td>{payment.month}</td>
+                      <td>{payment.date}</td>
                       <td>{payment.amount}</td>
                       <td>{payment.paymentDetails}</td>
                       <td>
@@ -102,23 +109,63 @@ export const PaymentModalP = ({
           )}
           {addPayment && (
             <div>
-              <div className="adding__course__div">
+               <div className="adding__course__div">
                 {/* 1. payment date*/}
-                <div className="payment__date">
-                  <label htmlFor="paymentDate">Payment Date</label>
-                  <input
-                    type="text"
-                    id="paymentDate"
+                <div>
+                  <label for="paymentYear">Year</label>
+                  <Select
+                    placeholder="Select Year"
+                    className="selecting__divs"
+                    options={yearsList}
                     onChange={(e) => {
                       setStudentPayment((prevState) => {
                         return {
                           ...prevState,
-                          paymentDate: e.target.value,
+                          year: e.value,
                         };
                       });
                     }}
                   />
                 </div>
+
+                {/* 2. Start Month  */}
+                <div class="learning__form__group ">
+                  <label for="month">Month</label>
+                  <Select
+                    placeholder="Select month"
+                    className="selecting__divs"
+                    options={monthsList}
+                    onChange={(e) => {
+                      setStudentPayment((prevState) => {
+                        return {
+                          ...prevState,
+                          month: e.value,
+                        };
+                      });
+                    }}
+                  />
+                </div>
+
+                {/* 3. Start Date  */}
+                <div class="learning__form__group ">
+                  <label htmlFor="">Date</label>
+                  <Select
+                    placeholder="startDate"
+                    className="selecting__divs"
+                    options={datesList}
+                    onChange={(e) => {
+                      setStudentPayment((prevState) => {
+                        return {
+                          ...prevState,
+                          date: e.value,
+                        };
+                      });
+                    }}
+                  />
+                </div>
+
+              </div>
+              <div className="adding__course__div">
 
                 {/* 2. amount*/}
                 <div className="payment__date">

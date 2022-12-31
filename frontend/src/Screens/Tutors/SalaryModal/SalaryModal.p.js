@@ -6,6 +6,9 @@ import { Image } from "cloudinary-react";
 
 import "../../../styles/screens/home.css";
 import { LoaderRotatingSquare } from "../../../components/Loader";
+import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
+import Select from "react-select";
+
 export const SalaryModalP = ({
   addSalary,
   handleOnShow,
@@ -60,7 +63,9 @@ export const SalaryModalP = ({
             <thead>
               <tr>
                 <th>#</th>
-                <th>Payment Date</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Date</th>
                 <th>Amount</th>
                 <th>Payment Details</th>
                 <th>Cheque Photo</th>
@@ -73,7 +78,9 @@ export const SalaryModalP = ({
                   return (
                     <tr key={salary.salaryId}>
                       <td>{index + 1}</td>
-                      <td>{salary.salaryDate}</td>
+                      <td>{salary.year}</td>
+                      <td>{salary.month}</td>
+                      <td>{salary.date}</td>
                       <td>{salary.amount}</td>
                       <td>{salary.salaryDetails}</td>
                       <td>
@@ -119,22 +126,62 @@ export const SalaryModalP = ({
             <div>
               <div className="adding__course__div">
                 {/* 1. payment date*/}
-                <div className="payment__date">
-                  <label htmlFor="paymentDate">Payment Date</label>
-                  <input
-                    type="text"
-                    id="paymentDate"
+                <div>
+                  <label for="paymentYear">Year</label>
+                  <Select
+                    placeholder="Select Year"
+                    className="selecting__divs"
+                    options={yearsList}
                     onChange={(e) => {
                       setTutorSalary((prevState) => {
                         return {
                           ...prevState,
-                          salaryDate: e.target.value,
+                          year: e.value,
                         };
                       });
                     }}
                   />
                 </div>
 
+                {/* 2. Start Month  */}
+                <div class="learning__form__group ">
+                  <label for="month">Month</label>
+                  <Select
+                    placeholder="Select month"
+                    className="selecting__divs"
+                    options={monthsList}
+                    onChange={(e) => {
+                      setTutorSalary((prevState) => {
+                        return {
+                          ...prevState,
+                          month: e.value,
+                        };
+                      });
+                    }}
+                  />
+                </div>
+
+                {/* 3. Start Date  */}
+                <div class="learning__form__group ">
+                  <label htmlFor="">Date</label>
+                  <Select
+                    placeholder="startDate"
+                    className="selecting__divs"
+                    options={datesList}
+                    onChange={(e) => {
+                      setTutorSalary((prevState) => {
+                        return {
+                          ...prevState,
+                          date: e.value,
+                        };
+                      });
+                    }}
+                  />
+                </div>
+
+              </div>
+
+              <div className="adding__course__div">
                 {/* 2. amount*/}
                 <div className="payment__date">
                   <label htmlFor="amount">Amount</label>
@@ -164,9 +211,6 @@ export const SalaryModalP = ({
                     }}
                   />
                 </div>
-              </div>
-
-              <div className="adding__course__div">
               <div className="payment__date">
                   <label htmlFor="paymentDetails">Cheque Photo</label>
                   <input
