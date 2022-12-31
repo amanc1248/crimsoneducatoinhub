@@ -6,6 +6,7 @@ import { DashboardContainer } from "./Dashboard/DashboardContainer";
 import { ShiftsContainer } from "./Shifts/ShiftContainer";
 import { StudentsContainer } from "./Students/StudentsContainer";
 import { TutorsContainer } from "./Tutors/TutorsContainer";
+import Users from "./Users/Users";
 
 export const TabContent = ({ tabIndex }) => {
   // data
@@ -16,6 +17,8 @@ export const TabContent = ({ tabIndex }) => {
     <TutorsContainer />,
     <StudentsContainer />,
     <ShiftsContainer />,
+
+    <Users />,
   ];
   return (
     <div className="tab__content">

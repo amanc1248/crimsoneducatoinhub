@@ -15,6 +15,7 @@ export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
     { label: "Tutors", icon: <SchoolIcon sx={{ fontSize: 18 }} /> },
     { label: "Students", icon: <PersonIcon sx={{ fontSize: 18 }} /> },
     { label: "Shifts", icon: <AccessTimeFilledIcon sx={{ fontSize: 18 }} /> },
+    { label: "Users", icon: <PersonIcon sx={{ fontSize: 18 }} /> },
   ];
 
   // usestate

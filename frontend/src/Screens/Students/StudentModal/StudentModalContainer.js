@@ -27,13 +27,24 @@ export function StudentModal({
     { label: "Partially Paid", value: "partially paid" },
   ];
 
+  const typeClassList = [
+    {
+      label: "Special Class",
+      value: "special",
+    },
+    {
+      label: "Normal Class",
+      value: "normal",
+    },
+  ];
+
   //   usestates
   // USESTATES
   const [name, setName] = useState(individualStudent && individualStudent.name);
   const [email, setEmail] = useState(
     individualStudent && individualStudent.email
   );
-  const [age, setAge] = useState(individualStudent && individualStudent.age);
+  // const [age, setAge] = useState(individualStudent && individualStudent.age);
   const [qualification, setQualification] = useState(
     individualStudent && individualStudent.qualification
   );
@@ -45,19 +56,51 @@ export function StudentModal({
   );
   const [loader, setLoader] = useState(false);
 
+  const [dob, setDOB] = useState(individualStudent && individualStudent.dob);
+  const [parentsName, setParentsName] = useState(
+    individualStudent && individualStudent.parentsName
+  );
+
+  const [typeClass, setTypeClass] = useState(
+    individualStudent && individualStudent.typeClass
+  );
+
+  const [address, setAddress] = useState(
+    individualStudent && individualStudent.address
+  );
+  const [counsellorName, setCounsellorName] = useState(
+    individualStudent && individualStudent.counsellorName
+  );
+
   // functions
   // 1. on adding course
   const handleOnClickSubmit = () => {
     const doc = {
       name,
       email,
-      age,
+
       qualification,
       phoneNumber,
       parentPhoneNumber,
+      dob,
+      parentsName,
+      typeClass,
+      address,
+      counsellorName,
       date: new Date(),
     };
-    if ((name, email, age, qualification, phoneNumber, parentPhoneNumber)) {
+    if (
+      (name,
+      email,
+      dob,
+      qualification,
+      phoneNumber,
+      parentPhoneNumber,
+      parentsName,
+      typeClass,
+      address,
+      counsellorName)
+    ) {
       let list = students;
       setLoader(true);
       insertData({
@@ -81,9 +124,14 @@ export function StudentModal({
   const handleClose = () => {
     setName("");
     setEmail("");
-    setAge("");
+    setTypeClass("");
+    setParentsName("");
+    setDOB("");
+    setParentPhoneNumber("");
     setQualification("");
     setPhoneNumber("");
+    setCounsellorName("");
+    setAddress("");
     setShow(false);
   };
 
@@ -92,12 +140,27 @@ export function StudentModal({
     const doc = {
       name,
       email,
-      age,
+      dob,
       qualification,
       phoneNumber,
       parentPhoneNumber,
+      parentsName,
+      typeClass,
+      address,
+      counsellorName,
     };
-    if ((name, email, age, qualification, phoneNumber, parentPhoneNumber)) {
+    if (
+      (name,
+      email,
+      dob,
+      qualification,
+      phoneNumber,
+      parentPhoneNumber,
+      parentsName,
+      typeClass,
+      address,
+      counsellorName)
+    ) {
       setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
@@ -148,6 +211,16 @@ export function StudentModal({
       parentPhoneNumber={parentPhoneNumber}
       qualificationList={qualificationList}
       setQualification={setQualification}
+      dob={dob}
+      setDOB={setDOB}
+      parentsName={parentsName}
+      setParentsName={setParentsName}
+      typeClassList={typeClassList}
+      setTypeClass={setTypeClass}
+      address={address}
+      setAddress={setAddress}
+      counsellorName={counsellorName}
+      setCounsellorName={setCounsellorName}
       handleClose={handleClose}
       handleOnClickSubmit={handleOnClickSubmit}
       handleOnClickUpdate={handleOnClickUpdate}

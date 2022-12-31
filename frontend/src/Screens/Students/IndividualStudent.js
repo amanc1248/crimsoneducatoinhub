@@ -43,10 +43,16 @@ export const IndividualStudent = ({ student, index, setRefresh }) => {
         <td>{index + 1}</td>
         <td>{student.name}</td>
         <td>{student.email}</td>
+        <td>{student.dob}</td>
         <td>{student.phoneNumber}</td>
+        <td>{student.qualification}</td>
+        <td>{student.address}</td>
+        <td>{student.parentsName}</td>
+
         <td>{student.parentPhoneNumber}</td>
 
-        <td>{student.qualification}</td>
+        <td>{student.counsellorName}</td>
+        <td>{student.typeClass}</td>
         <td>
           <Button
             variant="success"

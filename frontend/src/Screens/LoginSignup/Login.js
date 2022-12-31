@@ -61,6 +61,8 @@ const Login = () => {
           alert("Username or password not found");
         } else if (result.code === false) {
           alert("Code not matched");
+        } else if (result.role === false) {
+          alert("Role not Assigned");
         } else if (result.login === true) {
           localStorage.setItem("token", result.token);
           localStorage.setItem("userId", result.result._id);

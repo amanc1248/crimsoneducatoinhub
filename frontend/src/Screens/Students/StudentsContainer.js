@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
@@ -9,6 +9,7 @@ import Pagination from "react-js-pagination";
 import { StudentModal } from "./StudentModal/StudentModalContainer";
 import { SearchComponentC } from "../../components/SearchComponent/SearchComponent.c";
 import { CSVLink, CSVDownload } from "react-csv";
+import { useReactToPrint } from "react-to-print";
 
 export const StudentsContainer = () => {
   // use states
@@ -66,6 +67,16 @@ export const StudentsContainer = () => {
       });
   }, [currentPage]);
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  //   const studentTable = ()=> {
+  // return(
+  //     <div>ABC</div>
+  //   )
+  //   }
+
   return (
     <div className="students">
       {showModal && (
@@ -89,8 +100,11 @@ export const StudentsContainer = () => {
         </Button>
         <div className="mt-3">
           <CSVLink data={students}>
-            <Button>Download Student Details </Button>
+            <Button>Download Student CSV </Button>
           </CSVLink>
+        </div>
+        <div className="mt-3">
+          <Button onClick={handlePrint}>Download Student PDF </Button>
         </div>
         {students && (
           <SearchComponentC
@@ -113,16 +127,23 @@ export const StudentsContainer = () => {
         />
       </div>
       <br />
-      <div className="students__inside">
+      <div className="students__inside" ref={componentRef}>
         <Table striped hover size="sm" className="table__list">
           <thead>
             <tr>
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
+              <th>DOB</th>
+
               <th>Your Phone Number</th>
-              <th>Parent Phone Number</th>
               <th>Qualification</th>
+              <th>Address</th>
+              <th>Parents name</th>
+              <th>Parent Phone Number</th>
+              <th>Counsellor Name</th>
+              <th>Class</th>
+
               <th>Actions</th>
             </tr>
           </thead>

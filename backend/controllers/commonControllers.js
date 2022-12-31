@@ -167,6 +167,8 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
   const address = req.body.doc.address;
   const password = req.body.doc.password;
 
+  const role = ["read", "write", "delete"];
+
   try {
     const result = await db
       .collection(collectionName)
@@ -188,6 +190,7 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
         phoneNumber,
         address,
         hashedPassword,
+        role,
       };
 
       const newUser = await db.collection(collectionName).insertOne(newDoc);
@@ -209,6 +212,7 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
         .collection(collectionName)
         .findOne({ phoneNumber: doc.phoneNumber });
       if (result) {
+        // console.log(result.role);
         const validHashedPassword = await bcrypt.compare(
           doc.password,
           result.hashedPassword
@@ -226,6 +230,19 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
             result: result,
           });
         }
+        // if (result.role == "pending") {
+        //   return res.json({
+        //     role: false,
+        //     result: result,
+        //   });
+        // } else if (result.role == "assign") {
+
+        // } else {
+        //   return res.json({
+        //     login: false,
+        //     result: result,
+        //   });
+        // }
       } else {
         return res.json({
           login: false,
@@ -254,7 +271,7 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
 //   } catch (err) {
 //     console.log(err);
 //   }});
-  
+
 const verifyToken = asyncHandler(async (req, res, next) => {
   const { collectionName } = req.body;
   const token = req.body.token;
