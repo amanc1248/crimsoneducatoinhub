@@ -22,6 +22,9 @@ export function TutorModal({
     { label: "Accountant", value: "exp3" },
     { label: "Computer Instructor", value: "exp4" },
     { label: "Managing Director", value: "exp5" },
+    { label: "Cleaner", value: "exp6" },
+    { label: "Chairman", value: "exp7" },
+    { label: "Counselor", value: "exp8" },
   ];
   const salaryStatusList = [
     { label: "Paid", value: "paid" },
@@ -62,14 +65,7 @@ export function TutorModal({
     };
     console.log("Doc: ", doc);
 
-    if (
-      name &&
-      email &&
-      age &&
-      qualification &&
-      startDate &&
-      phoneNumber
-    ) {
+    if (name && email && age && qualification && startDate && phoneNumber) {
       let list = tutors;
       setLoader(true);
       insertData({
@@ -118,14 +114,7 @@ export function TutorModal({
       phoneNumber,
     };
     console.log("Doc: ", doc);
-    if (
-      name &&
-      email &&
-      age &&
-      qualification &&
-      startDate &&
-      phoneNumber
-    ) {
+    if (name && email && age && qualification && startDate && phoneNumber) {
       setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
