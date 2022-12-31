@@ -87,7 +87,7 @@ const insertOneDataController = asyncHandler(async (req, res, callback) => {
 
 // update one document common data controller
 const updateCommonDataController = asyncHandler(async (req, res, callback) => {
-  console.log(req.body);
+  console.log("Request body: ", req.body);
   try {
     const { collectionName, id, updateTo } = req.body;
     const madeUpdateTo = convertToObjectIDs(updateTo)
@@ -172,6 +172,8 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
   const phoneNumber = req.body.doc.phoneNumber;
   const address = req.body.doc.address;
   const password = req.body.doc.password;
+  const permissions = req.body.doc.permissions;
+  const role = req.body.doc.role;
 
   try {
     const result = await db
@@ -194,6 +196,8 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
         phoneNumber,
         address,
         hashedPassword,
+        permissions,
+        role
       };
 
       const newUser = await db.collection(collectionName).insertOne(newDoc);

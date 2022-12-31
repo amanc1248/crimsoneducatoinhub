@@ -11,7 +11,8 @@ export const UsersP = ({users})=>{
               <th>Name</th>
               <th>Email</th>
               <th>Phone Number</th>
-              <th>Designation</th>
+              <th>Position</th>
+              <th>Address</th>
               <th>Permissions</th>
               <th>Actions</th>
             </tr>

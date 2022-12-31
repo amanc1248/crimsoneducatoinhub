@@ -54,6 +54,8 @@ const Signup = () => {
       password,
       cPassword,
       date: new Date(),
+      permissions:[],
+      role:''
     };
 
     if (password != cPassword) {

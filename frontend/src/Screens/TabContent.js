@@ -19,7 +19,7 @@ export const TabContent = ({ tabIndex }) => {
     <StudentsContainer />,
     <ShiftsContainer />,
     <CustomFilterC></CustomFilterC>,
-    // <UsersC></UsersC>
+    <UsersC></UsersC>
   ];
   return (
     <div className="tab__content">
