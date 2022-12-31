@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { getAllData, updateData } from "../../actions/homeActions";
 import Pagination from "react-js-pagination";
 import Button from "react-bootstrap/esm/Button";
+import { Document, Page, Text } from "react-pdf";
 
 const Users = () => {
   const [userDetails, setUserDetails] = useState([]);
@@ -53,6 +54,20 @@ const Users = () => {
     }
   };
 
+  const pdfRef = useRef(null);
+
+  function handleDownload() {
+    const pdf = pdfRef.current.pdf;
+    pdf.pageSize("A4"); // Set the page size to A4
+    pdf.pageMargins([30, 30, 30, 30]); // Set the page margins to 30pt
+    pdf.fontSize(12); // Set the font size to 12pt
+    pdf.text("My Custom PDF", { align: "center" }); // Add a title to the PDF
+    pdf.moveDown(); // Move the cursor down by one line
+    pdf.text("This is a custom PDF file created with react-pdf", {
+      align: "center",
+    }); // Add some text to the PDF
+    pdf.save("document.pdf");
+  }
   return (
     <div>
       THIS IS USERS
@@ -119,6 +134,12 @@ const Users = () => {
             })}
           </tbody>
         </Table>
+      </div>
+      <div>
+        <Document ref={pdfRef}>
+          <Page>THIS IS NEW PDF</Page>
+        </Document>
+        <button onClick={handleDownload}>Download PDF</button>
       </div>
     </div>
   );
