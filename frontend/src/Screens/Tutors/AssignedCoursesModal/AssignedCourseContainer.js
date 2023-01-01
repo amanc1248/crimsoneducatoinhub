@@ -33,6 +33,8 @@ export const AssignedCoursesContainer = ({
     getOneModalAllDocuments({
       url: "/api/commonRoute/getAllDocuments",
       collectionName: "courses",
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -51,6 +53,8 @@ export const AssignedCoursesContainer = ({
     getOneModalAllDocuments({
       url: "/api/commonRoute/getAllDocuments",
       collectionName: "shifts",
+      checkPermission:'read',
+      userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((shift, index) => {
@@ -69,7 +73,9 @@ export const AssignedCoursesContainer = ({
     getOneModalDocumentsById({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "assignedCourses",
-      filter: {tutorId:individualTutor._id}
+      filter: {tutorId:individualTutor._id},
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -133,6 +139,8 @@ export const AssignedCoursesContainer = ({
         url: "/api/commonRoute/insertData",
         collectionName: "assignedCourses",
         doc: assignedCourse,
+        checkPermission:'write',
+        userId:localStorage.getItem('userId')
       }).then((result) => {
         const assignedCourseObject = new AssignedCourse({
           assignedCourseId: result.insertedId,
@@ -170,8 +178,9 @@ export const AssignedCoursesContainer = ({
   
   const handleOnDeleteAssignedCourse = (id) => {
     setDeleteLoading(true);
+    const userId =localStorage.getItem('userId');
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${id}&collectionName=assignedCourses`,
+      url: `/api/commonRoute/deleteData?id=${id}&collectionName=assignedCourses&userId=${userId}`,
     })
       .then((result) => {
         setAssignedCourses((prevState) => {

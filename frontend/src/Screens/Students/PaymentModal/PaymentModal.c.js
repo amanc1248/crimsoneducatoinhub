@@ -38,6 +38,8 @@ export const PaymentModalC = ({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "studentsCoursePayment",
       filter: {enrolledCourseId: course.id},
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((payment, index) => {
@@ -78,6 +80,8 @@ export const PaymentModalC = ({
           collectionName: "enrolledCourses",
           updatedTo: newObj,
           id: course.id,
+          checkPermission:'update',
+        userId:localStorage.getItem('userId')
         })
           .then((result) => {
             setAddedOrDeletedSalary(false);
@@ -112,6 +116,8 @@ export const PaymentModalC = ({
         url: "/api/commonRoute/insertData",
         collectionName: "studentsCoursePayment",
         doc: studentObj,
+        checkPermission:'write',
+        userId:localStorage.getItem('userId')
       });
       if(insertedData){
         console.log(insertedData);
@@ -147,8 +153,10 @@ export const PaymentModalC = ({
   };
 
   const handleOnDelete = async (id) => {
+    const userId =localStorage.getItem('userId');
+
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${id}&collectionName=studentsCoursePayment`,
+      url: `/api/commonRoute/deleteData?id=${id}&collectionName=studentsCoursePayment&userId=${userId}`,
     })
       .then(async (result) => {
         setAllPayments((prevState) => {

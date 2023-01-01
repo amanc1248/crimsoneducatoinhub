@@ -31,7 +31,9 @@ export function ShiftModalContainer({
       insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "shifts",
-        doc: shift
+        doc: shift,
+        checkPermission:'write',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setRefresh(true);
@@ -56,6 +58,8 @@ export function ShiftModalContainer({
         collectionName: "shifts",
         updatedTo: shift,
         id: individualShift.id,
+        checkPermission:'update',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setRefresh(true);
@@ -69,8 +73,9 @@ export function ShiftModalContainer({
 
   // 4. on deleting course
   const handleOnClickDelete = () => {
+    const userId =localStorage.getItem('userId');
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${individualShift.id}&collectionName=shifts`,
+      url: `/api/commonRoute/deleteData?id=${individualShift.id}&collectionName=shifts&userId=${userId}`,
     })
       .then((result) => {
         setRefresh(true);

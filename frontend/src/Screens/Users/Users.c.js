@@ -14,6 +14,8 @@ export const UsersC = () => {
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "users",
       filter: { _id: localStorage.getItem("userId") },
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     }).then((result) => {
       if (result[0]?.role === "admin") {
         setRole(result[0]?.role);
@@ -22,6 +24,8 @@ export const UsersC = () => {
           collectionName: "users",
           pageNumber: currentPage,
           nPerPage: 100,
+          checkPermission:'read',
+        userId:localStorage.getItem('userId')
         }).then((result) => {
           setUsers(result);
         });

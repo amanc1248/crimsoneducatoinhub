@@ -32,6 +32,8 @@ export const DashboardSection3 = () => {
     getTotalCount({
       url: "/api/commonRoute/getTotalDocument",
       collectionNames: ["students", "tutors", "courses", "shifts"],
+      checkPermission:'read',
+      userId:localStorage.getItem('userId')
     })
       .then((result) => {
         setTotalNumbers(result);

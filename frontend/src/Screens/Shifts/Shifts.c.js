@@ -20,6 +20,8 @@ export const ShiftsContainer = () => {
     getOneModalTotalCount({
       url: "/api/commonRoute/getOneModalTotalCount",
       collectionName: "shifts",
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         console.log("total documents: ", result);
@@ -35,6 +37,8 @@ export const ShiftsContainer = () => {
         collectionName: "shifts",
         pageNumber: currentPage,
         nPerPage: 100,
+        checkPermission:'read',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           const list = result.map((shift, i)=>{
@@ -61,6 +65,8 @@ export const ShiftsContainer = () => {
       collectionName: "shifts",
       pageNumber: currentPage,
       nPerPage: 100,
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((shift, i)=>{

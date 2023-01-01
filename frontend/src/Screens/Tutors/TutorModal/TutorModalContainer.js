@@ -72,6 +72,8 @@ export function TutorModal({
         url: "/api/commonRoute/insertData",
         collectionName: "tutors",
         doc,
+        checkPermission:'write',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setTutors(list);
@@ -121,6 +123,8 @@ export function TutorModal({
         collectionName: "tutors",
         updatedTo: doc,
         id: individualTutor._id,
+        checkPermission:'update',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setRefresh(true);
@@ -143,8 +147,9 @@ export function TutorModal({
   // 4. on deleting course
   const handleOnClickDelete = () => {
     setLoader(true);
+    const userId =localStorage.getItem('userId');
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${individualTutor._id}&collectionName=tutors`,
+      url: `/api/commonRoute/deleteData?id=${individualTutor._id}&collectionName=tutors&userId=${userId}`,
     })
       .then((result) => {
         setRefresh(true);

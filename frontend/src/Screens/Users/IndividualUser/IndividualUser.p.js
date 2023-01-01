@@ -12,9 +12,9 @@ export const IndividualUserP = ({user, handlePermissionChange, permissionsArray,
                 <div className="">
                 {permissionsArray.map((permission, index)=>{
             return <div key={index} className="individualPermission">
-                <label htmlFor={permission.permission}>
+                <label htmlFor={permission.permission+user.phoneNumber}>
                     {permission.permission}
-                    <input type="checkbox" id={permission.permission} checked={permission.access} value={permission.permission} onChange={
+                    <input type="checkbox" id={permission.permission+user.phoneNumber} checked={permission.access} value={permission.permission} onChange={
                         ()=>{
                             handlePermissionChange(permission);
                         }

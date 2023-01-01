@@ -34,6 +34,8 @@ export const CoursesContainer = () => {
         collectionName: "courses",
         pageNumber: currentPage,
         nPerPage: 100,
+        checkPermission:'read',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setUnModifiableOrignalList(result);
@@ -53,6 +55,8 @@ export const CoursesContainer = () => {
         })
         .catch((e) => {
           console.log(e);
+        }).finally(()=>{
+          setLoader(false)
         });
     }
   }, [refresh]);
@@ -64,6 +68,8 @@ export const CoursesContainer = () => {
       collectionName: "courses",
       pageNumber: currentPage,
       nPerPage: 100,
+      checkPermission:'read',
+      userId:localStorage.getItem('userId')
     })
       .then((result) => {
         setUnModifiableOrignalList(result);
@@ -83,7 +89,9 @@ export const CoursesContainer = () => {
       })
       .catch((e) => {
         console.log(e);
-      });
+      }).finally(()=>{
+        setLoader(false)
+      }); 
   }, [currentPage]);
 
   return (

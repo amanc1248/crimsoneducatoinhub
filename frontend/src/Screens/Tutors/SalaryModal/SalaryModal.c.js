@@ -43,6 +43,8 @@ export const SalaryModalC = ({
       collectionName: "tutorsCoursePayment",
       id: course.assignedCourseId,
       filter: { assignedCourseId: course.assignedCourseId },
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((salary, index) => {
@@ -86,6 +88,8 @@ export const SalaryModalC = ({
         collectionName: "assignedCourses",
         updatedTo: newObj,
         id: course.assignedCourseId,
+        checkPermission:'update',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           toast.success("Payment Status updated Successfully", {
@@ -140,6 +144,8 @@ export const SalaryModalC = ({
               url: "/api/commonRoute/insertData",
               collectionName: "tutorsCoursePayment",
               doc: obj,
+              checkPermission:'write',
+        userId:localStorage.getItem('userId')
             }).then(async (result) => {
               const tutorSalaryObject = new TutorSalaryClass({
                 assignedCourseId: tutorSalary.assignedCourseId,
@@ -178,8 +184,9 @@ export const SalaryModalC = ({
     setAddSalary(false);
   };
   const handleOnDelete = async (id) => {
+    const userId =localStorage.getItem('userId');
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${id}&collectionName=tutorsCoursePayment`,
+      url: `/api/commonRoute/deleteData?id=${id}&collectionName=tutorsCoursePayment&userId=${userId}`,
     })
       .then(async (result) => {
         setAllSalarys((prevState) => {

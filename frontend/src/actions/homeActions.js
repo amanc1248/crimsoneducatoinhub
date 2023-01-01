@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // fetching all data
 export function getAllData(data) {
@@ -17,15 +18,19 @@ export function getAllData(data) {
           collectionName: data.collectionName,
           pageNumber: data.pageNumber,
           nPerPage: data.nPerPage,
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -46,6 +51,8 @@ export function insertData(data) {
         {
           collectionName: data.collectionName,
           doc: data.doc,
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
@@ -54,7 +61,10 @@ export function insertData(data) {
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -100,6 +110,8 @@ export function updateData(data) {
           id: data.id,
           collectionName: data.collectionName,
           updateTo: data.updatedTo,
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
@@ -108,6 +120,10 @@ export function updateData(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -128,6 +144,10 @@ export function deleteData(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -146,6 +166,8 @@ export function getTotalCount(data) {
         url,
         {
           collectionNames: data.collectionNames,
+          checkPermission:data.checkPermission,
+          userId:data.userId
         },
         config
       )
@@ -155,6 +177,10 @@ export function getTotalCount(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -171,6 +197,8 @@ export function calculateDate(data) {
         url,
         {
           collectionNames: data.collectionNames,
+          checkPermission:data.checkPermission,
+          userId:data.userId
         },
         config
       )
@@ -180,6 +208,10 @@ export function calculateDate(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -196,6 +228,8 @@ export function getCourseData(data) {
         url,
         {
           collectionName: data.collectionName,
+          checkPermission:data.checkPermission,
+          userId:data.userId
         },
         config
       )
@@ -205,6 +239,10 @@ export function getCourseData(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -223,6 +261,8 @@ export function getOneModalTotalCount(data) {
         url,
         {
           collectionName: data.collectionName,
+          checkPermission:data.checkPermission,
+          userId:data.userId
         },
         config
       )
@@ -232,6 +272,10 @@ export function getOneModalTotalCount(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -252,6 +296,8 @@ export function getOneModalAllDocuments(data) {
         {
           collectionName: data.collectionName,
           token: data.token,
+          checkPermission:data.checkPermission,
+          userId:data.userId
         },
         config
       )
@@ -261,6 +307,10 @@ export function getOneModalAllDocuments(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
@@ -305,7 +355,9 @@ export function getOneModalDocumentsById(data) {
         {
           collectionName: data.collectionName,
           id: data.id,
-          filter:data.filter
+          filter: data.filter,
+          checkPermission:data.checkPermission,
+          userId:data.userId
         },
         config
       )
@@ -315,14 +367,17 @@ export function getOneModalDocumentsById(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }
 
-
 //get document by filter
 export function getDocumentByFilter(data) {
-  console.log("Data........", data)
+  console.log("Data........", data);
   let url = data.url;
   const config = {
     header: {
@@ -335,10 +390,12 @@ export function getDocumentByFilter(data) {
         url,
         {
           collectionName: data.collectionName,
-          filter:data.filter,
-          aggregateArray:data.aggregateArray,
+          filter: data.filter,
+          aggregateArray: data.aggregateArray,
           returnAs: data.returnAs,
-          filterType:data.filterType
+          filterType: data.filterType,
+          checkPermission:data.checkPermission,
+          userId:data.userId
         },
         config
       )
@@ -348,6 +405,10 @@ export function getDocumentByFilter(data) {
       })
       .catch((e) => {
         console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
       });
   });
 }

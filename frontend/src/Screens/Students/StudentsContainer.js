@@ -52,6 +52,8 @@ export const StudentsContainer = () => {
     getOneModalTotalCount({
       url: "/api/commonRoute/getOneModalTotalCount",
       collectionName: "students",
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         console.log("total documents: ", result);
@@ -68,6 +70,8 @@ export const StudentsContainer = () => {
         collectionName: "students",
         pageNumber: currentPage,
         nPerPage: 100,
+        checkPermission:'read',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setUnModifiableOrignalList(result);
@@ -77,6 +81,9 @@ export const StudentsContainer = () => {
         })
         .catch((e) => {
           console.log(e);
+        }).finally(() => {
+          console.log("I am ahuwerqwaserkalsejfhlkajsdhzglkjhsadfljh");
+          setLoading(false);
         });
     }
   }, [refresh]);
@@ -88,6 +95,8 @@ export const StudentsContainer = () => {
       collectionName: "students",
       pageNumber: currentPage,
       nPerPage: 100,
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         setStudents(result);
@@ -96,6 +105,8 @@ export const StudentsContainer = () => {
       })
       .catch((e) => {
         console.log(e);
+      }).finally(()=>{
+        setLoading(false)
       });
   }, [currentPage]);
 

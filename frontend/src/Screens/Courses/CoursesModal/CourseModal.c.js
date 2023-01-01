@@ -29,6 +29,8 @@ export function CourseModalContainer({individualCourse, courseModalType, setRefr
         url: "/api/commonRoute/insertData",
         collectionName: "courses",
         doc:course,
+        checkPermission:'write',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setRefresh(true);
@@ -68,7 +70,9 @@ export function CourseModalContainer({individualCourse, courseModalType, setRefr
         url: "/api/commonRoute/updateData",
         collectionName: "courses",
         updatedTo:course,
-        id:individualCourse.courseId
+        id:individualCourse.courseId,
+        checkPermission:'update',
+        userId:localStorage.getItem('userId')
       })
         .then((result) => {
           setRefresh(true);
@@ -91,8 +95,9 @@ export function CourseModalContainer({individualCourse, courseModalType, setRefr
   // 4. on deleting course
   const handleOnClickDelete = ()=>{
     setLoader(true);
+    const userId = localStorage.getItem('userId');
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${individualCourse.courseId}&collectionName=courses`,
+      url: `/api/commonRoute/deleteData?id=${individualCourse.courseId}&collectionName=courses&userId=${userId}`,
     })
       .then((result) => {
         setRefresh(true);

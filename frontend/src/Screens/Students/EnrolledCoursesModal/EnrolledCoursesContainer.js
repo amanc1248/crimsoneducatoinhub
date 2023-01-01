@@ -34,6 +34,8 @@ export const EnrolledCoursesModalContainer = ({
     getOneModalAllDocuments({
       url: "/api/commonRoute/getAllDocuments",
       collectionName: "courses",
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -53,6 +55,8 @@ export const EnrolledCoursesModalContainer = ({
     getOneModalAllDocuments({
       url: "/api/commonRoute/getAllDocuments",
       collectionName: "shifts",
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((shift, index) => {
@@ -72,6 +76,8 @@ export const EnrolledCoursesModalContainer = ({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "enrolledCourses",
       filter: { studentId: individualStudent._id },
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -135,6 +141,8 @@ export const EnrolledCoursesModalContainer = ({
         url: "/api/commonRoute/insertData",
         collectionName: "enrolledCourses",
         doc: enrolledCourse,
+        checkPermission:'write',
+        userId:localStorage.getItem('userId')
       }).then((result) => {
         const enrolledCourseObject = new EnrolledCourse({
           id: result.insertedId,
@@ -168,8 +176,9 @@ export const EnrolledCoursesModalContainer = ({
 
   const handleOnDeleteCourse = (id) => {
     setDeleteLoading(true);
+    const userId =localStorage.getItem('userId');
     deleteData({
-      url: `/api/commonRoute/deleteData?id=${id}&collectionName=enrolledCourses`,
+      url: `/api/commonRoute/deleteData?id=${id}&collectionName=enrolledCourses&userId=${userId}`,
     })
       .then((result) => {
         setEnrolledCourses((prevState) => {

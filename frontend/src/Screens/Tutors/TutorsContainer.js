@@ -30,7 +30,7 @@ const wantedDBList = [
 ];
 const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
   // use states
-  const [tutors, setTutors] = useState();
+  const [tutors, setTutors] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const [totalPages, setTotalPages] = useState();
@@ -44,6 +44,8 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
     getOneModalTotalCount({
       url: "/api/commonRoute/getOneModalTotalCount",
       collectionName: "tutors",
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     })
       .then((result) => {
         console.log("total documents: ", result);
@@ -60,6 +62,8 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
           collectionName: "tutors",
           pageNumber: currentPage,
           nPerPage: 100,
+          checkPermission:'read',
+          userId:localStorage.getItem('userId')
         })
           .then((result) => {
             setUnModifiableOrignalList(result);
@@ -80,6 +84,8 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
       collectionName: "tutors",
       pageNumber: currentPage,
       nPerPage: 100,
+      checkPermission:'read',
+      userId:localStorage.getItem('userId')
     })
       .then((result) => {
         setTutors(result);

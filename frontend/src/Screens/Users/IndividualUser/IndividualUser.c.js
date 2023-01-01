@@ -55,7 +55,9 @@ export const IndividualUserC = ({ user }) => {
         url: "/api/commonRoute/updateData",
         id:user._id,
         collectionName:"users",
-        updatedTo:user
+        updatedTo:user,
+        checkPermission:'update',
+        userId:localStorage.getItem('userId')
     });
     if(updatedData)toast.success("Permissions updated successfully",{autoClose:5000});
   }
