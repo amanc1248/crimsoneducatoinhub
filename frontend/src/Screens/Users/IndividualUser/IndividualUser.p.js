@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 
 export const IndividualUserP = ({user, handlePermissionChange, permissionsArray, handleOnUpdatePermission})=>{
-    return <tr>
+    return user._id!==localStorage.getItem('userId') && <tr>
         <td>{user.name}</td>
         <td>{user.email}</td>
         <td>{user.phoneNumber}</td>
