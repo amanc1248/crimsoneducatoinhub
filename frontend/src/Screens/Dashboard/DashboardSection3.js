@@ -4,7 +4,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { getTotalCount } from "../../actions/homeActions";
-import Invoice from "../../components/Invoice";
 export const DashboardSection3 = () => {
   // data
   const list = [

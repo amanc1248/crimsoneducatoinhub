@@ -6,8 +6,10 @@ import {LoaderRotatingSquare} from "../../../components/Loader"
 import "../../../styles/screens/home.css";
 import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
 import Select from "react-select";
+import {StudentInvoiceC } from "../../../components/Invoice/StudentInvoice/StudentInvoice.c";
 
 export const PaymentModalP = ({
+  student,
   addPayment,
   handleOnShow,
   handleClose,
@@ -20,6 +22,9 @@ export const PaymentModalP = ({
   setStudentPayment,
   studentPayment,
   loading,
+  course,
+  handleGenerateInvoice,
+  showInvoice
 }) => {
   return (
     <>
@@ -33,7 +38,12 @@ export const PaymentModalP = ({
         style={{ background: "white" }}
       >
         <Modal.Header>
+          <div>
           <Modal.Title>Payment Details</Modal.Title>
+          <div>Name: {student.name}</div>
+          <div>Address: {student.address}</div>
+          <div>Phone Number: {student.phoneNumber}</div>
+          </div>
           <div>
             <div>Total: {paymentCalculations.totalAmount}</div>
             <div>Paid: {paymentCalculations.paidAmount}</div>
@@ -58,7 +68,7 @@ export const PaymentModalP = ({
           <Table striped hover size="sm" className="table__list" responsive>
             <thead>
               <tr>
-                <th>#</th>
+                <th>#installment</th>
                 <th>Year</th>
                 <th>Month</th>
                 <th>Date</th>
@@ -226,6 +236,8 @@ export const PaymentModalP = ({
               )}
             </div>
           )}
+          {/* <button onClick={handleGenerateInvoice}>{showInvoice ? "Cancel Invoice": "Generate Invoice"}</button> */}
+          {/* {showInvoice && <StudentInvoiceC student={student} course={course} allPayments={allPayments}></StudentInvoiceC>} */}
         </Modal.Body>
         <Modal.Footer>
           <button

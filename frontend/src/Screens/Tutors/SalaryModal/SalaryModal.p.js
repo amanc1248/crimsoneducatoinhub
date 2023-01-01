@@ -23,7 +23,8 @@ export const SalaryModalP = ({
   tutorSalary,
   chequePhoto,
   setChequePhoto,
-  addSalaryLoading
+  addSalaryLoading,
+  individualTutor
 }) => {
   return (
     <>
@@ -37,7 +38,12 @@ export const SalaryModalP = ({
         style={{ background: "white" }}
       >
         <Modal.Header>
+          <div>
           <Modal.Title>Salary Details</Modal.Title>
+          <div>Name: {individualTutor.name}</div>
+          <div>Phone Number: {individualTutor.phoneNumber}</div>
+          <div>Address: {individualTutor.address}</div>
+          </div>
           <div>
             <div>Total: {salaryCalculations.totalAmount}</div>
             <div>Paid: {salaryCalculations.paidAmount}</div>

@@ -72,6 +72,7 @@ export const AssignedCoursesPresentational = ({
                       onHandleCourseDelete={onHandleCourseDelete}
                       loading={loading}
                       deleteLoading={deleteLoading}
+                      individualTutor={individualTutor}
                     ></IndividualAssignedCourseC>
                   );
                 })}

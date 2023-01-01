@@ -13,6 +13,7 @@ export const PaymentModalC = ({
   course,
   showPaymentModal,
   setShowPaymentModal,
+  student
 }) => {
   console.log("course:::", course);
 
@@ -31,6 +32,7 @@ export const PaymentModalC = ({
     paymentDetails: "",
   });
   const [loading, setLoading] = useState(false);
+  const [showInvoice, setShowInvoice] = useState(false);
   // use effects
   useEffect(() => {
     setLoading(true);
@@ -195,6 +197,9 @@ export const PaymentModalC = ({
       });
     }
   };
+  const handleGenerateInvoice = ()=>{
+    setShowInvoice(!showInvoice);
+  }
   return (
     <PaymentModalP
       addPayment={addPayment}
@@ -212,6 +217,9 @@ export const PaymentModalC = ({
       studentPayment={studentPayment}
       setStudentPayment={setStudentPayment}
       loading={loading}
+      showInvoice={showInvoice}
+      student={student}
+      handleGenerateInvoice={handleGenerateInvoice}
     ></PaymentModalP>
   );
 };

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { PaymentModalC } from "../../PaymentModal/PaymentModal.c";
 
-export const IndividualEnrolledCourseC = ({ course, index, handleOnDeleteCourse }) => {
+export const IndividualEnrolledCourseC = ({ course, index, handleOnDeleteCourse, student }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-      {showModal && <PaymentModalC course={course} showPaymentModal={showModal} setShowPaymentModal={setShowModal}></PaymentModalC>}
+      {showModal && <PaymentModalC course={course} showPaymentModal={showModal} setShowPaymentModal={setShowModal} student ={student}></PaymentModalC>}
 
       <tr>
         <td>{index + 1}</td>

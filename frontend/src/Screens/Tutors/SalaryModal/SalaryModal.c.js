@@ -16,6 +16,7 @@ export const SalaryModalC = ({
   course,
   showSalaryModal,
   setShowSalaryModal,
+  individualTutor
 }) => {
   // data
   const salaryCalculations = {};
@@ -242,6 +243,7 @@ export const SalaryModalC = ({
       tutorSalary={tutorSalary}
       setTutorSalary={setTutorSalary}
       addSalaryLoading={addSalaryLoading}
+    individualTutor={individualTutor}
     ></SalaryModalP>
   );
 };

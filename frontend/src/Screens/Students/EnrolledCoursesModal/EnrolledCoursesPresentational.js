@@ -23,7 +23,7 @@ export const EnrolledCoursesPresentataional = ({
   enrolledCourses,
   handleOnDeleteCourse,
   loading,
-  setDeleteLoading,
+  setDeleteLoading
 }) => {
   return (
     <>
@@ -69,6 +69,7 @@ export const EnrolledCoursesPresentataional = ({
                       course={course}
                       index={index}
                       handleOnDeleteCourse={handleOnDeleteCourse}
+                      student={individualStudent}
                     ></IndividualEnrolledCourseC>
                   );
                 })}

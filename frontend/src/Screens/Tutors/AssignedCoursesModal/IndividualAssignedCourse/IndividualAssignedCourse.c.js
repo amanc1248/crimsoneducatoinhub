@@ -10,6 +10,7 @@ export const IndividualAssignedCourseC = ({
   onHandleCourseDelete,
   loading,
   deleteLoading,
+  individualTutor
 }) => {
   const [showModal, setShowModal] = useState(false);
   console.log("assigned course: ", course);
@@ -20,6 +21,7 @@ export const IndividualAssignedCourseC = ({
           course={course}
           showSalaryModal={showModal}
           setShowSalaryModal={setShowModal}
+          individualTutor={individualTutor}
         ></SalaryModalC>
       )}
 
