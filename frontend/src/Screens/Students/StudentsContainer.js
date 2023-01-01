@@ -35,7 +35,15 @@ const wantedDBList = [
     titleValue: "shift",
   },
 ];
-const wantedLocalList = ["paymentStatus", "months", "year", "startDate"];
+const wantedLocalList=[
+  "paymentStatus",
+  "startYear",
+  "startMonth",
+  "startDate",
+  "endYear",
+  "endMonth",
+  "endDate",
+];
 export const StudentsContainer = () => {
   // use states
   const [students, setStudents] = useState([]);

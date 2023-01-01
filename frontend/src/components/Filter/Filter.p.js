@@ -11,6 +11,7 @@ export const FilterP = ({
   showFilterModal,
   setShowFilterModal,
 }) => {
+  console.log("Filtering object", filteringObject);
   return (
     <>
       <button
@@ -45,7 +46,7 @@ export const FilterP = ({
                     return (
                       <div key={fbi} className="filter__div__single">
                         <label
-                          htmlFor={filterObj.value}
+                          htmlFor={filterObj.id}
                           style={{ marginRight: "5px" }}
                         >
                           {filterObj.value}
@@ -53,10 +54,10 @@ export const FilterP = ({
                         <input
                           type="checkbox"
                           onChange={() => {
-                            changeFilterState(filterObj.value);
+                            changeFilterState(filterObj.id);
                           }}
                           checked={filterObj.checked}
-                          id={filterObj.value}
+                          id={filterObj.id}
                           name={filterObj.label}
                           value={filterObj.value}
                         />
@@ -64,6 +65,7 @@ export const FilterP = ({
                     );
                   })}
                 </div>
+                  <br />
               </div>
             );
           }): "Loading..."}

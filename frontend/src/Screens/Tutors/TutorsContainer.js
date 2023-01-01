@@ -28,7 +28,15 @@ const wantedDBList = [
   { collectionName: "courses",collectionTitleValue:'courseName', title: "Course", titleValue: "courseName" },
   { collectionName: "shifts", collectionTitleValue:'name',title: "Shifts", titleValue: "shift" },
 ];
-const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
+const wantedLocalList=[
+  "paymentStatus",
+  "startYear",
+  "startMonth",
+  "startDate",
+  "endYear",
+  "endMonth",
+  "endDate",
+];
   // use states
   const [tutors, setTutors] = useState([]);
   const [showModal, setShowModal] = useState(false);

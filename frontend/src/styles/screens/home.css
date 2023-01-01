@@ -249,7 +249,7 @@
     overflow: auto;
   }
   .filter__div__single{
-    margin-right: 10px;
+    margin-right: 30px;
   }
   .filter__div{
     display: flex;
@@ -287,4 +287,15 @@
   }
   .individualPermission{
     margin-right: 10px;
+  }
+  .outer__table__tr{
+    /* font-size: 50px; */
+    background-color:yellow;
+    border-bottom: 2px solid blue;
+    font-weight: bold;
+  }
+  .inner__table__list{
+    background-color: #3A10E5;
+    color: white;
+    font-weight: 500;
   }

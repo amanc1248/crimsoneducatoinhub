@@ -46,7 +46,15 @@ export const CustomFilterP = ({
           titleValue: "shift",
         },
       ],
-      wantedLocalList: ["paymentStatus", "months", "year", "startDate"],
+      wantedLocalList: [
+        "paymentStatus",
+        "startYear",
+        "startMonth",
+        "startDate",
+        "endYear",
+        "endMonth",
+        "endDate",
+      ],
     },
     tutors: {
       aggregateArray: [
@@ -83,9 +91,11 @@ export const CustomFilterP = ({
       ],
       wantedLocalList: [
         "paymentStatus",
-        "months",
-        "year",
+        "startYear",
+        "startMonth",
         "startDate",
+        "endYear",
+        "endMonth",
         "endDate",
       ],
     },
@@ -141,8 +151,6 @@ export const CustomFilterP = ({
       {result.length > 0 ? (
         <div className="students__inside">
           <Table
-            striped
-            hover
             size="sm"
             className="table__list"
             id="detailed-view-filter"
@@ -158,17 +166,14 @@ export const CustomFilterP = ({
             <tbody>
               {result.map((value, index) => {
                 return (
-                  <tr key={index}>
+                  <tr key={index} className="outer__table__tr">
                     {Object.keys(value).map((keyValue, keyValueIndex) => {
                       if (Array.isArray(value[keyValue])) {
-                        console.log("I am object");
                         return (
                           value[keyValue].length >0 ? <td>
                             <Table
-                              striped
-                              hover
                               size="sm"
-                              className="table__list"
+                              className="inner__table__list"
                               responsive
                             >
                               <thead>
@@ -196,10 +201,15 @@ export const CustomFilterP = ({
                                 })}
                               </tbody>
                             </Table>
-                          </td> :"No data"
+                          </td> : <td>
+                            <Table
+                             size="sm"
+                             className="inner__table__list"
+                             responsive
+                            >No Data</Table>
+                          </td>
                         );
                       } else {
-                        console.log("NOt an object");
                         return <td key={keyValueIndex}>{value[keyValue]}</td>;
                       }
                     })}
