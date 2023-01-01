@@ -14,6 +14,8 @@ export const LoggedInUser = ({ name, image, title }) => {
       url: "/api/commonRoute/getUserId",
       collectionName: "users",
       doc,
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
     }).then((response) => {
       setUserData(response);
     });
