@@ -175,7 +175,8 @@ export const StudentsContainer = () => {
                 <th>Parents name</th>
                 <th>Parent Phone Number</th>
                 <th>Counsellor Name</th>
-                <th>Class</th>
+                <th>Additional Amount</th>
+                <th>Additional Amount Details</th>
                 <th>Actions</th>
               </tr>
             </thead>

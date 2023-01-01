@@ -51,6 +51,10 @@ export function TutorModal({
   );
   const [loader, setLoader] = useState(false);
 
+  const [address, setAddress] = useState(
+    individualTutor && individualTutor.address
+  );
+
   // functions
   // 1. on adding course
   const handleOnClickSubmit = () => {
@@ -62,10 +66,19 @@ export function TutorModal({
       startDate,
       phoneNumber,
       date: new Date(),
+      address,
     };
     console.log("Doc: ", doc);
 
-    if (name && email && age && qualification && startDate && phoneNumber) {
+    if (
+      name &&
+      email &&
+      age &&
+      qualification &&
+      startDate &&
+      phoneNumber &&
+      address
+    ) {
       let list = tutors;
       setLoader(true);
       insertData({
@@ -101,6 +114,7 @@ export function TutorModal({
     setStartDate("");
     setSalary("");
     setShow(false);
+    setAddress("");
   };
 
   // 3. on updating course
@@ -112,9 +126,18 @@ export function TutorModal({
       qualification,
       startDate,
       phoneNumber,
+      address,
     };
     console.log("Doc: ", doc);
-    if (name && email && age && qualification && startDate && phoneNumber) {
+    if (
+      name &&
+      email &&
+      age &&
+      qualification &&
+      startDate &&
+      phoneNumber &&
+      address
+    ) {
       setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
@@ -189,6 +212,8 @@ export function TutorModal({
       qualification={qualification}
       startDate={startDate}
       loader={loader}
+      address={address}
+      setAddress={setAddress}
     ></TutorModalPresentational>
   );
 }

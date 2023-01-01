@@ -64,15 +64,22 @@ export function StudentModal({
     individualStudent && individualStudent.parentsName
   );
 
-  const [typeClass, setTypeClass] = useState(
-    individualStudent && individualStudent.typeClass
-  );
+  // const [typeClass, setTypeClass] = useState(
+  //   individualStudent && individualStudent.typeClass
+  // );
 
   const [address, setAddress] = useState(
     individualStudent && individualStudent.address
   );
   const [counsellorName, setCounsellorName] = useState(
     individualStudent && individualStudent.counsellorName
+  );
+
+  const [additionalAmount, setAdditionalAmount] = useState(
+    individualStudent && individualStudent.additionalAmount
+  );
+  const [additionalAmountDetails, setAdditionalAmountDetails] = useState(
+    individualStudent && individualStudent.additionalAmountDetails
   );
 
   // functions
@@ -88,10 +95,11 @@ export function StudentModal({
       parentPhoneNumber,
       dob,
       parentsName,
-      typeClass,
       address,
       counsellorName,
       date: new Date(),
+      additionalAmount,
+      additionalAmountDetails,
     };
     if (
       (name,
@@ -101,9 +109,10 @@ export function StudentModal({
       phoneNumber,
       parentPhoneNumber,
       parentsName,
-      typeClass,
       address,
-      counsellorName)
+      counsellorName,
+      additionalAmount,
+      additionalAmountDetails)
     ) {
       let list = students;
       setLoader(true);
@@ -131,7 +140,6 @@ export function StudentModal({
   const handleClose = () => {
     setName("");
     setEmail("");
-    setTypeClass("");
     setParentsName("");
     setDOB("");
     setParentPhoneNumber("");
@@ -140,6 +148,8 @@ export function StudentModal({
     setCounsellorName("");
     setAddress("");
     setShow(false);
+    setAdditionalAmount("");
+    setAdditionalAmountDetails("");
   };
 
   // 3. on updating course
@@ -152,9 +162,10 @@ export function StudentModal({
       phoneNumber,
       parentPhoneNumber,
       parentsName,
-      typeClass,
       address,
       counsellorName,
+      additionalAmount,
+      additionalAmountDetails,
     };
     if (
       (name,
@@ -164,9 +175,10 @@ export function StudentModal({
       phoneNumber,
       parentPhoneNumber,
       parentsName,
-      typeClass,
       address,
-      counsellorName)
+      counsellorName,
+      additionalAmount,
+      additionalAmountDetails)
     ) {
       setLoader(true);
       updateData({
@@ -226,13 +238,16 @@ export function StudentModal({
       setDOB={setDOB}
       parentsName={parentsName}
       setParentsName={setParentsName}
-      typeClassList={typeClassList}
-      setTypeClass={setTypeClass}
+      // ww
       address={address}
       setAddress={setAddress}
       counsellorName={counsellorName}
       setCounsellorName={setCounsellorName}
       setQualification={setQualification}
+      additionalAmount={additionalAmount}
+      setAdditionalAmount={setAdditionalAmount}
+      additionalAmountDetails={additionalAmountDetails}
+      setAdditionalAmountDetails={setAdditionalAmountDetails}
       handleClose={handleClose}
       handleOnClickSubmit={handleOnClickSubmit}
       handleOnClickUpdate={handleOnClickUpdate}
@@ -241,7 +256,7 @@ export function StudentModal({
       name={name}
       qualification={qualification}
       loader={loader}
-      typeClass={typeClass}
+      // typeClass={typeClass}
     ></StudentModalPresentational>
   );
 }

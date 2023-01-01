@@ -47,6 +47,7 @@ export const IndividualTutor = ({ tutor, index, setRefresh }) => {
         <td>{tutor.name}</td>
         <td>{tutor.email}</td>
         <td>{tutor.phoneNumber}</td>
+        <td>{tutor.address}</td>
         <td>{tutor.age}</td>
 
         <td>{tutor.qualification}</td>

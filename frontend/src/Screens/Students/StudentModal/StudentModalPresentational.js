@@ -26,13 +26,15 @@ export function StudentModalPresentational({
   setDOB,
   parentsName,
   setParentsName,
-  typeClass,
-  typeClassList,
-  setTypeClass,
+
   address,
   setAddress,
   counsellorName,
   setCounsellorName,
+  additionalAmount,
+  setAdditionalAmount,
+  additionalAmountDetails,
+  setAdditionalAmountDetails,
 }) {
   return (
     <>
@@ -134,6 +136,7 @@ export function StudentModalPresentational({
               <div class="learning__form__group col-lg-6 col-12">
                 <label for="qualification">Qualification</label>
                 <Select
+                  id="qualification"
                   placeholder="Select qualification"
                   className="select__learning__module"
                   options={qualificationList}
@@ -214,18 +217,43 @@ export function StudentModalPresentational({
                   }}
                 ></input>
               </div>
-              {/* 2. Type Class */}
+              {/* 2. Additional Amount  */}
               <div class="learning__form__group col-lg-6 col-12">
-                <label for="typeClass">Class</label>
-                <Select
-                  placeholder="Select Class"
-                  className="select__learning__module"
-                  options={typeClassList}
-                  value={{ label: typeClass, value: typeClass }}
+                <label for="ad_amt">Additional Amount</label>
+                <input
+                  class="form-control"
+                  id="ad_amt"
+                  name="ad_amt"
+                  rows="4"
+                  cols="50"
+                  placeholder="Enter additional Amount"
+                  value={additionalAmount}
                   onChange={(e) => {
-                    setTypeClass(e.label);
+                    setAdditionalAmount(e.target.value);
                   }}
-                />
+                  type="text"
+                ></input>
+              </div>
+            </div>
+            <div>
+              <div className="firstname__email row">
+                {/* 2. Additional Amount Details  */}
+                <div class="learning__form__group col-lg-6 col-12">
+                  <label for="ad_amt">Additional Amount Details</label>
+                  <input
+                    class="form-control"
+                    id="ad_amt_d"
+                    name="ad_amt_d"
+                    rows="4"
+                    cols="50"
+                    placeholder="Enter additional Amount Details"
+                    value={additionalAmountDetails}
+                    onChange={(e) => {
+                      setAdditionalAmountDetails(e.target.value);
+                    }}
+                    type="text"
+                  ></input>
+                </div>
               </div>
             </div>
           </div>

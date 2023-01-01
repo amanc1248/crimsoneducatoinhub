@@ -13,22 +13,32 @@ import { FilterC } from "../../components/Filter/Filter.c";
 import { Loader } from "../../components/Loader";
 
 export const TutorsContainer = () => {
-// data
-const aggregateArray = [
-  {
-    $lookup: {
-      from: "tutors",
-      localField: "tutorId",
-      foreignField: "_id",
-      as: "tutor",
+  // data
+  const aggregateArray = [
+    {
+      $lookup: {
+        from: "tutors",
+        localField: "tutorId",
+        foreignField: "_id",
+        as: "tutor",
+      },
     },
-  },
-];
-const wantedDBList = [
-  { collectionName: "courses",collectionTitleValue:'courseName', title: "Course", titleValue: "courseName" },
-  { collectionName: "shifts", collectionTitleValue:'name',title: "Shifts", titleValue: "shift" },
-];
-const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
+  ];
+  const wantedDBList = [
+    {
+      collectionName: "courses",
+      collectionTitleValue: "courseName",
+      title: "Course",
+      titleValue: "courseName",
+    },
+    {
+      collectionName: "shifts",
+      collectionTitleValue: "name",
+      title: "Shifts",
+      titleValue: "shift",
+    },
+  ];
+  const wantedLocalList = ["paymentStatus", "months", "year", "startDate"];
   // use states
   const [tutors, setTutors] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -53,24 +63,24 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
   }, []);
 
   useEffect(() => {
-      if(refresh){
-        setLoader(true);
-        getAllData({
-          url: "/api/commonRoute/getData",
-          collectionName: "tutors",
-          pageNumber: currentPage,
-          nPerPage: 100,
+    if (refresh) {
+      setLoader(true);
+      getAllData({
+        url: "/api/commonRoute/getData",
+        collectionName: "tutors",
+        pageNumber: currentPage,
+        nPerPage: 100,
+      })
+        .then((result) => {
+          setUnModifiableOrignalList(result);
+          setTutors(result);
+          setRefresh(false);
+          setLoader(false);
         })
-          .then((result) => {
-            setUnModifiableOrignalList(result);
-            setTutors(result);
-            setRefresh(false);
-            setLoader(false);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }, [refresh]);
 
   useEffect(() => {
@@ -91,9 +101,8 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
       });
   }, [currentPage]);
 
-
   const closeFilter = () => {
-    setShowFilter(false); 
+    setShowFilter(false);
   };
 
   return (
@@ -138,48 +147,53 @@ const wantedLocalList = ['paymentStatus','months','year', 'startDate'];
         />
       </div>
       <br />
-     {loader ? <Loader></Loader> :  <div>
-      <div className="filter__div">
-        <FilterC
-          aggregateArray={aggregateArray}
-          returnAs="tutor"
-          collectionName="assignedCourses"
-          setResult={setTutors}
-          wantedDBList={wantedDBList}
-          wantedLocalList={wantedLocalList}
-          filterType="normal"
-        ></FilterC>
-      </div>
-      <div className="students__inside">
-        <Table striped hover size="sm" className="table__list" responsive>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone Number</th>
-              <th>Age</th>
-              <th>Qualification</th>
-              <th>Start Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tutors &&
-              tutors.map((tutor, index) => {
-                return (
-                  <IndividualTutor
-                    tutor={tutor}
-                    index={index}
-                    key={index}
-                    setRefresh={setRefresh}
-                  />
-                );
-              })}
-          </tbody>
-        </Table>
-      </div>
-      </div> }
+      {loader ? (
+        <Loader></Loader>
+      ) : (
+        <div>
+          <div className="filter__div">
+            <FilterC
+              aggregateArray={aggregateArray}
+              returnAs="tutor"
+              collectionName="assignedCourses"
+              setResult={setTutors}
+              wantedDBList={wantedDBList}
+              wantedLocalList={wantedLocalList}
+              filterType="normal"
+            ></FilterC>
+          </div>
+          <div className="students__inside">
+            <Table striped hover size="sm" className="table__list" responsive>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Age</th>
+                  <th>Qualification</th>
+                  <th>Start Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tutors &&
+                  tutors.map((tutor, index) => {
+                    return (
+                      <IndividualTutor
+                        tutor={tutor}
+                        index={index}
+                        key={index}
+                        setRefresh={setRefresh}
+                      />
+                    );
+                  })}
+              </tbody>
+            </Table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -10,11 +10,19 @@ export const IndividualCoursePresentational = ({
   setShowModal,
   onHandleUpdate,
   onHandleDelete,
-  courseModalType
+  courseModalType,
 }) => {
   return (
     <>
-    {showModal &&  <CourseModalContainer show={true} setShow={setShowModal}  individualCourse={course} courseModalType={courseModalType} setRefresh={setRefresh} ></CourseModalContainer>}
+      {showModal && (
+        <CourseModalContainer
+          show={true}
+          setShow={setShowModal}
+          individualCourse={course}
+          courseModalType={courseModalType}
+          setRefresh={setRefresh}
+        ></CourseModalContainer>
+      )}
       <tr>
         <td>{index + 1}</td>
         <td>{course.courseName}</td>
@@ -26,6 +34,7 @@ export const IndividualCoursePresentational = ({
           {" "}
           {course.courseDetails}
         </td>
+        <td>{course.typeClass}</td>
         <td>
           <Button
             variant="success"

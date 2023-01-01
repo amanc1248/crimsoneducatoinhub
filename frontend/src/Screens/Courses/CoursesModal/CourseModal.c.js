@@ -1,34 +1,60 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { deleteData, insertData, updateData } from "../../../actions/homeActions";
+import {
+  deleteData,
+  insertData,
+  updateData,
+} from "../../../actions/homeActions";
 import { CourseModalPresentational } from "./CourseModa.p";
 
-export function CourseModalContainer({individualCourse, courseModalType, setRefresh, setShow }) {
-
+export function CourseModalContainer({
+  individualCourse,
+  courseModalType,
+  setRefresh,
+  setShow,
+}) {
   // USESTATES
   const [course, setCourse] = useState({
     courseName: individualCourse && individualCourse.courseName,
     courseDuration: individualCourse && individualCourse.courseDuration,
-    courseFee:individualCourse && individualCourse.courseFee,
+    courseFee: individualCourse && individualCourse.courseFee,
     courseDetails: individualCourse && individualCourse.courseDetails,
-    date:""
+    typeClass: individualCourse && individualCourse.typeClass,
+    date: "",
   });
   const [loader, setLoader] = useState(false);
+
+  const typeClassList = [
+    {
+      label: "Special Class",
+      value: "special",
+    },
+    {
+      label: "Normal Class",
+      value: "normal",
+    },
+  ];
   // functions
   // 1. on adding course
-  const handleOnClickSubmit = async() => { 
+  const handleOnClickSubmit = async () => {
     await setCourse((prevState) => {
       return {
         ...prevState,
         date: new Date(),
       };
     });
-    if (course.courseName && course.courseDuration && course.courseFee && course.courseDetails) {
+    if (
+      course.courseName &&
+      course.courseDuration &&
+      course.courseFee &&
+      course.courseDetails &&
+      course.typeClass
+    ) {
       setLoader(true);
       insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "courses",
-        doc:course,
+        doc: course,
       })
         .then((result) => {
           setRefresh(true);
@@ -41,7 +67,7 @@ export function CourseModalContainer({individualCourse, courseModalType, setRefr
         .catch((e) => {
           console.log(e);
         });
-    }else{
+    } else {
       toast.error("Please add required fields", {
         autoClose: 5000,
       });
@@ -56,19 +82,26 @@ export function CourseModalContainer({individualCourse, courseModalType, setRefr
       courseFee: "",
       courseDetails: "",
       date: "",
+      typeClass: "",
     });
-    setShow(false)
+    setShow(false);
   };
 
   // 3. on updating course
-  const handleOnClickUpdate = ()=>{
-    if (course.courseName && course.courseDuration && course.courseFee && course.courseDetails) {
-      setLoader(true)
+  const handleOnClickUpdate = () => {
+    if (
+      course.courseName &&
+      course.courseDuration &&
+      course.courseFee &&
+      course.courseDetails &&
+      course.typeClass
+    ) {
+      setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
         collectionName: "courses",
-        updatedTo:course,
-        id:individualCourse.courseId
+        updatedTo: course,
+        id: individualCourse.courseId,
       })
         .then((result) => {
           setRefresh(true);
@@ -81,15 +114,15 @@ export function CourseModalContainer({individualCourse, courseModalType, setRefr
         .catch((e) => {
           console.log(e);
         });
-    }else{
+    } else {
       toast.error("Please fill all fields to update", {
         autoClose: 5000,
       });
     }
-  }
+  };
 
   // 4. on deleting course
-  const handleOnClickDelete = ()=>{
+  const handleOnClickDelete = () => {
     setLoader(true);
     deleteData({
       url: `/api/commonRoute/deleteData?id=${individualCourse.courseId}&collectionName=courses`,
@@ -105,18 +138,19 @@ export function CourseModalContainer({individualCourse, courseModalType, setRefr
       .catch((e) => {
         console.log(e);
       });
-  }
+  };
 
   return (
     <CourseModalPresentational
-    courseModalType={courseModalType}
-    handleClose={handleClose}
-    course={course}
-    setCourse={setCourse}
-    handleOnClickSubmit={handleOnClickSubmit}
-    handleOnClickUpdate={handleOnClickUpdate}
-    handleOnClickDelete={handleOnClickDelete}
-    loader={loader}
+      courseModalType={courseModalType}
+      handleClose={handleClose}
+      course={course}
+      setCourse={setCourse}
+      handleOnClickSubmit={handleOnClickSubmit}
+      handleOnClickUpdate={handleOnClickUpdate}
+      handleOnClickDelete={handleOnClickDelete}
+      loader={loader}
+      typeClassList={typeClassList}
     ></CourseModalPresentational>
   );
 }
