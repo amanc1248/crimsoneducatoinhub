@@ -146,6 +146,9 @@ export const FilterC = ({
         collectionName: value.collectionName,
         pageNumber: 1,
         nPerPage: 100,
+         checkPermission:'read',
+        userId:localStorage.getItem('userId')
+        
       })
     })
      Promise.all(asyncList).then((result)=>{
