@@ -230,7 +230,9 @@ export const FilterC = ({
         filter: filterState,
         aggregateArray: aggregateArray,
         returnAs,
-        filterType:filterType
+        filterType:filterType,
+        checkPermission:'read',
+        userId:localStorage.getItem('userId')
       }).then((result) => {
         aggregateArray.shift();
         const list = removeDuplicates(result,result.length)
