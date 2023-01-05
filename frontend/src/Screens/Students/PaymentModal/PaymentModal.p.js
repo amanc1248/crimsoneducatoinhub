@@ -80,7 +80,6 @@ export const PaymentModalP = ({
             <tbody>
               {allPayments &&
                 allPayments.map((payment, index) => {
-                  console.log("payment: ", payment);
                   return (
                     <tr key={payment.paymentId}>
                       <td>{index + 1}</td>

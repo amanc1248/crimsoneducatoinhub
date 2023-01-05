@@ -536,6 +536,7 @@ export const PaymentFilterC = () => {
             }
         }
         setResults(result)
+        setShowFilterModal(false)
       })
     }
   };
