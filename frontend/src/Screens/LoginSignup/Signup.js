@@ -84,6 +84,7 @@ const Signup = () => {
           alert("Number already used");
         } else if (result.signup === true) {
           alert("User Successfully Registered");
+          navigate("/login");
         }
       });
     }
