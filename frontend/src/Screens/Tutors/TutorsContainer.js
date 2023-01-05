@@ -28,7 +28,7 @@ const wantedDBList = [
   { collectionName: "courses",collectionTitleValue:'courseName', title: "Course", titleValue: "courseName" },
   { collectionName: "shifts", collectionTitleValue:'name',title: "Shifts", titleValue: "shift" },
 ];
-const wantedLocalList=[
+const wantedLocalList= [
   "paymentStatus",
   "startYear",
   "startMonth",

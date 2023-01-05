@@ -23,7 +23,10 @@ export const EnrolledCoursesPresentataional = ({
   enrolledCourses,
   handleOnDeleteCourse,
   loading,
-  setDeleteLoading
+  setDeleteLoading,
+  handleCourseChange,
+  allTutors,
+  tutorLoading,
 }) => {
   return (
     <>
@@ -94,13 +97,41 @@ export const EnrolledCoursesPresentataional = ({
                     className="selecting__divs"
                     options={allCourses}
                     onChange={(e) => {
-                      enrolledCourse.courseId = e._id;
-                      enrolledCourse.courseName = e.value;
-                      enrolledCourse.studentId = individualStudent._id;
+                      handleCourseChange(e);
                     }}
                   />
                 </div>
 
+                {tutorLoading ? "Loading": <div>
+                  <label htmlFor="">Select a tutor</label>
+                  <Select
+                    placeholder="Tutors"
+                    className="selecting__divs"
+                    options={allTutors}
+                    onChange={(e) => {
+                      enrolledCourse.tutorId = e._id;
+                      enrolledCourse.tutorName = e.value;
+                      enrolledCourse.assignedCourseId = e.assignedCourseId;
+                      // enrolledCourse.shift = e.shift;
+                      // enrolledCourse.shiftId = e.shiftId;
+                    }}
+                  />
+                </div>}
+
+                <div>
+                  <label htmlFor="">Select a shift of the tutor</label>
+                  <Select
+                    placeholder="Shift"
+                    className="selecting__divs"
+                    options={allShifts}
+                    onChange={(e) => {
+                      enrolledCourse.shiftId = e._id;
+                      enrolledCourse.shift = e.value;
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="adding__course__div">
                 {/* select year */}
                 <div>
                   <label htmlFor="">Select start year</label>
@@ -176,19 +207,6 @@ export const EnrolledCoursesPresentataional = ({
                     options={datesList}
                     onChange={(e) => {
                       enrolledCourse.endDate = e.value;
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="">Select a shift</label>
-                  <Select
-                    placeholder="Shift"
-                    className="selecting__divs"
-                    options={allShifts}
-                    onChange={(e) => {
-                      enrolledCourse.shift = e.value;
-                      enrolledCourse.shiftId = e._id;
                     }}
                   />
                 </div>

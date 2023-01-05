@@ -8,6 +8,7 @@ class StudentPaymentClass {
     month,
     date,
     paymentDetails,
+    assignedCourseId
   }) {
     this.enrolledCourseId = enrolledCourseId;
     this.studentId = studentId;
@@ -17,6 +18,7 @@ class StudentPaymentClass {
     this.month = month;
     this.date = date;
     this.paymentDetails = paymentDetails;
+    this.assignedCourseId = assignedCourseId;
   }
 }
 export default StudentPaymentClass;

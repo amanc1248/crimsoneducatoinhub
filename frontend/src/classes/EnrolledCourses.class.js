@@ -16,6 +16,7 @@ class EnrolledCourse {
     studentId,
     padeAmount,
     remainingAmount,
+    assignedCourseId
 
   }) {
     this.id = id;
@@ -34,6 +35,7 @@ class EnrolledCourse {
     this.studentId = studentId;
     this.padeAmount = padeAmount;
     this.remainingAmount = remainingAmount;
+    this.assignedCourseId = assignedCourseId;
   }
 }
 export default EnrolledCourse;

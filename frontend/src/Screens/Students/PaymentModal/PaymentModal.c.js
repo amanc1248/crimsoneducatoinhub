@@ -48,10 +48,13 @@ export const PaymentModalC = ({
           const obj = new StudentPaymentClass({
             paymentId: payment._id,
             enrolledCourseId: payment.enrolledCourseId,
-            paymentDate: payment.paymentDate,
+            date: payment.date,
+            month:payment.month,
+            year:payment.year,
             amount: payment.amount,
             paymentDetails: payment.paymentDetails,
             studentId: payment.studentId,
+            assignedCourseId:payment.assignedCourseId
           });
           return obj;
         });
@@ -105,6 +108,7 @@ export const PaymentModalC = ({
       ...studentObj,
       enrolledCourseId: course.id,
       studentId: course.studentId,
+      assignedCourseId: course.assignedCourseId
     };
     if (
       studentPayment.year &&

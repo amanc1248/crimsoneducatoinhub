@@ -5,6 +5,8 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { CSVLink, CSVDownload } from "react-csv";
 import "../../styles/screens/home.css";
+import { getPaymentsDetails } from "../../actions/homeActions";
+import { PaymentFilterC } from "../../components/PaymentFilter/PaymentFilter.c";
 export const CustomFilterP = ({
   customFilterType,
   handleSettingCustomFilterType,
@@ -99,7 +101,61 @@ export const CustomFilterP = ({
         "endDate",
       ],
     },
+    payments: {
+      aggregateArray: [
+        {
+          $lookup: {
+            from: "studentsCoursePayment",
+            localField: "_id",
+            foreignField: "enrolledCourseId",
+            as: "studentCoursePayment",
+          },
+        },
+        {
+          $lookup: {
+            from: "students",
+            localField: "studentId",
+            foreignField: "_id",
+            as: "student",
+          },
+        },
+      ],
+      wantedDBList: [
+        {
+          collectionName: "courses",
+          collectionTitleValue: "courseName",
+          title: "Course",
+          titleValue: "courseName",
+        },
+        {
+          collectionName: "shifts",
+          collectionTitleValue: "name",
+          title: "Shifts",
+          titleValue: "shift",
+        },
+        {
+          collectionName: "tutors",
+          collectionTitleValue: "name",
+          title: "Tutor",
+          titleValue: "shift",
+        },
+      ],
+      wantedLocalList: [
+        "paymentStatus",
+        "startYear",
+        "startMonth",
+        "startDate",
+        "endYear",
+        "endMonth",
+        "endDate",
+      ],
+    },
   };
+  const handleOnClick= ()=>{
+    getPaymentsDetails({
+      url:"/api/commonRoute/getPaymentsDetails"
+    });
+  }
   return (
     <div>
       <div className="customFilter__tabs">
@@ -122,6 +178,16 @@ export const CustomFilterP = ({
           }}
         >
           Tutors
+        </div>
+        <div
+          className={`individualcustomFilter__tab ${
+            customFilterType === "payments" && "selected_customFilter__tab"
+          }`}
+          onClick={() => {
+            handleSettingCustomFilterType("payments");
+          }}
+        >
+          Payments
         </div>
       </div>
       <div className="filter__div">
@@ -147,7 +213,21 @@ export const CustomFilterP = ({
             filterType="detailed"
           ></FilterC>
         )}
+       
       </div>
+      {customFilterType === "payments" && (
+          // <FilterC
+          //   aggregateArray={obj.payments.aggregateArray}
+          //   returnAs="tutorPayment"
+          //   collectionName="tutorsCoursePayment"
+          //   setResult={setResult}
+          //   wantedDBList={obj.payments.wantedDBList}
+          //   wantedLocalList={obj.payments.wantedLocalList}
+          //   filterType="detailed"
+          // ></FilterC>
+          // <button onClick={handleOnClick}>Find Payments</button>
+          <PaymentFilterC></PaymentFilterC>
+        )}
       {result.length > 0 ? (
         <div className="students__inside">
           <Table

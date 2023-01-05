@@ -23,7 +23,88 @@ export const FilterC = ({
         { label: "Paid", value: "paid", checked: false , id:"paymentStatusPaid"},
         { label: "Not Paid", value: "not paid", checked: false, id:"paymentStatusNotPaid" },
       ],
-    },
+  },
+  paymentYear: {
+    title: "Payment Year",
+    titleValue: "year",
+    filters: [
+      {id:"paymentYear2070", checked: false,label: 2070, value: 2070 },
+      {id:"paymentYear2071", checked: false,label: 2071, value: 2071 },
+      {id:"paymentYear2072", checked: false,label: 2072, value: 2072 },
+      {id:"paymentYear2073", checked: false,label: 2073, value: 2073 },
+      {id:"paymentYear2074", checked: false,label: 2074, value: 2074 },
+      {id:"paymentYear2075", checked: false,label: 2075, value: 2075 },
+      {id:"paymentYear2076", checked: false,label: 2076, value: 2076 },
+      {id:"paymentYear2077", checked: false,label: 2077, value: 2077 },
+      {id:"paymentYear2078", checked: false,label: 2078, value: 2078 },
+      {id:"paymentYear2079", checked: false, label: 2079, value: 2079 },
+      {id:"paymentYear2080", checked: false, label: 2080, value: 2080 },
+      {id:"paymentYear2081", checked: false, label: 2081, value: 2081 },
+      {id:"paymentYear2082", checked: false, label: 2082, value: 2082 },
+      {id:"paymentYear2083", checked: false, label: 2083, value: 2083 },
+      {id:"paymentYear2084", checked: false, label: 2084, value: 2084 },
+      {id:"paymentYear2085", checked: false, label: 2085, value: 2085 },
+      {id:"paymentYear2086", checked: false, label: 2086, value: 2086 },
+      {id:"paymentYear2087", checked: false, label: 2087, value: 2087 },
+    ],
+  },
+  paymentMonth: {
+    title: "Payment Month",
+    titleValue: "month",
+    filters: [
+      {label: "Baishakh", value: "Baishakh" , checked:false, id:"paymentMonthBaishakh"},
+      {label: "Jestha", value: "Jestha" , checked:false, id:"paymentMonthJestha"},
+      {label: "Ashadh", value: "Ashadh" , checked:false, id:"paymentMonthAshadh"},
+      {label: "Shrawan", value: "Shrawan" , checked:false, id:"paymentMonthShrawan"},
+      {label: "Bhadau", value: "Bhadau" , checked:false, id:"paymentMonthBhadau"},
+      {label: "Asoj", value: "Asoj" , checked:false, id:"paymentMonthAsoj"},
+      {label: "Kartik", value: "Kartik" , checked:false, id:"paymentMonthKartik"},
+      {label: "Mangsir", value: "Mangsir", checked:false, id:"paymentMonthMangsir"},
+      {label: "Poush", value: "Poush" , checked:false, id:"paymentMonthPoush"},
+      { label: "Magh", value: "Magh", checked:false , id:"paymentMonthMagh"},
+      { label: "Falgun", value: "Falgun" , checked:false, id:"paymentMonthFalgun"},
+      { label: "Chaitra", value: "Chaitra" , checked:false, id:"paymentMonthChaitra"},
+    ],
+  },
+  paymentDate: {
+    title: "Payment Date",
+    titleValue: "date",
+    filters: [
+      {id:"paymentDate1", label: 1, value: 1, checked: false },
+      {id:"paymentDate2", label: 2, value: 2, checked: false },
+      {id:"paymentDate3", label: 3, value: 3, checked: false },
+      {id:"paymentDate4", label: 4, value: 4, checked: false },
+      {id:"paymentDate5", label: 5, value: 5, checked: false },
+      {id:"paymentDate6", label: 6, value: 6, checked: false },
+      {id:"paymentDate7", label: 7, value: 7, checked: false },
+      {id:"paymentDate8", label: 8, value: 8, checked: false },
+      {id:"paymentDate9", label: 9, value: 9, checked: false },
+      {id:"paymentDate10", label: 10, value: 10, checked: false },
+      {id:"paymentDate11", label: 11, value: 11, checked: false },
+      {id:"paymentDate12", label: 12, value: 12, checked: false },
+      {id:"paymentDate13", label: 13, value: 13, checked: false },
+      {id:"paymentDate14", label: 14, value: 14, checked: false },
+      {id:"paymentDate15", label: 15, value: 15, checked: false },
+      {id:"paymentDate16", label: 16, value: 16, checked: false },
+      {id:"paymentDate17", label: 17, value: 17, checked: false },
+      {id:"paymentDate18", label: 18, value: 18, checked: false },
+      {id:"paymentDate19", label: 19, value: 19, checked: false },
+      {id:"paymentDate20", label: 20, value: 20, checked: false },
+      {id:"paymentDate21", label: 21, value: 21, checked: false },
+      {id:"paymentDate22", label: 22, value: 22, checked: false },
+      {id:"paymentDate23", label: 23, value: 23, checked: false },
+      {id:"paymentDate24", label: 24, value: 24, checked: false },
+      {id:"paymentDate25", label: 25, value: 25, checked: false },
+      {id:"paymentDate26", label: 26, value: 26, checked: false },
+      {id:"paymentDate27", label: 27, value: 27, checked: false },
+      {id:"paymentDate27", label: 27, value: 27, checked: false },
+      {id:"paymentDate28", label: 28, value: 28, checked: false },
+      {id:"paymentDate29", label: 29, value: 29, checked: false },
+      {id:"paymentDate30", label: 30, value: 30, checked: false },
+      {id:"paymentDate31", label: 31, value: 31, checked: false },
+      {id:"paymentDate32", label: 32, value: 32, checked: false },
+    ],
+  },
     startYear: {
       title: "Start Year",
       titleValue: "startYear",
@@ -249,14 +330,6 @@ export const FilterC = ({
       })
     );
   };
-
-  // remove duplicates
-
-
-
-
-
-
 
   // applying filter
   const applyFilter = async () => {

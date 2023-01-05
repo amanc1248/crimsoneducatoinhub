@@ -18,6 +18,7 @@ export const SalaryModalC = ({
   setShowSalaryModal,
   individualTutor
 }) => {
+  console.log("COURSE: ", course)
   // data
   const salaryCalculations = {};
 
@@ -208,8 +209,8 @@ export const SalaryModalC = ({
       paid = paid + parseInt(salary.amount);
       return paid;
     });
-    remainingAmount = parseInt(course.salary) - paid;
-    salaryCalculations.totalAmount = parseInt(course.salary);
+    remainingAmount = parseInt(course.salaryAmount) - paid;
+    salaryCalculations.totalAmount = parseInt(course.salaryAmount);
     salaryCalculations.paidAmount = paid;
     salaryCalculations.remainingAmount = remainingAmount;
     // console.log("salary calculations: ", salaryCalculations)

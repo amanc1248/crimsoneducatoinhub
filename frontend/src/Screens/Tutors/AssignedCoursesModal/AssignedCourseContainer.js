@@ -18,9 +18,9 @@ export const AssignedCoursesContainer = ({
 }) => {
   console.log("individual tutor: ", individualTutor)
 
-  const assignedCourse = {};
   // usestates
 
+  const [assignedCourse, setAssignedCourse] = useState({});
   const [addCourse, setAddCourse] = useState(false);
   const [assignedCourses, setAssignedCourses] = useState([]);
 
@@ -29,6 +29,10 @@ export const AssignedCoursesContainer = ({
   const [allShifts, setAllShifts] = useState();
   const [loading, setLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [courseFee, setCourseFee] = useState();
+  const [salaryAmount, setSalaryAmount] = useState(0);
+  const [courseFeeLoading, setCourseFeeLoading] = useState(false);
+  const [selectedShifts, setSelectedShifts] = useState();
   useEffect(() => {
     getOneModalAllDocuments({
       url: "/api/commonRoute/getAllDocuments",
@@ -89,13 +93,14 @@ export const AssignedCoursesContainer = ({
             endDate: course.endDate,
             endMonth: course.endMonth,
             endYear: course.endYear,
-            shiftId: course.shiftId,
-            shift: course.shift,
+            shifts: course.shifts,
             paymentStatus: course.paymentStatus,
-            salary: course.salary,
+            salaryPercentage: course.salaryPercentage,
+            salaryAmount: course.salaryAmount,
             tutorId: course.tutorId,
             padeAmount:course.padeAmount,
-            remainingAmount: course.remainingAmount
+            remainingAmount: course.remainingAmount,
+            courseFee: course.courseFee,
           });
           return obj;
         });
@@ -115,12 +120,17 @@ export const AssignedCoursesContainer = ({
 
   const hideAddCourse = () => {
     setAddCourse(false);
+    setCourseFee();
   };
 
   const handleOnAddCourse = () => {
     assignedCourse.paymentStatus = "not paid";
     assignedCourse.padeAmount = 0;
-    assignedCourse.remainingAmount = assignedCourse.salary;
+    assignedCourse.remainingAmount = salaryAmount;
+    assignedCourse.shifts = selectedShifts;
+    assignedCourse.courseFee = courseFee;
+    console.log("The Doc: ", assignedCourse);
+
     if (
       assignedCourse.courseId &&
       assignedCourse.courseName &&
@@ -129,12 +139,13 @@ export const AssignedCoursesContainer = ({
       assignedCourse.startDate &&
       assignedCourse.endDate &&
       assignedCourse.endMonth &&
-      assignedCourse.shift &&
-      assignedCourse.shiftId &&
+      assignedCourse.shifts &&
       assignedCourse.endYear &&
-      assignedCourse.salary
+      assignedCourse.salaryPercentage &&
+      salaryAmount
     ) {
       setLoading(true);
+      console.log("The Doc: ", assignedCourse);
       insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "assignedCourses",
@@ -155,10 +166,12 @@ export const AssignedCoursesContainer = ({
           shiftId: assignedCourse.shiftId,
           shift: assignedCourse.shift,
           paymentStatus: assignedCourse.paymentStatus,
-          salary: assignedCourse.salary,
+          salaryAmount: assignedCourse.salaryAmount,
+          salaryPercentage: assignedCourse.salaryPercentage,
           tutorId: individualTutor._id,
           padeAmount:0,
-          remainingAmount:assignedCourse.salary
+          remainingAmount:salaryAmount,
+          courseFee: assignedCourse.courseFee,
         });
         setAssignedCourses((prevState) => {
           return [...prevState, assignedCourseObject];
@@ -199,6 +212,43 @@ export const AssignedCoursesContainer = ({
       });
   };
 
+  const handleOnChangeCourse = (e)=>{
+    assignedCourse.courseId = e._id;
+    assignedCourse.courseName = e.value;
+    assignedCourse.tutorId = individualTutor._id;
+    assignedCourse.tutorName = individualTutor.name;
+    setCourseFeeLoading(true);
+    getOneModalDocumentsById({
+      url: "/api/commonRoute/getDocumentsById",
+      collectionName: "courses",
+      filter: {_id:e._id},
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
+    }).then((result)=>{
+        setCourseFee(parseInt(result[0].courseFee))
+        setCourseFeeLoading(false);
+    }).catch((error)=>{
+      console.log(error);
+    }).finally(()=>{
+      setCourseFeeLoading(false);
+    })
+  }
+  const calculateSalaryAmount =(percentage)=>{
+    setSalaryAmount((percentage*courseFee)/100);
+    assignedCourse.salaryAmount = (percentage*courseFee)/100;
+    assignedCourse.salaryPercentage = percentage;
+  }
+  console.log("onchange course<:", assignedCourse)
+
+  const handleSelectedShifts = (shifts)=>{
+    setSelectedShifts(shifts.map((u) => {
+      return {
+        value:u.value,
+        shiftId:u._id
+      }
+    }));
+  }
+  console.log("selected shifts<:", selectedShifts);
   return (
     <AssignedCoursesPresentational
       show={show}
@@ -221,6 +271,13 @@ export const AssignedCoursesContainer = ({
       onHandleCourseDelete={handleOnDeleteAssignedCourse}
       loading = {loading}
       deleteLoading={deleteLoading}
+      handleOnChangeCourse={handleOnChangeCourse}
+      courseFee={courseFee}
+      calculateSalaryAmount={calculateSalaryAmount}
+      salaryAmount={salaryAmount}
+      courseFeeLoading={courseFeeLoading}
+      selectedShifts={selectedShifts}
+      handleSelectedShifts={handleSelectedShifts}
     ></AssignedCoursesPresentational>
   );
 };

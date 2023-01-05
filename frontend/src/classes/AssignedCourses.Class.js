@@ -9,13 +9,14 @@ class AssignedCourse {
     endYear,
     endMonth,
     endDate,
-    shiftId,
-    shift,
+    shifts,
     paymentStatus,
-    salary,
+    salaryPercentage,
+    salaryAmount,
     tutorId,
     padeAmount,
-    remainingAmount
+    remainingAmount,
+    courseFee
   }) {
     this.assignedCourseId = assignedCourseId;
     this.courseId = courseId;
@@ -26,13 +27,14 @@ class AssignedCourse {
     this.endYear = endYear;
     this.endMonth = endMonth;
     this.endDate = endDate;
-    this.shiftId = shiftId;
-    this.shift = shift;
+    this.shifts = shifts;
     this.paymentStatus = paymentStatus;
-    this.salary = salary;
+    this.salaryPercentage = salaryPercentage;
+    this.salaryAmount = salaryAmount;
     this.tutorId = tutorId;
     this.padeAmount = padeAmount;
     this.remainingAmount = remainingAmount;
+    this.courseFee = courseFee;
   }
 }
 export default AssignedCourse;

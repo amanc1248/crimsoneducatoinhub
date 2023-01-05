@@ -35,7 +35,7 @@ const wantedDBList = [
     titleValue: "shift",
   },
 ];
-const wantedLocalList=[
+const wantedLocalList= [
   "paymentStatus",
   "startYear",
   "startMonth",

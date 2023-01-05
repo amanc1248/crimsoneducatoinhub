@@ -377,7 +377,6 @@ export function getOneModalDocumentsById(data) {
 
 //get document by filter
 export function getDocumentByFilter(data) {
-  console.log("Data........", data);
   let url = data.url;
   const config = {
     header: {
@@ -412,3 +411,46 @@ export function getDocumentByFilter(data) {
       });
   });
 }
+
+//get payments details
+export function getPaymentsDetails(data) {
+  let url = data.url;
+  const config = {
+    header: {
+      "Content-Type": "application/json",
+    },
+  };
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        url,
+        {
+          data:data.data,
+          checkPermission:data.checkPermission,
+          userId:data.userId
+        },
+        // {
+        //   collectionName: data.collectionName,
+        //   filter: data.filter,
+        //   aggregateArray: data.aggregateArray,
+        //   returnAs: data.returnAs,
+        //   filterType: data.filterType,
+        //   checkPermission:data.checkPermission,
+        //   userId:data.userId
+        // },
+        config
+      )
+      .then((result) => {
+        console.log(result.data);
+        resolve(result.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        if (e.response.data.error === "UNAUTHORIZED") {
+          toast.error(e.response.data.error, { autoClose: 5000 });
+          reject(e.response.data.error);
+        }
+      });
+  });
+}
+

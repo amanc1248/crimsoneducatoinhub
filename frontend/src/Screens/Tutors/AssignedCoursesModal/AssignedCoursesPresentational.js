@@ -24,6 +24,13 @@ export const AssignedCoursesPresentational = ({
   onHandleCourseDelete,
   loading,
   deleteLoading,
+  handleOnChangeCourse,
+  courseFee,
+  calculateSalaryAmount,
+  salaryAmount,
+  courseFeeLoading,
+  selectedShifts,
+  handleSelectedShifts
 }) => {
   return (
     <>
@@ -54,7 +61,8 @@ export const AssignedCoursesPresentational = ({
                 <th>End Month</th>
                 <th>End Date</th>
                 <th>Shift</th>
-                <th>Actual Price</th>
+                <th>Salary %</th>
+                <th>Salary Amount </th>
                 <th>Paid Amount</th>
                 <th>Remaining Amount</th>
                 <th>Payment Status</th>
@@ -90,6 +98,7 @@ export const AssignedCoursesPresentational = ({
           {/* For assigning the course to tutor */}
           {addCourse && (
             <div>
+              {/* for saving or canceling the assigned course  */}
               <div className="adding__course__div">
                 {/* 1. selecting course */}
                 <div>
@@ -99,15 +108,68 @@ export const AssignedCoursesPresentational = ({
                     className="selecting__divs"
                     options={allCourses}
                     onChange={(e) => {
-                      assignedCourse.courseId = e._id;
-                      assignedCourse.courseName = e.value;
-                      assignedCourse.tutorId = individualTutor._id;
+                      handleOnChangeCourse(e);
                     }}
                   />
                 </div>
-
                 <div>
-                  <label for="year">Year</label>
+                  <label for="Course Fee">Course Fee</label>
+                  <input
+                    class="form-control input__div"
+                    id="Course Fee"
+                    name="Course Fee"
+                    placeholder="Course Fee"
+                    type="number"
+                    value={!courseFeeLoading  && courseFee}
+                    disabled={true}
+                  ></input>
+                </div>
+                <div>
+                  <label for="salaryPercentage">Salary %</label>
+                  <input
+                    class="form-control input__div"
+                    id="salaryPercentage"
+                    name="salaryPercentage"
+                    placeholder="Enter Salary Percentage"
+                    onChange={(e) => {
+                      calculateSalaryAmount(e.target.value);
+                    }}
+                    type="number"
+                    max={5}
+                    // min={0}
+                  ></input>
+                </div>
+                <div>
+                  <label for="salaryAmount">Salary Amount</label>
+                  <input
+                    class="form-control input__div"
+                    id="salaryAmount"
+                    name="salaryAmount"
+                    placeholder="Enter Amount"
+                    type="number"
+                    value={salaryAmount}
+                    disabled={true}
+                  ></input>
+                </div>
+              </div>
+              <div className="adding__course__div">
+                <div>
+                  <label htmlFor="">Select a shift</label>
+                  <Select
+                    placeholder="Shift"
+                    className="selecting__divs"
+                    isMulti
+                    options={allShifts}
+                    // value={
+                    //   selectedShifts && allShifts.filter((ug) => selectedShifts.includes(ug.value))
+                    // }
+                    onChange={(e) => {
+                      handleSelectedShifts(e);
+                    }}
+                  />
+                </div>
+                <div>
+                  <label for="year">Select Start Year</label>
                   <Select
                     placeholder="Select Year"
                     className="selecting__divs"
@@ -145,13 +207,14 @@ export const AssignedCoursesPresentational = ({
                     }}
                   />
                 </div>
+
                 <br />
               </div>
 
               <div className="adding__course__div">
                 {/* selecting end year */}
                 <div>
-                  <label htmlFor="">Select end date</label>
+                  <label htmlFor="">Select end year</label>
                   <Select
                     placeholder="endYear"
                     className="selecting__divs"
@@ -186,55 +249,30 @@ export const AssignedCoursesPresentational = ({
                     }}
                   />
                 </div>
-
-                <div>
-                  <label htmlFor="">Select a shift</label>
-                  <Select
-                    placeholder="Shift"
-                    className="selecting__divs"
-                    options={allShifts}
-                    onChange={(e) => {
-                      assignedCourse.shift = e.value;
-                      assignedCourse.shiftId = e._id;
-                    }}
-                  />
-                </div>
               </div>
 
-              {/* for saving or canceling the assigned course  */}
-              <div className="adding__course__div">
+              {loading ? (
+                <Loader></Loader>
+              ) : (
                 <div>
-                  <label for="salary">Salary</label>
-                  <input
-                    class="form-control input__div"
-                    id="salary"
-                    name="salary"
-                    placeholder="Enter Amount"
-                    onChange={(e) => {
-                      assignedCourse.salary = e.target.value;
-                    }}
-                    type="number"
-                  ></input>
+                  <Button
+                    variant="btn-close"
+                    size="sm"
+                    className="add__button__size"
+                    onClick={hideAddCourse}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="add__button__size"
+                    onClick={handleOnAddCourse}
+                  >
+                    Save
+                  </Button>
                 </div>
-              </div>
-              {loading ? <Loader></Loader> : <div>
-                <Button
-                  variant="btn-close"
-                  size="sm"
-                  className="add__button__size"
-                  onClick={hideAddCourse}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="add__button__size"
-                  onClick={handleOnAddCourse}
-                >
-                  Save
-                </Button>
-              </div>}
+              )}
             </div>
           )}
         </Modal.Body>

@@ -299,3 +299,27 @@
     color: white;
     font-weight: 500;
   }
+  .shift__div{
+    /* background-color: #3A10E5; */
+    color: #3A10E5;
+    margin-right:5px;
+  }
+  .amount__collected__div{
+    display: flex;
+    background-color: #3A10E5;
+    color: white;
+    margin-bottom: 5px;
+    padding: 5px;
+    justify-content: space-between;
+    width: 300px;
+  }
+  .final__amounts__table{
+    background-color: #3A10E5;
+    color: white;
+    font-weight: 400;
+  }
+  .payments__table__list{
+    background-color:yellow;
+    border-bottom: 2px solid blue;
+    font-weight: bold;
+  }

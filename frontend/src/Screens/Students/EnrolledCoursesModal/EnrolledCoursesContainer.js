@@ -20,15 +20,17 @@ export const EnrolledCoursesModalContainer = ({
   setRefresh,
 }) => {
   // data
-  const enrolledCourse = {};
   // USESTATES
+  const [enrolledCourse, setEnrolledCourse] = useState({});
   const [allCourses, setAllCourses] = useState();
+  const [allTutors, setAllTutors] = useState();
   const [allShifts, setAllShifts] = useState();
   const [addCourse, setAddCourse] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [tutorLoading, setTutorLoading] = useState(false);
   // USE EFFECTS
   useEffect(() => {
     getOneModalAllDocuments({
@@ -48,26 +50,6 @@ export const EnrolledCoursesModalContainer = ({
         });
         setAllCourses(list);
         console.log(list);
-      })
-      .catch((e) => console.log(e));
-
-    // for fetching shifts
-    getOneModalAllDocuments({
-      url: "/api/commonRoute/getAllDocuments",
-      collectionName: "shifts",
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
-    })
-      .then((result) => {
-        const list = result.map((shift, index) => {
-          const obj = {
-            _id: shift._id,
-            label: shift.name,
-            value: shift.name,
-          };
-          return obj;
-        });
-        setAllShifts(list);
       })
       .catch((e) => console.log(e));
 
@@ -97,7 +79,8 @@ export const EnrolledCoursesModalContainer = ({
             actualCoursePrice: course.actualCoursePrice,
             studentId: course.studentId,
             padeAmount: course.padeAmount,
-            remainingAmount: course.remainingAmount
+            remainingAmount: course.remainingAmount,
+            assignedCourseId:course.assignedCourseId
           });
           return obj;
         });
@@ -123,6 +106,7 @@ export const EnrolledCoursesModalContainer = ({
     enrolledCourse.paymentStatus = "not paid";
     enrolledCourse.padeAmount = 0;
     enrolledCourse.remainingAmount = enrolledCourse.actualCoursePrice;
+    console.log("enrolledCourse: ", enrolledCourse)
     if (
       enrolledCourse.courseId &&
       enrolledCourse.courseName &&
@@ -194,6 +178,45 @@ export const EnrolledCoursesModalContainer = ({
       });
   };
 
+  const handleCourseChange = (e)=>{
+    enrolledCourse.courseId = e._id;
+    enrolledCourse.courseName = e.value;
+    enrolledCourse.studentId = individualStudent._id;
+    setTutorLoading(true);
+    getOneModalDocumentsById({
+      url: "/api/commonRoute/getDocumentsById",
+      collectionName: "assignedCourses",
+      filter: {courseId:e._id},
+      checkPermission:'read',
+        userId:localStorage.getItem('userId')
+    }).then((result)=>{
+      const list = result.map((tutor, index) => {
+        const obj = {
+          _id: tutor.tutorId,
+          label: tutor.tutorName,
+          value: tutor.tutorName,
+          assignedCourseId: tutor._id
+        };
+        const shiftLists = tutor.shifts.map((shift, index) => {
+          const obj = {
+            _id: shift.shiftId,
+            label: shift.value,
+            value: shift.value,
+          };
+          return obj;
+        });
+        setAllShifts(shiftLists);
+        return obj;
+      });
+      
+      setAllTutors(list)
+      setTutorLoading(false);
+    }).catch((error)=>{
+      console.log(error);
+    }).finally(()=>{
+      setTutorLoading(false);
+    })
+  }
   return (
     <EnrolledCoursesPresentataional
       show={show}
@@ -217,6 +240,9 @@ export const EnrolledCoursesModalContainer = ({
       setShowPaymentModal={setShowPaymentModal}
       loading={loading}
       deleteLoading={deleteLoading}
+      handleCourseChange={handleCourseChange}
+      allTutors={allTutors}
+      tutorLoading={tutorLoading}
     ></EnrolledCoursesPresentataional>
   );
 };

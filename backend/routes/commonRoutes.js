@@ -13,7 +13,8 @@ const {
   verifyToken,
   getUserId,
   getDocumentsByIdController,
-  getDocumentsByFilterController
+  getDocumentsByFilterController,
+  findTutorsPaymentDetails
 } = require("../controllers/commonControllers");
 const { findUserRole, findUserPermissions } = require("../middlewares/auth.middleware");
 const router = express.Router();
@@ -35,5 +36,6 @@ router.route("/getUserId").post(findUserPermissions,getUserId);
 
 router.route("/getDocumentsById").post(findUserPermissions,getDocumentsByIdController);
 router.route("/getDocumnetsByFilter").post(findUserPermissions,getDocumentsByFilterController);
+router.route("/getPaymentsDetails").post(findTutorsPaymentDetails);
 
 module.exports = router;

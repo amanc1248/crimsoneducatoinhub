@@ -90,7 +90,7 @@ const updateCommonDataController = asyncHandler(async (req, res, callback) => {
   console.log("Request body: ", req.body);
   try {
     const { collectionName, id, updateTo } = req.body;
-    const madeUpdateTo = convertToObjectIDs(updateTo)
+    const madeUpdateTo = convertToObjectIDs(updateTo);
     const filter = { _id: ObjectId(id) };
     const updateDoc = {
       $set: madeUpdateTo,
@@ -197,7 +197,7 @@ const signupNewUserController = asyncHandler(async (req, res, callback) => {
         address,
         hashedPassword,
         permissions,
-        role
+        role,
       };
 
       const newUser = await db.collection(collectionName).insertOne(newDoc);
@@ -302,8 +302,11 @@ const getUserId = asyncHandler(async (req, res, callback) => {
 const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
   try {
     const { collectionName, id, filter } = req.body;
-    const madeFilter = convertToObjectIDs(filter?filter:{})
-    const result = await db.collection(collectionName).find(madeFilter).toArray();
+    const madeFilter = convertToObjectIDs(filter ? filter : {});
+    const result = await db
+      .collection(collectionName)
+      .find(madeFilter)
+      .toArray();
     if (result) {
       return res.json(result);
     }
@@ -314,26 +317,106 @@ const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
 
 const getDocumentsByFilterController = asyncHandler(async (req, res) => {
   try {
-    const { collectionName, filter,aggregateArray, returnAs, filterType } = req.body;
+    const { collectionName, filter, aggregateArray, returnAs, filterType } =
+      req.body;
     const result = await db
       .collection(collectionName)
-      .aggregate(aggregateArray,)
+      .aggregate(aggregateArray)
       .toArray();
     if (result) {
-      const list = result.map((value,index)=>{
-        console.log("here: ", value[returnAs][0])
-        return value[returnAs][0]
+      const list = result.map((value, index) => {
+        return value[returnAs][0];
       });
-      console.log("list:::::::", list)
-      if(filterType==='normal'){
+      if (filterType === "normal") {
         return res.json(list);
-      }else{
+      } else {
         return res.json(result);
       }
     }
     console.log(result);
   } catch (err) {
     console.log(err);
+  }
+});
+
+// find the tutors payments details
+const findTutorsPaymentDetails = asyncHandler(async (req,res) => {
+  try {
+    const {data} = req.body;
+    for (let obj of Object.keys(data)){
+      if(obj.toLowerCase().includes("ids")){
+        const list = [];
+        for(let id of data[obj]["$in"]){
+          list.push(ObjectId(id));
+        }
+        data[obj]["$in"] = list;
+      }
+    }
+    const assignedCoursesFilter = {}
+    if(data.courseIds)assignedCoursesFilter.courseId = data.courseIds;
+    if(data.tutorIds)assignedCoursesFilter.tutorId = data.tutorIds;
+    if(data.paymentStatus)assignedCoursesFilter.paymentStatus = data.paymentStatus;
+
+    const studentsPaymentFilter = {}
+    if (data.month) {
+      studentsPaymentFilter.month = data.month;
+    } else {
+      studentsPaymentFilter.month = {$in:[
+        "Baishakh",
+        "Jestha",
+        "Ashadh",
+        "Shrawan",
+        "Bhadau",
+        "Asoj",
+        "Kartik",
+        "Mangsir",
+        "Poush",
+        "Magh",
+        "Falgun",
+        "Chaitra",
+      ]}
+    }
+    // // const courses = await db.collection('courses').find(coursesFilter).toArray();
+    // // console.log("Courses: " + courses);
+    // const assignedCourses = await db.collection("assignedCourses").find(assignedCoursesFilter).toArray();
+    // const assignedCourseIdsList=[];
+    // for(let assignedCourse of assignedCourses){
+    //   assignedCourseIdsList.push(ObjectId(assignedCourse._id));
+    // }
+    // const paymentsFilter = {};
+    
+    // const assignedCoursesFilter = {};
+    const assginedCourses = await db.collection("assignedCourses").aggregate([
+      {
+        $match:assignedCoursesFilter
+      },
+      {
+        $lookup:{
+          from:"enrolledCourses",
+          localField:"_id",
+          foreignField:"assignedCourseId",
+          as:"enrolledCourses"
+        }
+      },
+      {
+        $lookup:{
+          from:"studentsCoursePayment",
+          localField:"_id",
+          foreignField:"assignedCourseId",
+          as:"studentsPayment",
+          let:{"month":"studentsPayment.month"},
+          "pipeline": [
+            { "$match": {
+              month:studentsPaymentFilter.month
+            }},
+          ],
+        }
+      },
+    ]).toArray();
+    return res.json(assginedCourses);
+    
+  } catch (error) {
+    console.log(error);
   }
 });
 module.exports = {
@@ -353,4 +436,18 @@ module.exports = {
   getUserId,
   getDocumentsByIdController,
   getDocumentsByFilterController,
+  findTutorsPaymentDetails,
 };
+
+
+// {
+//   $lookup: {
+//     from: "tutorsCoursePayment",
+//     localField: "_id",
+//     foreignField: "assignedCourseId",
+//     as: "tutorPayment",
+//   },
+// },
+// {$match:{
+//   "tutorPayment.month": {$in:["Baishakh"]}
+// }}
