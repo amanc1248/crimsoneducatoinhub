@@ -215,7 +215,7 @@ export function StudentModalPresentational({
                 ></input>
               </div>
               {/* 2. Type Class */}
-              <div class="learning__form__group col-lg-6 col-12">
+              {/* <div class="learning__form__group col-lg-6 col-12">
                 <label for="typeClass">Class</label>
                 <Select
                   placeholder="Select Class"
@@ -226,7 +226,7 @@ export function StudentModalPresentational({
                     setTypeClass(e.label);
                   }}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </Modal.Body>
