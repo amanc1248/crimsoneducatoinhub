@@ -99,7 +99,7 @@ export const PaymentFilterP = ({
         </Modal.Footer>
       </Modal>
       {results.length > 0 && (
-        <Table hover size="sm" className="" responsive>
+        <Table hover size="sm" className="table__list" responsive>
           <thead>
             <tr>
               <th>Tutor Name</th>
