@@ -23,7 +23,7 @@ export const EnrolledCoursesPresentataional = ({
   enrolledCourses,
   handleOnDeleteCourse,
   loading,
-  setDeleteLoading,
+  handleOnChangeTutor,
   handleCourseChange,
   allTutors,
   tutorLoading,
@@ -112,6 +112,7 @@ export const EnrolledCoursesPresentataional = ({
                       enrolledCourse.tutorId = e._id;
                       enrolledCourse.tutorName = e.value;
                       enrolledCourse.assignedCourseId = e.assignedCourseId;
+                      handleOnChangeTutor(e._id);
                       // enrolledCourse.shift = e.shift;
                       // enrolledCourse.shiftId = e.shiftId;
                     }}

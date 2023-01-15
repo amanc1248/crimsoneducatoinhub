@@ -195,17 +195,9 @@ export const EnrolledCoursesModalContainer = ({
           _id: tutor.tutorId,
           label: tutor.tutorName,
           value: tutor.tutorName,
-          assignedCourseId: tutor._id
+          assignedCourseId: tutor._id,
+          shifts: tutor.shifts
         };
-        const shiftLists = tutor.shifts.map((shift, index) => {
-          const obj = {
-            _id: shift.shiftId,
-            label: shift.value,
-            value: shift.value,
-          };
-          return obj;
-        });
-        setAllShifts(shiftLists);
         return obj;
       });
       
@@ -215,6 +207,22 @@ export const EnrolledCoursesModalContainer = ({
       console.log(error);
     }).finally(()=>{
       setTutorLoading(false);
+    })
+  }
+
+  const handleOnChangeTutor = (tutorId)=>{
+    allTutors.map((tutor)=>{
+      if(tutor._id===tutorId){
+        const shiftLists = tutor.shifts.map((shift, index) => {
+          const obj = {
+            _id: shift.shiftId,
+            label: shift.value,
+            value: shift.value,
+          };
+          return obj;
+        });
+        setAllShifts(shiftLists);
+      }
     })
   }
   return (
@@ -243,6 +251,7 @@ export const EnrolledCoursesModalContainer = ({
       handleCourseChange={handleCourseChange}
       allTutors={allTutors}
       tutorLoading={tutorLoading}
+      handleOnChangeTutor={handleOnChangeTutor}
     ></EnrolledCoursesPresentataional>
   );
 };
