@@ -102,21 +102,23 @@ export const EnrolledCoursesPresentataional = ({
                   />
                 </div>
 
-                {tutorLoading ? "Loading": <div>
-                  <label htmlFor="">Select a tutor</label>
-                  <Select
-                    placeholder="Tutors"
-                    className="selecting__divs"
-                    options={allTutors}
-                    onChange={(e) => {
-                      enrolledCourse.tutorId = e._id;
-                      enrolledCourse.tutorName = e.value;
-                      enrolledCourse.assignedCourseId = e.assignedCourseId;
-                      // enrolledCourse.shift = e.shift;
-                      // enrolledCourse.shiftId = e.shiftId;
-                    }}
-                  />
-                </div>}
+                {tutorLoading ? (
+                  "Loading"
+                ) : (
+                  <div>
+                    <label htmlFor="">Select a tutor</label>
+                    <Select
+                      placeholder="Tutors"
+                      className="selecting__divs"
+                      options={allTutors}
+                      onChange={(e) => {
+                        enrolledCourse.tutorId = e._id;
+                        enrolledCourse.tutorName = e.value;
+                        enrolledCourse.assignedCourseId = e.assignedCourseId;
+                      }}
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label htmlFor="">Select a shift of the tutor</label>

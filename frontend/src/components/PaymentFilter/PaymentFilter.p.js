@@ -14,8 +14,6 @@ export const PaymentFilterP = ({
   setShowFilterModal,
   results,
 }) => {
-  console.log("Filtering object", filteringObject);
-  console.log("REsults: ", results);
   return (
     <>
       <div>
@@ -178,7 +176,6 @@ export const PaymentFilterP = ({
                                     </td>
                                   </tr>
                                 );
-                                // </div>
                               }
                             )
                           : "Rs: 0"}

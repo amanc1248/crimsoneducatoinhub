@@ -19,12 +19,16 @@ export const IndividualUserC = ({ user }) => {
     {
       permission: "update",
       access:
-        user?.permissions.findIndex((p) => p === "update") === -1 ? false : true,
+        user?.permissions.findIndex((p) => p === "update") === -1
+          ? false
+          : true,
     },
     {
       permission: "delete",
       access:
-        user?.permissions.findIndex((p) => p === "delete") === -1 ? false : true,
+        user?.permissions.findIndex((p) => p === "delete") === -1
+          ? false
+          : true,
     },
   ];
   const [permissionsArray, setPermissionsArray] = useState(list);
@@ -42,26 +46,25 @@ export const IndividualUserC = ({ user }) => {
     setPermissionsArray(newList);
   };
 
-  const handleOnUpdatePermission =async()=>{
-    const list=[];
-    for(let permission of permissionsArray) {
-        if(permission.access){
-            list.push(permission.permission);
-        }
+  const handleOnUpdatePermission = async () => {
+    const list = [];
+    for (let permission of permissionsArray) {
+      if (permission.access) {
+        list.push(permission.permission);
+      }
     }
-    user.permissions=list;
-    console.log("user: ", user)
+    user.permissions = list;
     const updatedData = await updateData({
-        url: "/api/commonRoute/updateData",
-        id:user._id,
-        collectionName:"users",
-        updatedTo:user,
-        checkPermission:'update',
-        userId:localStorage.getItem('userId')
+      url: "/api/commonRoute/updateData",
+      id: user._id,
+      collectionName: "users",
+      updatedTo: user,
+      checkPermission: "update",
+      userId: localStorage.getItem("userId"),
     });
-    if(updatedData)toast.success("Permissions updated successfully",{autoClose:5000});
-  }
-  console.log("Permission array: ", permissionsArray);
+    if (updatedData)
+      toast.success("Permissions updated successfully", { autoClose: 5000 });
+  };
   return (
     <IndividualUserP
       user={user}

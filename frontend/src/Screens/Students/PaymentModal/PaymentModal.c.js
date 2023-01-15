@@ -15,8 +15,6 @@ export const PaymentModalC = ({
   setShowPaymentModal,
   student,
 }) => {
-  console.log("course:::", course);
-
   // data
   const paymentCalculations = {};
 
@@ -102,7 +100,6 @@ export const PaymentModalC = ({
     setAddPayment(true);
   };
   const handleAddPayment = async () => {
-    console.log("course: ", course);
     let studentObj = studentPayment;
     studentObj = {
       ...studentObj,
@@ -126,7 +123,6 @@ export const PaymentModalC = ({
         userId: localStorage.getItem("userId"),
       });
       if (insertedData) {
-        console.log(insertedData);
         const studentPaymentObject = new StudentPaymentClass({
           enrolledCourseId: studentObj.enrolledCourseId,
           studentId: studentObj.studentId,
@@ -137,7 +133,6 @@ export const PaymentModalC = ({
           paymentDetails: studentPayment.paymentDetails,
           paymentId: insertedData.insertedId,
         });
-        console.log(studentPaymentObject);
         setAllPayments((prevState) => {
           return [...prevState, studentPaymentObject];
         });

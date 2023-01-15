@@ -14,7 +14,7 @@ export function ShiftModalPresentational({
   handleClose,
   handleOnClickDelete,
   handleOnClickSubmit,
-  handleOnClickUpdate
+  handleOnClickUpdate,
 }) {
   return (
     <>
@@ -89,9 +89,6 @@ export function ShiftModalPresentational({
                   name="endTime"
                   rows="4"
                   cols="50"
-                  // placeholder="hrs:mins"
-                  // pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$"
-                  // required
                   value={shift.endTime}
                   onChange={(e) => {
                     setShift((prevState) => {

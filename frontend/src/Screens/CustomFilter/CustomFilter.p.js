@@ -13,7 +13,6 @@ export const CustomFilterP = ({
   setResult,
   result,
 }) => {
-  console.log("Resutl:J ", result);
   const obj = {
     students: {
       aggregateArray: [
@@ -151,11 +150,11 @@ export const CustomFilterP = ({
       ],
     },
   };
-  const handleOnClick= ()=>{
+  const handleOnClick = () => {
     getPaymentsDetails({
-      url:"/api/commonRoute/getPaymentsDetails"
+      url: "/api/commonRoute/getPaymentsDetails",
     });
-  }
+  };
   return (
     <div>
       <div className="customFilter__tabs">
@@ -213,21 +212,8 @@ export const CustomFilterP = ({
             filterType="detailed"
           ></FilterC>
         )}
-       
       </div>
-      {customFilterType === "payments" && (
-          // <FilterC
-          //   aggregateArray={obj.payments.aggregateArray}
-          //   returnAs="tutorPayment"
-          //   collectionName="tutorsCoursePayment"
-          //   setResult={setResult}
-          //   wantedDBList={obj.payments.wantedDBList}
-          //   wantedLocalList={obj.payments.wantedLocalList}
-          //   filterType="detailed"
-          // ></FilterC>
-          // <button onClick={handleOnClick}>Find Payments</button>
-          <PaymentFilterC></PaymentFilterC>
-        )}
+      {customFilterType === "payments" && <PaymentFilterC></PaymentFilterC>}
       {result.length > 0 ? (
         <div className="students__inside">
           <Table
@@ -249,8 +235,8 @@ export const CustomFilterP = ({
                   <tr key={index} className="outer__table__tr">
                     {Object.keys(value).map((keyValue, keyValueIndex) => {
                       if (Array.isArray(value[keyValue])) {
-                        return (
-                          value[keyValue].length >0 ? <td>
+                        return value[keyValue].length > 0 ? (
+                          <td>
                             <Table
                               size="sm"
                               className="inner__table__list"
@@ -281,12 +267,16 @@ export const CustomFilterP = ({
                                 })}
                               </tbody>
                             </Table>
-                          </td> : <td>
+                          </td>
+                        ) : (
+                          <td>
                             <Table
-                             size="sm"
-                             className="inner__table__list"
-                             responsive
-                            >No Data</Table>
+                              size="sm"
+                              className="inner__table__list"
+                              responsive
+                            >
+                              No Data
+                            </Table>
                           </td>
                         );
                       } else {

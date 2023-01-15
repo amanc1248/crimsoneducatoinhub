@@ -49,7 +49,6 @@ export const EnrolledCoursesModalContainer = ({
           return obj;
         });
         setAllCourses(list);
-        console.log(list);
       })
       .catch((e) => console.log(e));
 
@@ -84,7 +83,6 @@ export const EnrolledCoursesModalContainer = ({
           });
           return obj;
         });
-        console.log("The list of courses: ", list[0]);
         setEnrolledCourses(list);
       })
       .catch((e) => console.log(e));

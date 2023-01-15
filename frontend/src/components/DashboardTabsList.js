@@ -4,9 +4,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { DashboardTab } from "./DashboardTab";
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
   // DATA
   const tabsList = [
@@ -25,6 +25,7 @@ export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
       {tabsList.map((tab, index) => (
         <DashboardTab
           title={tab.label}
+          key={index}
           icon={tab.icon}
           tabIndex={tabIndex}
           setTabIndex={setTabIndex}

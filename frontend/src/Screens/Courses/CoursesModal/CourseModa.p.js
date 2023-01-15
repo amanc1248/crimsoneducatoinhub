@@ -38,10 +38,10 @@ export function CourseModalPresentational({
         <Modal.Body>
           <div className="new__feature__request__form">
             {/* 1. course name */}
-            <div class="learning__form__group ">
+            <div className="learning__form__group ">
               <label for="name">Course Name</label>
               <input
-                class="form-control"
+                className="form-control"
                 id="name"
                 name="name"
                 rows="4"
@@ -60,10 +60,10 @@ export function CourseModalPresentational({
             </div>
 
             {/* 2. course duration  */}
-            <div class="learning__form__group ">
+            <div className="learning__form__group ">
               <label for="email">Course Duration (Days)</label>
               <input
-                class="form-control"
+                className="form-control"
                 id="courseDuration"
                 name="courseDuration"
                 rows="4"
@@ -101,10 +101,10 @@ export function CourseModalPresentational({
             </div>
 
             {/* Course fee */}
-            <div class="learning__form__group">
+            <div className="learning__form__group">
               <label for="fee">Fee (Rs.)</label>
               <input
-                class="form-control"
+                className="form-control"
                 id="fee"
                 name="fee"
                 rows="4"
@@ -123,10 +123,10 @@ export function CourseModalPresentational({
               ></input>
             </div>
 
-            <div class="learning__form__group">
+            <div className="learning__form__group">
               <label for="coursedetails">Course Details</label>
               <textarea
-                class="form-control"
+                className="form-control"
                 id="coursedetails"
                 name="coursedetails"
                 rows="6"

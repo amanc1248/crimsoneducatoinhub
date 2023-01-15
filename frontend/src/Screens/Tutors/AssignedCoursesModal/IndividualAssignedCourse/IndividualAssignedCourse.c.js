@@ -13,7 +13,6 @@ export const IndividualAssignedCourseC = ({
   individualTutor,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  console.log("assigned course: ", course);
   return (
     <>
       {showModal && (
@@ -81,7 +80,6 @@ export const IndividualAssignedCourseC = ({
               size="sm"
               className="button__size"
               onClick={() => {
-                // onHandleCourseDelete(course._id);
                 onHandleCourseDelete(course.assignedCourseId);
               }}
             >

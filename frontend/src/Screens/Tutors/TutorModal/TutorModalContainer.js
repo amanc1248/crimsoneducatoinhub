@@ -133,7 +133,6 @@ export function TutorModal({
       startDate,
       phoneNumber,
     };
-    console.log("Doc: ", doc);
     if (!emailRegex.test(email)) {
       toast.error("Please enter valid email", {
         autoClose: 5000,

@@ -37,7 +37,6 @@ export function getAllData(data) {
 
 // insert data
 export function insertData(data) {
-  console.log("HELLO", data);
   let url = data.url;
   const config = {
     header: {
@@ -57,7 +56,6 @@ export function insertData(data) {
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
@@ -119,7 +117,6 @@ export function updateData(data) {
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
         if (e.response.data.error === "UNAUTHORIZED") {
           toast.error(e.response.data.error, { autoClose: 5000 });
           reject(e.response.data.error);
@@ -143,7 +140,6 @@ export function deleteData(data) {
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
         if (e.response.data.error === "UNAUTHORIZED") {
           toast.error(e.response.data.error, { autoClose: 5000 });
           reject(e.response.data.error);
@@ -166,13 +162,12 @@ export function getTotalCount(data) {
         url,
         {
           collectionNames: data.collectionNames,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
@@ -197,13 +192,12 @@ export function calculateDate(data) {
         url,
         {
           collectionNames: data.collectionNames,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
@@ -228,17 +222,15 @@ export function getCourseData(data) {
         url,
         {
           collectionName: data.collectionName,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
         if (e.response.data.error === "UNAUTHORIZED") {
           toast.error(e.response.data.error, { autoClose: 5000 });
           reject(e.response.data.error);
@@ -261,13 +253,12 @@ export function getOneModalTotalCount(data) {
         url,
         {
           collectionName: data.collectionName,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
@@ -280,7 +271,6 @@ export function getOneModalTotalCount(data) {
   });
 }
 
-//yaha maile token add grya xu yesma token add grda kai farak prxa prdaina?
 //get one modal all documents
 export function getOneModalAllDocuments(data) {
   let url = data.url;
@@ -296,13 +286,12 @@ export function getOneModalAllDocuments(data) {
         {
           collectionName: data.collectionName,
           token: data.token,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
@@ -314,33 +303,7 @@ export function getOneModalAllDocuments(data) {
       });
   });
 }
-// export function getOneModalAllDocumentsToken(data) {
-//   let url = data.url;
-//   const config = {
-//     header: {
-//       "Content-Type": "application/json",
-//     },
-//   };
-//   return new Promise((resolve, reject) => {
-//     axios
-//       .post(
-//         url,
-//         {
-//           collectionName: data.collectionName,
-//         },
-//         config
-//       )
-//       .then((result) => {
-//         console.log(result.data);
-//         resolve(result.data);
-//       })
-//       .catch((e) => {
-//         console.log(e);
-//       });
-//   });
-// }
 
-//get one modal documents by id
 export function getOneModalDocumentsById(data) {
   let url = data.url;
   const config = {
@@ -356,13 +319,12 @@ export function getOneModalDocumentsById(data) {
           collectionName: data.collectionName,
           id: data.id,
           filter: data.filter,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
@@ -393,17 +355,15 @@ export function getDocumentByFilter(data) {
           aggregateArray: data.aggregateArray,
           returnAs: data.returnAs,
           filterType: data.filterType,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
         if (e.response.data.error === "UNAUTHORIZED") {
           toast.error(e.response.data.error, { autoClose: 5000 });
           reject(e.response.data.error);
@@ -425,27 +385,17 @@ export function getPaymentsDetails(data) {
       .post(
         url,
         {
-          data:data.data,
-          checkPermission:data.checkPermission,
-          userId:data.userId
+          data: data.data,
+          checkPermission: data.checkPermission,
+          userId: data.userId,
         },
-        // {
-        //   collectionName: data.collectionName,
-        //   filter: data.filter,
-        //   aggregateArray: data.aggregateArray,
-        //   returnAs: data.returnAs,
-        //   filterType: data.filterType,
-        //   checkPermission:data.checkPermission,
-        //   userId:data.userId
-        // },
+
         config
       )
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
         if (e.response.data.error === "UNAUTHORIZED") {
           toast.error(e.response.data.error, { autoClose: 5000 });
           reject(e.response.data.error);
@@ -453,4 +403,3 @@ export function getPaymentsDetails(data) {
       });
   });
 }
-
