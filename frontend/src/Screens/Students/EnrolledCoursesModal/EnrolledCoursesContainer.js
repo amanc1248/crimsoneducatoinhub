@@ -28,7 +28,7 @@ export const EnrolledCoursesModalContainer = ({
   const [addCourse, setAddCourse] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [tutorLoading, setTutorLoading] = useState(false);
   // USE EFFECTS
@@ -36,8 +36,8 @@ export const EnrolledCoursesModalContainer = ({
     getOneModalAllDocuments({
       url: "/api/commonRoute/getAllDocuments",
       collectionName: "courses",
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -58,8 +58,8 @@ export const EnrolledCoursesModalContainer = ({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "enrolledCourses",
       filter: { studentId: individualStudent._id },
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         const list = result.map((course, index) => {
@@ -80,7 +80,7 @@ export const EnrolledCoursesModalContainer = ({
             studentId: course.studentId,
             padeAmount: course.padeAmount,
             remainingAmount: course.remainingAmount,
-            assignedCourseId:course.assignedCourseId
+            assignedCourseId: course.assignedCourseId,
           });
           return obj;
         });
@@ -106,7 +106,7 @@ export const EnrolledCoursesModalContainer = ({
     enrolledCourse.paymentStatus = "not paid";
     enrolledCourse.padeAmount = 0;
     enrolledCourse.remainingAmount = enrolledCourse.actualCoursePrice;
-    console.log("enrolledCourse: ", enrolledCourse)
+    console.log("enrolledCourse: ", enrolledCourse);
     if (
       enrolledCourse.courseId &&
       enrolledCourse.courseName &&
@@ -125,8 +125,8 @@ export const EnrolledCoursesModalContainer = ({
         url: "/api/commonRoute/insertData",
         collectionName: "enrolledCourses",
         doc: enrolledCourse,
-        checkPermission:'write',
-        userId:localStorage.getItem('userId')
+        checkPermission: "write",
+        userId: localStorage.getItem("userId"),
       }).then((result) => {
         const enrolledCourseObject = new EnrolledCourse({
           id: result.insertedId,
@@ -135,7 +135,7 @@ export const EnrolledCoursesModalContainer = ({
           startYear: enrolledCourse.startYear,
           startMonth: enrolledCourse.startMonth,
           startDate: enrolledCourse.startDate,
-          endYear:enrolledCourse.endYear,
+          endYear: enrolledCourse.endYear,
           endMonth: enrolledCourse.endMonth,
           endDate: enrolledCourse.endDate,
           shiftId: enrolledCourse.shiftId,
@@ -143,24 +143,29 @@ export const EnrolledCoursesModalContainer = ({
           paymentStatus: enrolledCourse.paymentStatus,
           actualCoursePrice: enrolledCourse.actualCoursePrice,
           studentId: individualStudent._id,
-          padeAmount:0,
-          remainingAmount:enrolledCourse.actualCoursePrice
+          padeAmount: 0,
+          remainingAmount: enrolledCourse.actualCoursePrice,
         });
         setEnrolledCourses((prevState) => {
           return [...prevState, enrolledCourseObject];
         });
         setAddCourse(false);
         setLoading(false);
-      toast.success('Course enrolled to student successfully', {autoClose:5000});
+        toast.success("Course enrolled to student successfully", {
+          autoClose: 5000,
+        });
       });
-    }else{
-      toast.error('Add required fields to add course', {autoClose:5000});
+    } else {
+      toast.error("Add required fields to add course", { autoClose: 5000 });
     }
+  };
+  const handleOnUpdateCourse = async (id) => {
+    alert(id);
   };
 
   const handleOnDeleteCourse = (id) => {
     setDeleteLoading(true);
-    const userId =localStorage.getItem('userId');
+    const userId = localStorage.getItem("userId");
     deleteData({
       url: `/api/commonRoute/deleteData?id=${id}&collectionName=enrolledCourses&userId=${userId}`,
     })
@@ -178,7 +183,7 @@ export const EnrolledCoursesModalContainer = ({
       });
   };
 
-  const handleCourseChange = (e)=>{
+  const handleCourseChange = (e) => {
     enrolledCourse.courseId = e._id;
     enrolledCourse.courseName = e.value;
     enrolledCourse.studentId = individualStudent._id;
@@ -186,37 +191,40 @@ export const EnrolledCoursesModalContainer = ({
     getOneModalDocumentsById({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "assignedCourses",
-      filter: {courseId:e._id},
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
-    }).then((result)=>{
-      const list = result.map((tutor, index) => {
-        const obj = {
-          _id: tutor.tutorId,
-          label: tutor.tutorName,
-          value: tutor.tutorName,
-          assignedCourseId: tutor._id
-        };
-        const shiftLists = tutor.shifts.map((shift, index) => {
+      filter: { courseId: e._id },
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
+    })
+      .then((result) => {
+        const list = result.map((tutor, index) => {
           const obj = {
-            _id: shift.shiftId,
-            label: shift.value,
-            value: shift.value,
+            _id: tutor.tutorId,
+            label: tutor.tutorName,
+            value: tutor.tutorName,
+            assignedCourseId: tutor._id,
           };
+          const shiftLists = tutor.shifts.map((shift, index) => {
+            const obj = {
+              _id: shift.shiftId,
+              label: shift.value,
+              value: shift.value,
+            };
+            return obj;
+          });
+          setAllShifts(shiftLists);
           return obj;
         });
-        setAllShifts(shiftLists);
-        return obj;
+
+        setAllTutors(list);
+        setTutorLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setTutorLoading(false);
       });
-      
-      setAllTutors(list)
-      setTutorLoading(false);
-    }).catch((error)=>{
-      console.log(error);
-    }).finally(()=>{
-      setTutorLoading(false);
-    })
-  }
+  };
   return (
     <EnrolledCoursesPresentataional
       show={show}
@@ -236,6 +244,7 @@ export const EnrolledCoursesModalContainer = ({
       handleOnAddCourse={handleOnAddCourse}
       enrolledCourses={enrolledCourses}
       handleOnDeleteCourse={handleOnDeleteCourse}
+      handleOnUpdateCourse={handleOnUpdateCourse}
       showPaymentModal={showPaymentModal}
       setShowPaymentModal={setShowPaymentModal}
       loading={loading}

@@ -2,6 +2,8 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { Loader } from "../../../components/Loader";
 
+import Select from "react-select";
+
 export function CourseModalPresentational({
   course,
   setCourse,
@@ -11,6 +13,7 @@ export function CourseModalPresentational({
   handleOnClickUpdate,
   handleOnClickDelete,
   loader,
+  classTypeList,
 }) {
   return (
     <>
@@ -77,6 +80,24 @@ export function CourseModalPresentational({
                 }}
                 type="number"
               ></input>
+            </div>
+
+            <div className="learning__form__group">
+              <label for="class">Class Type</label>
+              <Select
+                placeholder="Select class type"
+                className="select__learning__module"
+                options={classTypeList}
+                value={{ label: course.classType, value: course.classType }}
+                onChange={(e) => {
+                  setCourse((prevState) => {
+                    return {
+                      ...prevState,
+                      classType: e.label,
+                    };
+                  });
+                }}
+              />
             </div>
 
             {/* Course fee */}

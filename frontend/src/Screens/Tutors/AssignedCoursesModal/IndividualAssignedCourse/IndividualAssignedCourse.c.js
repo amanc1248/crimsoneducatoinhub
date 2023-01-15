@@ -3,14 +3,14 @@ import Button from "react-bootstrap/Button";
 import { LoaderFallingLines } from "../../../../components/Loader";
 import { SalaryModalC } from "../../SalaryModal/SalaryModal.c";
 // import { PaymentModalC } from "../../PaymentModal/PaymentModal.c";
-import "../../../../styles/screens/home.css"
+import "../../../../styles/screens/home.css";
 export const IndividualAssignedCourseC = ({
   course,
   index,
   onHandleCourseDelete,
   loading,
   deleteLoading,
-  individualTutor
+  individualTutor,
 }) => {
   const [showModal, setShowModal] = useState(false);
   console.log("assigned course: ", course);
@@ -34,12 +34,19 @@ export const IndividualAssignedCourseC = ({
         <td>{course?.endYear}</td>
         <td>{course?.endMonth}</td>
         <td>{course?.endDate}</td>
-        <td><div className="">
-        {course?.shifts && course.shifts.map((shift, index)=>{
-          return <div className="shift__div">{index+1}: {shift.value}</div>
-        })}
-          </div></td>
-        <td>Rs. {course?.salaryPercentage}</td>
+        <td>
+          <div className="">
+            {course?.shifts &&
+              course.shifts.map((shift, index) => {
+                return (
+                  <div className="shift__div">
+                    {index + 1}: {shift.value}
+                  </div>
+                );
+              })}
+          </div>
+        </td>
+        <td>{course?.salaryPercentage} %</td>
         <td>Rs. {course?.salaryAmount}</td>
         <td>Rs. {course?.padeAmount}</td>
         <td>Rs. {course?.remainingAmount}</td>

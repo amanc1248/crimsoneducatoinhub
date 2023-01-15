@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-import {LoaderRotatingSquare} from "../../../components/Loader"
+import { LoaderRotatingSquare } from "../../../components/Loader";
 import "../../../styles/screens/home.css";
 import { datesList, monthsList, yearsList } from "../../../Data/StudentsData";
 import Select from "react-select";
-import {StudentInvoiceC } from "../../../components/Invoice/StudentInvoice/StudentInvoice.c";
+import { StudentInvoiceC } from "../../../components/Invoice/StudentInvoice/StudentInvoice.c";
 
 export const PaymentModalP = ({
   student,
@@ -24,8 +24,9 @@ export const PaymentModalP = ({
   loading,
   course,
   handleGenerateInvoice,
-  showInvoice
+  showInvoice,
 }) => {
+  console.log(`this`, course);
   return (
     <>
       <Modal
@@ -39,10 +40,11 @@ export const PaymentModalP = ({
       >
         <Modal.Header>
           <div>
-          <Modal.Title>Payment Details</Modal.Title>
-          <div>Name: {student.name}</div>
-          <div>Address: {student.address}</div>
-          <div>Phone Number: {student.phoneNumber}</div>
+            <Modal.Title>Payment Details</Modal.Title>
+            <div>Student Name: {student.name}</div>
+            <div>Student Address: {student.address}</div>
+            <div>Phone Number: {student.phoneNumber}</div>
+            <div>Shift Name: {course.shift}</div>
           </div>
           <div>
             <div>Total: {paymentCalculations.totalAmount}</div>
@@ -119,7 +121,7 @@ export const PaymentModalP = ({
           )}
           {addPayment && (
             <div>
-               <div className="adding__course__div">
+              <div className="adding__course__div">
                 {/* 1. payment date*/}
                 <div>
                   <label for="paymentYear">Year</label>
@@ -173,10 +175,8 @@ export const PaymentModalP = ({
                     }}
                   />
                 </div>
-
               </div>
               <div className="adding__course__div">
-
                 {/* 2. amount*/}
                 <div className="payment__date">
                   <label htmlFor="amount">Amount</label>

@@ -27,15 +27,15 @@ export const CoursesContainer = () => {
   }, []);
 
   useEffect(() => {
-    if(refresh){
-      setLoader(true)
+    if (refresh) {
+      setLoader(true);
       getAllData({
         url: "/api/commonRoute/getData",
         collectionName: "courses",
         pageNumber: currentPage,
         nPerPage: 100,
-        checkPermission:'read',
-        userId:localStorage.getItem('userId')
+        checkPermission: "read",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           setUnModifiableOrignalList(result);
@@ -46,8 +46,9 @@ export const CoursesContainer = () => {
               courseDuration: course.courseDuration,
               courseFee: course.courseFee,
               courseDetails: course.courseDetails,
+              classType: course.classType,
             });
-            setLoader(false)
+            setLoader(false);
             return courseObj;
           });
           setCourses(list);
@@ -55,8 +56,9 @@ export const CoursesContainer = () => {
         })
         .catch((e) => {
           console.log(e);
-        }).finally(()=>{
-          setLoader(false)
+        })
+        .finally(() => {
+          setLoader(false);
         });
     }
   }, [refresh]);
@@ -68,8 +70,8 @@ export const CoursesContainer = () => {
       collectionName: "courses",
       pageNumber: currentPage,
       nPerPage: 100,
-      checkPermission:'read',
-      userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         setUnModifiableOrignalList(result);
@@ -80,18 +82,20 @@ export const CoursesContainer = () => {
             courseDuration: course.courseDuration,
             courseFee: course.courseFee,
             courseDetails: course.courseDetails,
+            classType: course.classType,
           });
           return courseObj;
         });
         setCourses(list);
         setRefresh(false);
-        setLoader(false)
+        setLoader(false);
       })
       .catch((e) => {
         console.log(e);
-      }).finally(()=>{
-        setLoader(false)
-      }); 
+      })
+      .finally(() => {
+        setLoader(false);
+      });
   }, [currentPage]);
 
   return (

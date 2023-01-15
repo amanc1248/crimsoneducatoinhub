@@ -13,7 +13,7 @@ export const PaymentModalC = ({
   course,
   showPaymentModal,
   setShowPaymentModal,
-  student
+  student,
 }) => {
   console.log("course:::", course);
 
@@ -39,9 +39,9 @@ export const PaymentModalC = ({
     getOneModalDocumentsById({
       url: "/api/commonRoute/getDocumentsById",
       collectionName: "studentsCoursePayment",
-      filter: {enrolledCourseId: course.id},
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      filter: { enrolledCourseId: course.id },
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         const list = result.map((payment, index) => {
@@ -49,12 +49,12 @@ export const PaymentModalC = ({
             paymentId: payment._id,
             enrolledCourseId: payment.enrolledCourseId,
             date: payment.date,
-            month:payment.month,
-            year:payment.year,
+            month: payment.month,
+            year: payment.year,
             amount: payment.amount,
             paymentDetails: payment.paymentDetails,
             studentId: payment.studentId,
-            assignedCourseId:payment.assignedCourseId
+            assignedCourseId: payment.assignedCourseId,
           });
           return obj;
         });
@@ -64,51 +64,51 @@ export const PaymentModalC = ({
       .catch((e) => console.log(e));
   }, []);
 
-    // for updating the payment status
-    useEffect(() => {
-      if (addedOrDeletedSalary) {
-        course.paymentStatus =
+  // for updating the payment status
+  useEffect(() => {
+    if (addedOrDeletedSalary) {
+      course.paymentStatus =
         paymentCalculations?.paidAmount === paymentCalculations?.totalAmount
-            ? "paid"
-            : "not paid";
-            course.padeAmount = paymentCalculations.paidAmount;
-          course.remainingAmount = paymentCalculations.remainingAmount;
-        const newObj = JSON.parse(JSON.stringify(course));
-  
-        const _id = course.id;
-        delete newObj["id"];
-        newObj._id = _id;
-        newObj.padeAmount = paymentCalculations?.paidAmount;
-        newObj.remainingAmount = paymentCalculations?.remainingAmount;
-        updateData({
-          url: "/api/commonRoute/updateData",
-          collectionName: "enrolledCourses",
-          updatedTo: newObj,
-          id: course.id,
-          checkPermission:'update',
-        userId:localStorage.getItem('userId')
+          ? "paid"
+          : "not paid";
+      course.padeAmount = paymentCalculations.paidAmount;
+      course.remainingAmount = paymentCalculations.remainingAmount;
+      const newObj = JSON.parse(JSON.stringify(course));
+
+      const _id = course.id;
+      delete newObj["id"];
+      newObj._id = _id;
+      newObj.padeAmount = paymentCalculations?.paidAmount;
+      newObj.remainingAmount = paymentCalculations?.remainingAmount;
+      updateData({
+        url: "/api/commonRoute/updateData",
+        collectionName: "enrolledCourses",
+        updatedTo: newObj,
+        id: course.id,
+        checkPermission: "update",
+        userId: localStorage.getItem("userId"),
+      })
+        .then((result) => {
+          setAddedOrDeletedSalary(false);
         })
-          .then((result) => {
-            setAddedOrDeletedSalary(false);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
-    }, [addedOrDeletedSalary]);
-  
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [addedOrDeletedSalary]);
+
   // functions
   const handleOnShow = () => {
     setAddPayment(true);
   };
   const handleAddPayment = async () => {
-    console.log("course: ", course)
+    console.log("course: ", course);
     let studentObj = studentPayment;
     studentObj = {
       ...studentObj,
       enrolledCourseId: course.id,
       studentId: course.studentId,
-      assignedCourseId: course.assignedCourseId
+      assignedCourseId: course.assignedCourseId,
     };
     if (
       studentPayment.year &&
@@ -118,14 +118,14 @@ export const PaymentModalC = ({
       studentPayment.paymentDetails
     ) {
       setLoading(true);
-     const insertedData = await insertData({
+      const insertedData = await insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "studentsCoursePayment",
         doc: studentObj,
-        checkPermission:'write',
-        userId:localStorage.getItem('userId')
+        checkPermission: "write",
+        userId: localStorage.getItem("userId"),
       });
-      if(insertedData){
+      if (insertedData) {
         console.log(insertedData);
         const studentPaymentObject = new StudentPaymentClass({
           enrolledCourseId: studentObj.enrolledCourseId,
@@ -145,12 +145,12 @@ export const PaymentModalC = ({
         setAddPayment(false);
         setAddedOrDeletedSalary(true);
         setLoading(false);
-        toast.success("Payment added successfully", {autoClose:5000})
-      }else{
-        console.log("error")
+        toast.success("Payment added successfully", { autoClose: 5000 });
+      } else {
+        console.log("error");
       }
-    }else{
-      toast.error("Add required fields to add payment", {autoClose:5000})
+    } else {
+      toast.error("Add required fields to add payment", { autoClose: 5000 });
     }
   };
 
@@ -159,7 +159,7 @@ export const PaymentModalC = ({
   };
 
   const handleOnDelete = async (id) => {
-    const userId =localStorage.getItem('userId');
+    const userId = localStorage.getItem("userId");
 
     deleteData({
       url: `/api/commonRoute/deleteData?id=${id}&collectionName=studentsCoursePayment&userId=${userId}`,
@@ -201,9 +201,9 @@ export const PaymentModalC = ({
       });
     }
   };
-  const handleGenerateInvoice = ()=>{
+  const handleGenerateInvoice = () => {
     setShowInvoice(!showInvoice);
-  }
+  };
   return (
     <PaymentModalP
       addPayment={addPayment}
