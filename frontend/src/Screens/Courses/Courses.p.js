@@ -20,7 +20,7 @@ export const CoursesPresentational = ({
   currentPage,
   totalPages,
   setCurrentPage,
-  loader
+  loader,
 }) => {
   return (
     <div className="courses">
@@ -67,32 +67,37 @@ export const CoursesPresentational = ({
         />
       </div>
       <br />
-      {loader ? <Loader></Loader> :  <div className="students__inside">
-        <Table striped hover size="sm" className="table__list" responsive>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Course Name</th>
-              <th>Time (Months)</th>
-              <th>Fee (Rs.)</th>
-              <th>Course Details</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courses.map((course, index) => {
-              return (
-                <IndividualCourseContainer
-                  course={course}
-                  index={index}
-                  key={index}
-                  setRefresh={setRefresh}
-                />
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>}
+      {loader ? (
+        <Loader></Loader>
+      ) : (
+        <div className="students__inside">
+          <Table striped hover size="sm" className="table__list" responsive>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Course Name</th>
+                <th>Time (Months)</th>
+                <th>Class Type</th>
+                <th>Fee (Rs.)</th>
+                <th>Course Details</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {courses.map((course, index) => {
+                return (
+                  <IndividualCourseContainer
+                    course={course}
+                    index={index}
+                    key={index}
+                    setRefresh={setRefresh}
+                  />
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 };

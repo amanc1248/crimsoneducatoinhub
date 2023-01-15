@@ -54,7 +54,7 @@ export function TutorModalPresentational({
                   name="name"
                   rows="4"
                   cols="50"
-                  placeholder="Enter First name"
+                  placeholder="Enter Your Name"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
@@ -86,10 +86,16 @@ export function TutorModalPresentational({
             <div className="learning__form__group">
               <label for="course">Phone Number</label>
               <input
+                onInput={(e) => {
+                  if (e.target.value.length > 10) {
+                    e.target.value = e.target.value.slice(0, 10);
+                  }
+                }}
+                maxLength={10}
                 class="form-control"
                 id="phnNumber"
                 name="phnNumber"
-                placeholder="Enter your phone number"
+                placeholder="Enter Your Phone Number"
                 value={phoneNumber}
                 onChange={(e) => {
                   setPhoneNumber(e.target.value);
@@ -98,11 +104,11 @@ export function TutorModalPresentational({
               ></input>
             </div>
             <div class="learning__form__group">
-              <label for="name">Age</label>
+              <label for="age">Age</label>
               <input
                 class="form-control"
-                id="name"
-                name="name"
+                id="age"
+                name="age"
                 rows="4"
                 cols="50"
                 placeholder="Enter Your Age"

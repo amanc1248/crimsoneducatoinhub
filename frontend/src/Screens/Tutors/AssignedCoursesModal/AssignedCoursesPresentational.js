@@ -30,7 +30,7 @@ export const AssignedCoursesPresentational = ({
   salaryAmount,
   courseFeeLoading,
   selectedShifts,
-  handleSelectedShifts
+  handleSelectedShifts,
 }) => {
   return (
     <>
@@ -120,7 +120,7 @@ export const AssignedCoursesPresentational = ({
                     name="Course Fee"
                     placeholder="Course Fee"
                     type="number"
-                    value={!courseFeeLoading  && courseFee}
+                    value={!courseFeeLoading && courseFee}
                     disabled={true}
                   ></input>
                 </div>

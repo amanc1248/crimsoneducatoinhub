@@ -24,7 +24,7 @@ export const SalaryModalP = ({
   chequePhoto,
   setChequePhoto,
   addSalaryLoading,
-  individualTutor
+  individualTutor,
 }) => {
   return (
     <>
@@ -39,10 +39,10 @@ export const SalaryModalP = ({
       >
         <Modal.Header>
           <div>
-          <Modal.Title>Salary Details</Modal.Title>
-          <div>Name: {individualTutor.name}</div>
-          <div>Phone Number: {individualTutor.phoneNumber}</div>
-          <div>Address: {individualTutor.address}</div>
+            <Modal.Title>Salary Details</Modal.Title>
+            <div>Name: {individualTutor.name}</div>
+            <div>Phone Number: {individualTutor.phoneNumber}</div>
+            <div>Address: {individualTutor.address}</div>
           </div>
           <div>
             <div>Total: {salaryCalculations.totalAmount}</div>
@@ -153,7 +153,7 @@ export const SalaryModalP = ({
                 <div class="learning__form__group ">
                   <label for="month">Month</label>
                   <Select
-                    placeholder="Select month"
+                    placeholder="Select Month"
                     className="selecting__divs"
                     options={monthsList}
                     onChange={(e) => {
@@ -171,7 +171,7 @@ export const SalaryModalP = ({
                 <div class="learning__form__group ">
                   <label htmlFor="">Date</label>
                   <Select
-                    placeholder="startDate"
+                    placeholder="Select Date"
                     className="selecting__divs"
                     options={datesList}
                     onChange={(e) => {
@@ -184,7 +184,6 @@ export const SalaryModalP = ({
                     }}
                   />
                 </div>
-
               </div>
 
               <div className="adding__course__div">
@@ -217,7 +216,7 @@ export const SalaryModalP = ({
                     }}
                   />
                 </div>
-              <div className="payment__date">
+                <div className="payment__date">
                   <label htmlFor="paymentDetails">Cheque Photo</label>
                   <input
                     type="file"
@@ -234,24 +233,28 @@ export const SalaryModalP = ({
                 </div>
               </div>
 
-              {addSalaryLoading ? <LoaderRotatingSquare></LoaderRotatingSquare>: <div>
-              <Button
-                variant="btn-close"
-                size="sm"
-                className="add__button__size"
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                className="add__button__size"
-                onClick={handleAddSalary}
-              >
-                Save
-              </Button>
-              </div>}
+              {addSalaryLoading ? (
+                <LoaderRotatingSquare></LoaderRotatingSquare>
+              ) : (
+                <div>
+                  <Button
+                    variant="btn-close"
+                    size="sm"
+                    className="add__button__size"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="add__button__size"
+                    onClick={handleAddSalary}
+                  >
+                    Save
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </Modal.Body>

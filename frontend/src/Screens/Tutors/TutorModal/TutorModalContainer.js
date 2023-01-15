@@ -1,3 +1,4 @@
+import e from "cors";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -50,6 +51,9 @@ export function TutorModal({
     individualTutor && individualTutor.phoneNumber
   );
   const [loader, setLoader] = useState(false);
+  const phoneNumberRegex = /^98\d{8}$/;
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   // functions
   // 1. on adding course
@@ -63,17 +67,31 @@ export function TutorModal({
       phoneNumber,
       date: new Date(),
     };
-    console.log("Doc: ", doc);
 
-    if (name && email && age && qualification && startDate && phoneNumber) {
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter valid email", {
+        autoClose: 5000,
+      });
+    } else if (!phoneNumberRegex.test(phoneNumber)) {
+      toast.error("Please enter valid phone number", {
+        autoClose: 5000,
+      });
+    } else if (
+      name &&
+      email &&
+      age &&
+      qualification &&
+      startDate &&
+      phoneNumber
+    ) {
       let list = tutors;
       setLoader(true);
       insertData({
         url: "/api/commonRoute/insertData",
         collectionName: "tutors",
         doc,
-        checkPermission:'write',
-        userId:localStorage.getItem('userId')
+        checkPermission: "write",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           setTutors(list);
@@ -116,15 +134,30 @@ export function TutorModal({
       phoneNumber,
     };
     console.log("Doc: ", doc);
-    if (name && email && age && qualification && startDate && phoneNumber) {
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter valid email", {
+        autoClose: 5000,
+      });
+    } else if (!phoneNumberRegex.test(phoneNumber)) {
+      toast.error("Please enter valid phone number", {
+        autoClose: 5000,
+      });
+    } else if (
+      name &&
+      email &&
+      age &&
+      qualification &&
+      startDate &&
+      phoneNumber
+    ) {
       setLoader(true);
       updateData({
         url: "/api/commonRoute/updateData",
         collectionName: "tutors",
         updatedTo: doc,
         id: individualTutor._id,
-        checkPermission:'update',
-        userId:localStorage.getItem('userId')
+        checkPermission: "update",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           setRefresh(true);
@@ -147,7 +180,7 @@ export function TutorModal({
   // 4. on deleting course
   const handleOnClickDelete = () => {
     setLoader(true);
-    const userId =localStorage.getItem('userId');
+    const userId = localStorage.getItem("userId");
     deleteData({
       url: `/api/commonRoute/deleteData?id=${individualTutor._id}&collectionName=tutors&userId=${userId}`,
     })

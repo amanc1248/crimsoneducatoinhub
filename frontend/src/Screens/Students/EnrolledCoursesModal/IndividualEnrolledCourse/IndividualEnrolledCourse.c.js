@@ -2,11 +2,24 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import { PaymentModalC } from "../../PaymentModal/PaymentModal.c";
 
-export const IndividualEnrolledCourseC = ({ course, index, handleOnDeleteCourse, student }) => {
+export const IndividualEnrolledCourseC = ({
+  course,
+  index,
+  handleOnDeleteCourse,
+  handleOnUpdateCourse,
+  student,
+}) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-      {showModal && <PaymentModalC course={course} showPaymentModal={showModal} setShowPaymentModal={setShowModal} student ={student}></PaymentModalC>}
+      {showModal && (
+        <PaymentModalC
+          course={course}
+          showPaymentModal={showModal}
+          setShowPaymentModal={setShowModal}
+          student={student}
+        ></PaymentModalC>
+      )}
 
       <tr>
         <td>{index + 1}</td>
@@ -23,7 +36,16 @@ export const IndividualEnrolledCourseC = ({ course, index, handleOnDeleteCourse,
         <td>Rs. {course.remainingAmount}</td>
         <td>
           <div>
-            <div className={`${course.paymentStatus==='not paid' ? 'payment__not__paide': 'payment__paide'} `}> <strong>{course.paymentStatus}</strong> </div>
+            <div
+              className={`${
+                course.paymentStatus === "not paid"
+                  ? "payment__not__paide"
+                  : "payment__paide"
+              } `}
+            >
+              {" "}
+              <strong>{course.paymentStatus}</strong>{" "}
+            </div>
             <div
               className="see__details__link"
               onClick={() => {
@@ -44,6 +66,16 @@ export const IndividualEnrolledCourseC = ({ course, index, handleOnDeleteCourse,
             }}
           >
             Delete
+          </Button>
+          <Button
+            variant="success"
+            size="sm"
+            className="button__size"
+            onClick={() => {
+              handleOnUpdateCourse(course.id);
+            }}
+          >
+            Update
           </Button>
         </td>
       </tr>

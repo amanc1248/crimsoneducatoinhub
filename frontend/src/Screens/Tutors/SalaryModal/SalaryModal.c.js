@@ -16,9 +16,9 @@ export const SalaryModalC = ({
   course,
   showSalaryModal,
   setShowSalaryModal,
-  individualTutor
+  individualTutor,
 }) => {
-  console.log("COURSE: ", course)
+  console.log("COURSE: ", course);
   // data
   const salaryCalculations = {};
 
@@ -28,8 +28,8 @@ export const SalaryModalC = ({
   const [addedOrDeletedSalary, setAddedOrDeletedSalary] = useState(false);
   const [tutorSalary, setTutorSalary] = useState({
     year: "",
-    month:"",
-    date:"",
+    month: "",
+    date: "",
     amount: "",
     salaryDetails: "",
     chequePhoto: "",
@@ -45,8 +45,8 @@ export const SalaryModalC = ({
       collectionName: "tutorsCoursePayment",
       id: course.assignedCourseId,
       filter: { assignedCourseId: course.assignedCourseId },
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         const list = result.map((salary, index) => {
@@ -54,7 +54,7 @@ export const SalaryModalC = ({
             salaryId: salary._id,
             assignedCourseId: salary.assignedCourseId,
             year: salary.year,
-            month:salary.month,
+            month: salary.month,
             date: salary.date,
             amount: salary.amount,
             salaryDetails: salary.salaryDetails,
@@ -90,8 +90,8 @@ export const SalaryModalC = ({
         collectionName: "assignedCourses",
         updatedTo: newObj,
         id: course.assignedCourseId,
-        checkPermission:'update',
-        userId:localStorage.getItem('userId')
+        checkPermission: "update",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           toast.success("Payment Status updated Successfully", {
@@ -107,7 +107,11 @@ export const SalaryModalC = ({
 
   // on adding salary
   const handleAddSalary = async () => {
-    console.log("TutorSalary: ", tutorSalary);
+    // const numericRegex = /^[0-9]*$/;
+    // if (!numericRegex.test(tutorSalary.amount)) {
+    //   toast.error("Error", { autoClose: 5000 });
+    // } else
+
     if (
       tutorSalary.amount &&
       tutorSalary.chequePhoto &&
@@ -146,15 +150,15 @@ export const SalaryModalC = ({
               url: "/api/commonRoute/insertData",
               collectionName: "tutorsCoursePayment",
               doc: obj,
-              checkPermission:'write',
-        userId:localStorage.getItem('userId')
+              checkPermission: "write",
+              userId: localStorage.getItem("userId"),
             }).then(async (result) => {
               const tutorSalaryObject = new TutorSalaryClass({
                 assignedCourseId: tutorSalary.assignedCourseId,
                 tutorId: tutorSalary.tutorId,
                 amount: tutorSalary.amount,
                 year: tutorSalary.year,
-                month:tutorSalary.month,
+                month: tutorSalary.month,
                 date: tutorSalary.date,
                 salaryDetails: tutorSalary.salaryDetails,
                 salaryId: result.insertedId,
@@ -167,14 +171,14 @@ export const SalaryModalC = ({
               setTutorSalary({});
               setAddSalary(false);
               setAddedOrDeletedSalary(true);
-              setAddSalaryLoading(false)
+              setAddSalaryLoading(false);
             });
           }
         })
         .catch((err) => {
           toast.error("err", { autoClose: 5000 });
         });
-    }else{
+    } else {
       toast.error("Please add the required fields", { autoClose: 5000 });
     }
   };
@@ -186,7 +190,7 @@ export const SalaryModalC = ({
     setAddSalary(false);
   };
   const handleOnDelete = async (id) => {
-    const userId =localStorage.getItem('userId');
+    const userId = localStorage.getItem("userId");
     deleteData({
       url: `/api/commonRoute/deleteData?id=${id}&collectionName=tutorsCoursePayment&userId=${userId}`,
     })
@@ -244,7 +248,7 @@ export const SalaryModalC = ({
       tutorSalary={tutorSalary}
       setTutorSalary={setTutorSalary}
       addSalaryLoading={addSalaryLoading}
-    individualTutor={individualTutor}
+      individualTutor={individualTutor}
     ></SalaryModalP>
   );
 };
