@@ -18,7 +18,6 @@ export const SalaryModalC = ({
   setShowSalaryModal,
   individualTutor,
 }) => {
-  console.log("COURSE: ", course);
   // data
   const salaryCalculations = {};
 
@@ -32,7 +31,7 @@ export const SalaryModalC = ({
     date: "",
     amount: "",
     salaryDetails: "",
-    chequePhoto: "",
+    chequeNumber: "",
   });
   const [addSalaryLoading, setAddSalaryLoading] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,12 +58,11 @@ export const SalaryModalC = ({
             amount: salary.amount,
             salaryDetails: salary.salaryDetails,
             tutorId: salary.tutorId,
-            filename: salary.chequePhoto,
+            chequeNumber: salary.chequeNumber,
           });
           return obj;
         });
         setAllSalarys(list);
-        console.log(list);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -84,7 +82,6 @@ export const SalaryModalC = ({
       newObj._id = _id;
       newObj.padeAmount = salaryCalculations.paidAmount;
       newObj.remainingAmount = salaryCalculations.remainingAmount;
-      console.log("New obj: ", newObj);
       updateData({
         url: "/api/commonRoute/updateData",
         collectionName: "assignedCourses",
@@ -114,70 +111,59 @@ export const SalaryModalC = ({
 
     if (
       tutorSalary.amount &&
-      tutorSalary.chequePhoto &&
       tutorSalary.year &&
       tutorSalary.month &&
       tutorSalary.date &&
-      tutorSalary.salaryDetails
+      tutorSalary.salaryDetails &&
+      tutorSalary.chequeNumber
     ) {
       setAddSalaryLoading(true);
-      const formData = new FormData();
-      formData.append("file", tutorSalary.chequePhoto);
-      formData.append("upload_preset", "farmersfrienduploadpreset");
 
-      await Axios.post(
-        "https://api.cloudinary.com/v1_1/gaurabcloudinary/image/upload",
-        formData
-      )
-        .then((response) => {
-          const filename = response.data.public_id;
-
-          let obj = tutorSalary;
-          obj = {
-            ...obj,
-            assignedCourseId: course.assignedCourseId,
-            tutorId: course.tutorId,
-            chequePhoto: filename,
-          };
-          if (
-            tutorSalary.year &&
-            tutorSalary.amount &&
-            tutorSalary.salaryDetails &&
-            filename
-          ) {
-            console.log("Final Object: ", obj);
-            insertData({
-              url: "/api/commonRoute/insertData",
-              collectionName: "tutorsCoursePayment",
-              doc: obj,
-              checkPermission: "write",
-              userId: localStorage.getItem("userId"),
-            }).then(async (result) => {
-              const tutorSalaryObject = new TutorSalaryClass({
-                assignedCourseId: tutorSalary.assignedCourseId,
-                tutorId: tutorSalary.tutorId,
-                amount: tutorSalary.amount,
-                year: tutorSalary.year,
-                month: tutorSalary.month,
-                date: tutorSalary.date,
-                salaryDetails: tutorSalary.salaryDetails,
-                salaryId: result.insertedId,
-                filename: filename,
-              });
-              setAllSalarys((prevState) => {
-                return [...prevState, tutorSalaryObject];
-              });
-
-              setTutorSalary({});
-              setAddSalary(false);
-              setAddedOrDeletedSalary(true);
-              setAddSalaryLoading(false);
-            });
-          }
+      let obj = tutorSalary;
+      obj = {
+        ...obj,
+        assignedCourseId: course.assignedCourseId,
+        tutorId: course.tutorId,
+      };
+      if (
+        tutorSalary.year &&
+        tutorSalary.amount &&
+        tutorSalary.salaryDetails &&
+        tutorSalary.chequeNumber
+      ) {
+        insertData({
+          url: "/api/commonRoute/insertData",
+          collectionName: "tutorsCoursePayment",
+          doc: obj,
+          checkPermission: "write",
+          userId: localStorage.getItem("userId"),
         })
-        .catch((err) => {
-          toast.error("err", { autoClose: 5000 });
-        });
+          .then(async (result) => {
+            const tutorSalaryObject = new TutorSalaryClass({
+              assignedCourseId: tutorSalary.assignedCourseId,
+              tutorId: tutorSalary.tutorId,
+              amount: tutorSalary.amount,
+              year: tutorSalary.year,
+              month: tutorSalary.month,
+              date: tutorSalary.date,
+              salaryDetails: tutorSalary.salaryDetails,
+              salaryId: result.insertedId,
+              chequeNumber: tutorSalary.chequeNumber,
+            });
+            setAllSalarys((prevState) => {
+              return [...prevState, tutorSalaryObject];
+            });
+
+            setTutorSalary({});
+            setAddSalary(false);
+            setAddedOrDeletedSalary(true);
+            setAddSalaryLoading(false);
+          })
+
+          .catch((err) => {
+            toast.error("err", { autoClose: 5000 });
+          });
+      }
     } else {
       toast.error("Please add the required fields", { autoClose: 5000 });
     }

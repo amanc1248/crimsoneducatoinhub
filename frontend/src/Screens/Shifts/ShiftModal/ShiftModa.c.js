@@ -14,7 +14,6 @@ export function ShiftModalContainer({
   courseModalType,
   setRefresh,
 }) {
-  console.log("Individual shift: ", individualShift);
   //   usestates
   // USESTATES
   const [shift, setShift] = useState({

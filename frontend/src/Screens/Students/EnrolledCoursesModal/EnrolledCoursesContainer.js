@@ -104,7 +104,6 @@ export const EnrolledCoursesModalContainer = ({
     enrolledCourse.paymentStatus = "not paid";
     enrolledCourse.padeAmount = 0;
     enrolledCourse.remainingAmount = enrolledCourse.actualCoursePrice;
-    console.log("enrolledCourse: ", enrolledCourse);
     if (
       enrolledCourse.courseId &&
       enrolledCourse.courseName &&
