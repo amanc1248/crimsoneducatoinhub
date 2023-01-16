@@ -127,7 +127,6 @@ export const AssignedCoursesContainer = ({
     assignedCourse.remainingAmount = salaryAmount;
     assignedCourse.shifts = selectedShifts;
     assignedCourse.courseFee = courseFee;
-    console.log("The Doc: ", assignedCourse);
 
     if (
       assignedCourse.courseId &&
