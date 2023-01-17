@@ -24,6 +24,8 @@ export function TutorModalPresentational({
   setStartDate,
   qualification,
   loader,
+  address,
+  setAddress,
 }) {
   return (
     <>
@@ -101,6 +103,20 @@ export function TutorModalPresentational({
                   setPhoneNumber(e.target.value);
                 }}
                 type="number"
+              ></input>
+            </div>
+            <div className="learning__form__group">
+              <label for="course">Address</label>
+              <input
+                class="form-control"
+                id="address"
+                name="address"
+                placeholder="Enter Your Addres"
+                value={address}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                type="text"
               ></input>
             </div>
             <div class="learning__form__group">

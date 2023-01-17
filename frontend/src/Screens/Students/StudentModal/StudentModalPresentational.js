@@ -66,7 +66,7 @@ export function StudentModalPresentational({
                   name="name"
                   rows="4"
                   cols="50"
-                  placeholder="Enter First name"
+                  placeholder="Enter Your Name"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
@@ -83,7 +83,7 @@ export function StudentModalPresentational({
                   name="email"
                   rows="4"
                   cols="50"
-                  placeholder="Enter your email"
+                  placeholder="Enter Your Email"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -102,7 +102,7 @@ export function StudentModalPresentational({
                   name="dateofbirth"
                   rows="4"
                   cols="50"
-                  placeholder="Enter your DOB"
+                  placeholder="Enter Your DOB"
                   value={dob}
                   onChange={(e) => {
                     setDOB(e.target.value);
@@ -119,7 +119,7 @@ export function StudentModalPresentational({
                   name="yourPhnNumber"
                   rows="4"
                   cols="50"
-                  placeholder="Enter your phone number"
+                  placeholder="Enter Your Phone Number"
                   value={phoneNumber}
                   onChange={(e) => {
                     setPhoneNumber(e.target.value);
@@ -134,7 +134,7 @@ export function StudentModalPresentational({
               <div class="learning__form__group col-lg-6 col-12">
                 <label for="qualification">Qualification</label>
                 <Select
-                  placeholder="Select qualification"
+                  placeholder="Select Qualification"
                   className="select__learning__module"
                   options={qualificationList}
                   value={{ label: qualification, value: qualification }}
@@ -152,7 +152,7 @@ export function StudentModalPresentational({
                   name="name"
                   rows="4"
                   cols="50"
-                  placeholder="Enter your address"
+                  placeholder="Enter Your Address"
                   value={address}
                   onChange={(e) => {
                     setAddress(e.target.value);
@@ -170,7 +170,7 @@ export function StudentModalPresentational({
                   name="parentsName"
                   rows="4"
                   cols="50"
-                  placeholder="Enter your Parents Name"
+                  placeholder="Enter Your Parents Name"
                   value={parentsName}
                   onChange={(e) => {
                     setParentsName(e.target.value);
@@ -188,7 +188,7 @@ export function StudentModalPresentational({
                   name="parentPhnNumber"
                   rows="4"
                   cols="50"
-                  placeholder="Enter your parent phone number"
+                  placeholder="Enter Your Parent Phone Number"
                   value={parentPhoneNumber}
                   onChange={(e) => {
                     setParentPhoneNumber(e.target.value);

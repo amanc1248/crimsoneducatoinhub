@@ -104,11 +104,6 @@ export const SalaryModalC = ({
 
   // on adding salary
   const handleAddSalary = async () => {
-    // const numericRegex = /^[0-9]*$/;
-    // if (!numericRegex.test(tutorSalary.amount)) {
-    //   toast.error("Error", { autoClose: 5000 });
-    // } else
-
     if (
       tutorSalary.amount &&
       tutorSalary.year &&
@@ -203,7 +198,6 @@ export const SalaryModalC = ({
     salaryCalculations.totalAmount = parseInt(course.salaryAmount);
     salaryCalculations.paidAmount = paid;
     salaryCalculations.remainingAmount = remainingAmount;
-    // console.log("salary calculations: ", salaryCalculations)
   };
   calculatePayments();
 

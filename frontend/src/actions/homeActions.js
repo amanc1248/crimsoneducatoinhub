@@ -262,7 +262,6 @@ export function getOneModalTotalCount(data) {
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
         if (e.response.data.error === "UNAUTHORIZED") {
           toast.error(e.response.data.error, { autoClose: 5000 });
           reject(e.response.data.error);
