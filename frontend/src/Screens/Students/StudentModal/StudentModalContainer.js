@@ -111,8 +111,8 @@ export function StudentModal({
         url: "/api/commonRoute/insertData",
         collectionName: "students",
         doc,
-        checkPermission:'write',
-        userId:localStorage.getItem('userId')
+        checkPermission: "write",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           setStudents(list);
@@ -176,8 +176,8 @@ export function StudentModal({
         collectionName: "students",
         updatedTo: doc,
         id: individualStudent._id,
-        checkPermission:'update',
-        userId:localStorage.getItem('userId')
+        checkPermission: "update",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           setRefresh(true);
@@ -197,12 +197,11 @@ export function StudentModal({
   // 4. on deleting course
   const handleOnClickDelete = () => {
     setLoader(true);
-    const userId =localStorage.getItem('userId');
+    const userId = localStorage.getItem("userId");
     deleteData({
       url: `/api/commonRoute/deleteData?id=${individualStudent._id}&collectionName=students&userId=${userId}`,
     })
       .then((result) => {
-        console.log("Result: " + result)
         setRefresh(true);
         setLoader(false);
         handleClose();

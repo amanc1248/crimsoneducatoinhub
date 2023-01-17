@@ -8,7 +8,7 @@ class TutorSalaryClass {
     month,
     date,
     salaryDetails,
-    filename,
+    chequeNumber,
   }) {
     this.assignedCourseId = assignedCourseId;
     this.tutorId = tutorId;
@@ -18,7 +18,7 @@ class TutorSalaryClass {
     this.month = month;
     this.date = date;
     this.salaryDetails = salaryDetails;
-    this.filename = filename;
+    this.chequeNumber = chequeNumber;
   }
 }
 export default TutorSalaryClass;

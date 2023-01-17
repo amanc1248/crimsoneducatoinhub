@@ -214,19 +214,6 @@ export function StudentModalPresentational({
                   }}
                 ></input>
               </div>
-              {/* 2. Type Class */}
-              {/* <div class="learning__form__group col-lg-6 col-12">
-                <label for="typeClass">Class</label>
-                <Select
-                  placeholder="Select Class"
-                  className="select__learning__module"
-                  options={typeClassList}
-                  value={{ label: typeClass, value: typeClass }}
-                  onChange={(e) => {
-                    setTypeClass(e.label);
-                  }}
-                />
-              </div> */}
             </div>
           </div>
         </Modal.Body>

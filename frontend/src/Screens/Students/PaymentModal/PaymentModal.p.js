@@ -26,7 +26,6 @@ export const PaymentModalP = ({
   handleGenerateInvoice,
   showInvoice,
 }) => {
-  console.log(`this`, course);
   return (
     <>
       <Modal

@@ -31,8 +31,8 @@ export const DashboardSection3 = () => {
     getTotalCount({
       url: "/api/commonRoute/getTotalDocument",
       collectionNames: ["students", "tutors", "courses", "shifts"],
-      checkPermission:'read',
-      userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         setTotalNumbers(result);
@@ -57,7 +57,7 @@ export const DashboardSection3 = () => {
           {cardsList &&
             totalNumbers &&
             cardsList.map((card, index) => (
-              <div className="section3__card col-4">
+              <div className="section3__card col-4" key={index}>
                 <div className="section3__card__content">
                   <div className="card__icon">{card.icon}</div>
                   <div className="card__title">{card.title}</div>
@@ -67,9 +67,6 @@ export const DashboardSection3 = () => {
             ))}
         </div>
       </div>
-      {/* <div>
-        <Invoice />
-      </div> */}
     </div>
   );
 };

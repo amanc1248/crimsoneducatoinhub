@@ -25,6 +25,8 @@ export const SalaryModalP = ({
   setChequePhoto,
   addSalaryLoading,
   individualTutor,
+  chequeNumber,
+  setChequeNumber,
 }) => {
   return (
     <>
@@ -72,9 +74,9 @@ export const SalaryModalP = ({
                 <th>Year</th>
                 <th>Month</th>
                 <th>Date</th>
+                <th>Cheque Number</th>
                 <th>Amount</th>
                 <th>Payment Details</th>
-                <th>Cheque Photo</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -87,19 +89,10 @@ export const SalaryModalP = ({
                       <td>{salary.year}</td>
                       <td>{salary.month}</td>
                       <td>{salary.date}</td>
+                      <td>{salary.chequeNumber}</td>
                       <td>{salary.amount}</td>
                       <td>{salary.salaryDetails}</td>
-                      <td>
-                        {" "}
-                        <Image
-                          cloudName="gaurabcloudinary"
-                          publicId={salary.filename}
-                          variant="top"
-                          width="50%"
-                          height="70px"
-                        />
-                        {/* {salary.filename} */}
-                      </td>
+
                       <td>
                         {" "}
                         <Button
@@ -187,6 +180,22 @@ export const SalaryModalP = ({
               </div>
 
               <div className="adding__course__div">
+                {/* 1. cheque Number*/}
+                <div className="payment__date">
+                  <label htmlFor="chequeNumber">Cheque Number</label>
+                  <input
+                    type="text"
+                    id="chequeNumber"
+                    onChange={(e) => {
+                      setTutorSalary((prevState) => {
+                        return {
+                          ...prevState,
+                          chequeNumber: e.target.value,
+                        };
+                      });
+                    }}
+                  />
+                </div>
                 {/* 2. amount*/}
                 <div className="payment__date">
                   <label htmlFor="amount">Amount</label>
@@ -211,21 +220,6 @@ export const SalaryModalP = ({
                         return {
                           ...prevState,
                           salaryDetails: e.target.value,
-                        };
-                      });
-                    }}
-                  />
-                </div>
-                <div className="payment__date">
-                  <label htmlFor="paymentDetails">Cheque Photo</label>
-                  <input
-                    type="file"
-                    id="paymentDetails"
-                    onChange={(e) => {
-                      setTutorSalary((prevState) => {
-                        return {
-                          ...prevState,
-                          chequePhoto: e.target.files[0],
                         };
                       });
                     }}

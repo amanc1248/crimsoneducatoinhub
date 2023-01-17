@@ -4,12 +4,6 @@ import "../../styles/screens/dashboard.css";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { calculateDate } from "../../actions/homeActions";
 export const DashboardSection1 = () => {
-  // DATA
-  // 1. performance list
-  // const performanceList = [
-  //   { number: 76, label: "Income" },
-  //   { number: 44, label: "Spendings" },
-  // ];
   // 2. checklist
   const checkList = [
     {
@@ -32,34 +26,10 @@ export const DashboardSection1 = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   calculateDate({
-  //     url: "/api/commonRoute/calculateDate",
-  //     collectionNames: ["students"],
-  //   })
-  //     .then((result) => {
-  //       // setTotalNumbers(result);
-  //       console.log(result);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // }, []);
-
   return (
     <div className="dashboard__section1 col-5">
       <div className="dashboard__section1__content">
         <h5 className="section__1__title">Student Statistics</h5>
-
-        {/* performance list */}
-        {/* <div className="perfomance__list">
-          {performanceList.map((pl) => (
-            <div key={pl.label} className="perfomance__number">
-              <h2 style={{ color: "white" }}>{pl.number}%</h2>
-              <div className="performance__text">{pl.label}</div>
-            </div>
-          ))}
-        </div> */}
 
         {/* checklist */}
         <div className="checklist">

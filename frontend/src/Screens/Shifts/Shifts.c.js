@@ -6,7 +6,6 @@ import { ShiftsPresentational } from "./Shifts.p";
 import ShiftClass from "../../classes/Shifts.class";
 
 export const ShiftsContainer = () => {
-
   // use states
   const [shifts, setShifts] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -20,11 +19,10 @@ export const ShiftsContainer = () => {
     getOneModalTotalCount({
       url: "/api/commonRoute/getOneModalTotalCount",
       collectionName: "shifts",
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
-        console.log("total documents: ", result);
         setTotalPages(result);
       })
       .catch((e) => console.log(e));
@@ -37,22 +35,22 @@ export const ShiftsContainer = () => {
         collectionName: "shifts",
         pageNumber: currentPage,
         nPerPage: 100,
-        checkPermission:'read',
-        userId:localStorage.getItem('userId')
+        checkPermission: "read",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
-          const list = result.map((shift, i)=>{
-            const shiftObj  = new ShiftClass({
-                id:shift._id,
-                name:shift.name,
-                startTime:shift.startTime,
-                endTime:shift.endTime,
-            })
+          const list = result.map((shift, i) => {
+            const shiftObj = new ShiftClass({
+              id: shift._id,
+              name: shift.name,
+              startTime: shift.startTime,
+              endTime: shift.endTime,
+            });
             return shiftObj;
-        })
-        setUnModifiableOrignalList(result);
-        setShifts(list);
-        setRefresh(false);
+          });
+          setUnModifiableOrignalList(result);
+          setShifts(list);
+          setRefresh(false);
         })
         .catch((e) => {
           console.log(e);
@@ -65,22 +63,22 @@ export const ShiftsContainer = () => {
       collectionName: "shifts",
       pageNumber: currentPage,
       nPerPage: 100,
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
-        const list = result.map((shift, i)=>{
-          const shiftObj  = new ShiftClass({
-              id:shift._id,
-              name:shift.name,
-              startTime:shift.startTime,
-              endTime:shift.endTime,
-          })
+        const list = result.map((shift, i) => {
+          const shiftObj = new ShiftClass({
+            id: shift._id,
+            name: shift.name,
+            startTime: shift.startTime,
+            endTime: shift.endTime,
+          });
           return shiftObj;
-      })
-      setUnModifiableOrignalList(result);
-      setShifts(list);
-      setRefresh(false);
+        });
+        setUnModifiableOrignalList(result);
+        setShifts(list);
+        setRefresh(false);
       })
       .catch((e) => {
         console.log(e);

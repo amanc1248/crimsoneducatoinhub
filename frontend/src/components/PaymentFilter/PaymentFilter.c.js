@@ -11,12 +11,7 @@ export const PaymentFilterC = () => {
       title: "Course",
       titleValue: "courseIds",
     },
-    // {
-    //   collectionName: "shifts",
-    //   collectionTitleValue: "name",
-    //   title: "Shifts",
-    //   titleValue: "shiftIds",
-    // },
+
     {
       collectionName: "tutors",
       collectionTitleValue: "name",
@@ -448,11 +443,8 @@ export const PaymentFilterC = () => {
   const [filterState, setFilterState] = useState();
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [results, setResults] = useState([]);
-  console.log("FIlter state: ", filterState);
   useEffect(() => {
     if (showFilterModal) {
-      console.log("wantedDBList bfefor: ", wantedDBList);
-
       const asyncList = wantedDBList.map((value, index) => {
         return getAllData({
           url: "/api/commonRoute/getData",
@@ -464,15 +456,12 @@ export const PaymentFilterC = () => {
         });
       });
       Promise.all(asyncList).then((result) => {
-        console.log("The russkskskdf: ", result);
         for (let index = 0; index < wantedDBList.length; index++) {
           const list = [];
           const dbTitleValue = wantedDBList[index].collectionTitleValue;
-          console.log("dbtitlevalue: ", dbTitleValue);
           for (let index2 = 0; index2 < result[index].length; index2++) {
             const resultElement = result[index][index2][dbTitleValue];
             const resultElementId = result[index][index2]["_id"];
-            console.log("Result Element: ", resultElement);
             const obj = {
               label: resultElement,
               value: resultElement,
@@ -484,7 +473,6 @@ export const PaymentFilterC = () => {
           }
           wantedDBList[index].filters = list;
         }
-        console.log("wantedDBList after: ", wantedDBList);
         let localList = JSON.parse(JSON.stringify(wantedDBList));
         for (let localListValue of wantedLocalList) {
           localList.push(localLists[localListValue]);
@@ -511,33 +499,32 @@ export const PaymentFilterC = () => {
       }
       console.log(searchingArray);
     }
-    console.log("Original filter: ", originalFilter);
     if (Object.keys(originalFilter).length === 0) {
       alert("No filter applied");
     } else {
       getPaymentsDetails({
-        url:"api/commonRoute/getPaymentsDetails",
-        data:originalFilter
-      }).then((result)=>{
-        if(result.length>0){
-          console.log("Hiiiiii")
+        url: "api/commonRoute/getPaymentsDetails",
+        data: originalFilter,
+      }).then((result) => {
+        if (result.length > 0) {
+          console.log("Hiiiiii");
           for (let assignedCourse of result) {
-              assignedCourse.month = {};
-              for (let studentPayment of assignedCourse.studentsPayment) {
-                let month =  studentPayment.month;
-                const list = [];
-                for (let sp of assignedCourse.studentsPayment){
-                  if(month===sp.month){
-                    list.push(sp);
-                  }
+            assignedCourse.month = {};
+            for (let studentPayment of assignedCourse.studentsPayment) {
+              let month = studentPayment.month;
+              const list = [];
+              for (let sp of assignedCourse.studentsPayment) {
+                if (month === sp.month) {
+                  list.push(sp);
                 }
-                assignedCourse.month[month] = list;
               }
+              assignedCourse.month[month] = list;
             }
+          }
         }
-        setResults(result)
-        setShowFilterModal(false)
-      })
+        setResults(result);
+        setShowFilterModal(false);
+      });
     }
   };
   const changeFilterState = (id) => {

@@ -20,8 +20,8 @@ const Signup = () => {
       url: "/api/commonRoute/verifyToken",
       collectionName: "users",
       token: localStorage.getItem("token"),
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         if (result.login === false) {
@@ -56,12 +56,12 @@ const Signup = () => {
       password,
       cPassword,
       date: new Date(),
-      permissions:[],
-      role:''
+      permissions: [],
+      role: "",
     };
 
     if (password != cPassword) {
-      alert("Pass Not Match");
+      alert("Password Not Match");
     } else if (!emailRegex.test(email)) {
       alert("Invalid Email");
     } else if (!phoneNumberRegex.test(phoneNumber)) {
@@ -185,16 +185,6 @@ const Signup = () => {
                 setCPassword(e.target.value);
               }}
             />
-
-            {/* <div className="d-flex justify-content-between mb-4">
-              <MDBCheckbox
-                name="flexCheck"
-                value=""
-                id="flexCheckDefault"
-                label="Remember me"
-              />
-              <a href="!#">Forgot password?</a>
-            </div> */}
 
             <div className="text-center text-md-start mt-4 pt-2">
               <MDBBtn

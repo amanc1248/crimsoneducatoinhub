@@ -14,11 +14,10 @@ export function ShiftModalContainer({
   courseModalType,
   setRefresh,
 }) {
-  console.log("Individual shift: ", individualShift);
   //   usestates
   // USESTATES
   const [shift, setShift] = useState({
-    id:individualShift && individualShift.id,
+    id: individualShift && individualShift.id,
     name: individualShift && individualShift.name,
     startTime: individualShift && individualShift.startTime,
     endTime: individualShift && individualShift.endTime,
@@ -32,8 +31,8 @@ export function ShiftModalContainer({
         url: "/api/commonRoute/insertData",
         collectionName: "shifts",
         doc: shift,
-        checkPermission:'write',
-        userId:localStorage.getItem('userId')
+        checkPermission: "write",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           setRefresh(true);
@@ -58,8 +57,8 @@ export function ShiftModalContainer({
         collectionName: "shifts",
         updatedTo: shift,
         id: individualShift.id,
-        checkPermission:'update',
-        userId:localStorage.getItem('userId')
+        checkPermission: "update",
+        userId: localStorage.getItem("userId"),
       })
         .then((result) => {
           setRefresh(true);
@@ -73,7 +72,7 @@ export function ShiftModalContainer({
 
   // 4. on deleting course
   const handleOnClickDelete = () => {
-    const userId =localStorage.getItem('userId');
+    const userId = localStorage.getItem("userId");
     deleteData({
       url: `/api/commonRoute/deleteData?id=${individualShift.id}&collectionName=shifts&userId=${userId}`,
     })
@@ -85,13 +84,12 @@ export function ShiftModalContainer({
         console.log(e);
       });
   };
-  // console.log("individual Shift: ", shift)
   return (
     <ShiftModalPresentational
       show={show}
       setShow={setShow}
       shift={shift}
-      setShift = {setShift}
+      setShift={setShift}
       courseModalType={courseModalType}
       setRefresh={setRefresh}
       handleClose={handleClose}

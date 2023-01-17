@@ -27,7 +27,6 @@ const getCommonDataController = asyncHandler(async (req, res, callback) => {
 // get one model total count
 const getOneModalTotalCount = asyncHandler(async (req, res, callback) => {
   const { collectionName } = req.body;
-  console.log("here========>", collectionName);
   try {
     const result = await db.collection(collectionName).countDocuments();
     return res.json(result);
@@ -71,12 +70,10 @@ const insertOneDataController = asyncHandler(async (req, res, callback) => {
   try {
     const { collectionName, doc } = req.body;
     for (let data of Object.keys(doc)) {
-      console.log(doc[data]);
       if (data.toLowerCase().includes("id")) {
         doc[data] = ObjectId(doc[data]);
       }
     }
-    console.log("The doc: ", doc);
 
     const result = await db.collection(collectionName).insertOne(doc);
     return res.json(result);
@@ -87,7 +84,6 @@ const insertOneDataController = asyncHandler(async (req, res, callback) => {
 
 // update one document common data controller
 const updateCommonDataController = asyncHandler(async (req, res, callback) => {
-  console.log("Request body: ", req.body);
   try {
     const { collectionName, id, updateTo } = req.body;
     const madeUpdateTo = convertToObjectIDs(updateTo);
@@ -109,7 +105,7 @@ const updateCommonDataController = asyncHandler(async (req, res, callback) => {
 const updateCommonDataControllerWithSet = asyncHandler(
   async (req, res, callback) => {
     const { collectionName, id, updateTo } = req.body;
-    console.log(req.body);
+
     try {
       const filter = { _id: ObjectId(id) };
       const updateDoc = {
@@ -134,7 +130,6 @@ const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
     const result = await db.collection(collectionName).deleteOne(query);
     if (result.deletedCount === 1) {
       res.json(result);
-      console.log("Successfully deleted one document.");
     } else {
       console.log("No documents matched the query. Deleted 0 documents.");
     }
@@ -144,7 +139,6 @@ const deleteCommonDataController = asyncHandler(async (req, res, callback) => {
 });
 
 const getTotalCountDataController = asyncHandler(async (req, res) => {
-  console.log(req.body.collectionNames);
   await Promise.all(
     req.body.collectionNames.map((collectionName) => {
       return db.collection(collectionName).countDocuments();
@@ -333,48 +327,50 @@ const getDocumentsByFilterController = asyncHandler(async (req, res) => {
         return res.json(result);
       }
     }
-    console.log(result);
   } catch (err) {
     console.log(err);
   }
 });
 
 // find the tutors payments details
-const findTutorsPaymentDetails = asyncHandler(async (req,res) => {
+const findTutorsPaymentDetails = asyncHandler(async (req, res) => {
   try {
-    const {data} = req.body;
-    for (let obj of Object.keys(data)){
-      if(obj.toLowerCase().includes("ids")){
+    const { data } = req.body;
+    for (let obj of Object.keys(data)) {
+      if (obj.toLowerCase().includes("ids")) {
         const list = [];
-        for(let id of data[obj]["$in"]){
+        for (let id of data[obj]["$in"]) {
           list.push(ObjectId(id));
         }
         data[obj]["$in"] = list;
       }
     }
-    const assignedCoursesFilter = {}
-    if(data.courseIds)assignedCoursesFilter.courseId = data.courseIds;
-    if(data.tutorIds)assignedCoursesFilter.tutorId = data.tutorIds;
-    if(data.paymentStatus)assignedCoursesFilter.paymentStatus = data.paymentStatus;
+    const assignedCoursesFilter = {};
+    if (data.courseIds) assignedCoursesFilter.courseId = data.courseIds;
+    if (data.tutorIds) assignedCoursesFilter.tutorId = data.tutorIds;
+    if (data.paymentStatus)
+      assignedCoursesFilter.paymentStatus = data.paymentStatus;
 
-    const studentsPaymentFilter = {}
+    const studentsPaymentFilter = {};
     if (data.month) {
       studentsPaymentFilter.month = data.month;
     } else {
-      studentsPaymentFilter.month = {$in:[
-        "Baishakh",
-        "Jestha",
-        "Ashadh",
-        "Shrawan",
-        "Bhadau",
-        "Asoj",
-        "Kartik",
-        "Mangsir",
-        "Poush",
-        "Magh",
-        "Falgun",
-        "Chaitra",
-      ]}
+      studentsPaymentFilter.month = {
+        $in: [
+          "Baishakh",
+          "Jestha",
+          "Ashadh",
+          "Shrawan",
+          "Bhadau",
+          "Asoj",
+          "Kartik",
+          "Mangsir",
+          "Poush",
+          "Magh",
+          "Falgun",
+          "Chaitra",
+        ],
+      };
     }
     // // const courses = await db.collection('courses').find(coursesFilter).toArray();
     // // console.log("Courses: " + courses);
@@ -384,37 +380,41 @@ const findTutorsPaymentDetails = asyncHandler(async (req,res) => {
     //   assignedCourseIdsList.push(ObjectId(assignedCourse._id));
     // }
     // const paymentsFilter = {};
-    
+
     // const assignedCoursesFilter = {};
-    const assginedCourses = await db.collection("assignedCourses").aggregate([
-      {
-        $match:assignedCoursesFilter
-      },
-      {
-        $lookup:{
-          from:"enrolledCourses",
-          localField:"_id",
-          foreignField:"assignedCourseId",
-          as:"enrolledCourses"
-        }
-      },
-      {
-        $lookup:{
-          from:"studentsCoursePayment",
-          localField:"_id",
-          foreignField:"assignedCourseId",
-          as:"studentsPayment",
-          let:{"month":"studentsPayment.month"},
-          "pipeline": [
-            { "$match": {
-              month:studentsPaymentFilter.month
-            }},
-          ],
-        }
-      },
-    ]).toArray();
+    const assginedCourses = await db
+      .collection("assignedCourses")
+      .aggregate([
+        {
+          $match: assignedCoursesFilter,
+        },
+        {
+          $lookup: {
+            from: "enrolledCourses",
+            localField: "_id",
+            foreignField: "assignedCourseId",
+            as: "enrolledCourses",
+          },
+        },
+        {
+          $lookup: {
+            from: "studentsCoursePayment",
+            localField: "_id",
+            foreignField: "assignedCourseId",
+            as: "studentsPayment",
+            let: { month: "studentsPayment.month" },
+            pipeline: [
+              {
+                $match: {
+                  month: studentsPaymentFilter.month,
+                },
+              },
+            ],
+          },
+        },
+      ])
+      .toArray();
     return res.json(assginedCourses);
-    
   } catch (error) {
     console.log(error);
   }
@@ -438,7 +438,6 @@ module.exports = {
   getDocumentsByFilterController,
   findTutorsPaymentDetails,
 };
-
 
 // {
 //   $lookup: {

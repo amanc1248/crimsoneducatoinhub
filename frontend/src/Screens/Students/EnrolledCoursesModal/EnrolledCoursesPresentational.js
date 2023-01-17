@@ -113,8 +113,6 @@ export const EnrolledCoursesPresentataional = ({
                       enrolledCourse.tutorName = e.value;
                       enrolledCourse.assignedCourseId = e.assignedCourseId;
                       handleOnChangeTutor(e._id);
-                      // enrolledCourse.shift = e.shift;
-                      // enrolledCourse.shiftId = e.shiftId;
                     }}
                   />
                 </div>}
