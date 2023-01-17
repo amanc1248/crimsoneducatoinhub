@@ -13,28 +13,6 @@ function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(null);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   getOneModalAllDocuments({
-  //     url: "/api/commonRoute/verifyToken",
-  //     collectionName: "users",
-  //     token: localStorage.getItem("token"),
-  //   })
-  //     .then((result) => {
-  //       if (result.login === false) {
-  //         setUserLoggedIn(false);
-  //         // // navigate("/login");
-  //         // console.log(result);
-  //         // console.log("False");
-  //       } else {
-  //         navigate("/");
-  //         setUserLoggedIn(true);
-  //         // console.log("false");
-  //         // console.log("RUE");
-  //       }
-  //     })
-  //     .catch((e) => console.log(e));
-  // }, []);
-
   return (
     <div className="App">
       <ToastContainer />

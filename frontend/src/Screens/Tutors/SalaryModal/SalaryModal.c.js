@@ -203,7 +203,6 @@ export const SalaryModalC = ({
     salaryCalculations.totalAmount = parseInt(course.salaryAmount);
     salaryCalculations.paidAmount = paid;
     salaryCalculations.remainingAmount = remainingAmount;
-    // console.log("salary calculations: ", salaryCalculations)
   };
   calculatePayments();
 

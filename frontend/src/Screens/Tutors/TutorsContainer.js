@@ -119,7 +119,7 @@ export const TutorsContainer = () => {
   };
 
   return (
-    <div className="tutors">
+    <div className="students">
       {showModal && (
         <TutorModal
           setShow={setShowModal}
@@ -163,7 +163,7 @@ export const TutorsContainer = () => {
       {loader ? (
         <Loader></Loader>
       ) : (
-        <div>
+        <div className="students">
           <div className="filter__div">
             <FilterC
               aggregateArray={aggregateArray}

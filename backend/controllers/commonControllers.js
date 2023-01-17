@@ -154,7 +154,6 @@ const getTotalCountDataController = asyncHandler(async (req, res) => {
 
 const calulateDateDataController = asyncHandler(async (req, res) => {
   const date = new Date();
-  // console.log(date);
 });
 
 const signupNewUserController = asyncHandler(async (req, res, callback) => {
@@ -243,18 +242,6 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
   }
 });
 
-// find all documents by id
-// const getDocumentsByIdController = asyncHandler(async (req, res, callback) => {
-//   try {
-//     const { collectionName, id } = req.body;
-//     console.log(collectionName, id)
-//     const result = await db.collection(collectionName).find({enrolledCourseId:id}).toArray();
-//       if (result) {
-//         return res.json(result);
-//       }
-//   } catch (err) {
-//     console.log(err);
-//   }});
 
 const verifyToken = asyncHandler(async (req, res, next) => {
   try {
@@ -372,14 +359,6 @@ const findTutorsPaymentDetails = asyncHandler(async (req, res) => {
         ],
       };
     }
-    // // const courses = await db.collection('courses').find(coursesFilter).toArray();
-    // // console.log("Courses: " + courses);
-    // const assignedCourses = await db.collection("assignedCourses").find(assignedCoursesFilter).toArray();
-    // const assignedCourseIdsList=[];
-    // for(let assignedCourse of assignedCourses){
-    //   assignedCourseIdsList.push(ObjectId(assignedCourse._id));
-    // }
-    // const paymentsFilter = {};
 
     // const assignedCoursesFilter = {};
     const assginedCourses = await db

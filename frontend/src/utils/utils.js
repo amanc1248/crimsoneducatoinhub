@@ -35,7 +35,6 @@ function removeDuplicates(arr, n) {
   // Modify original array
   for (var i = 0; i < j; i++) arr[i] = temp[i];
 
-  console.log(j);
   const list = [];
   for (var i=0; i<j; i++){
     list.push(arr[i])

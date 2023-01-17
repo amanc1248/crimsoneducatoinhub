@@ -210,7 +210,6 @@
     flex-direction: row;
     gap: 10px;
     justify-content: space-between;
-    /* overflow: auto; */
   }
   .add__button__size{
     font-size: 10px;

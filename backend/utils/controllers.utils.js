@@ -34,13 +34,11 @@ const { User } = require("../schemas/User.schema");
     "User",
   ];
   let model = arr[mapper.indexOf(collectionName)];
-  console.log(model);
   return model;
 };
 
  const convertToObjectIDs = (obj) => {
   for (let data of Object.keys(obj)) {
-    console.log(obj[data]);
     if (data.toLowerCase().includes("id")) {
       obj[data] = ObjectId(obj[data]);
     }

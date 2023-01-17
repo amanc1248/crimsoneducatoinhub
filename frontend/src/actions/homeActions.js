@@ -78,11 +78,9 @@ export function insertPhoto(data) {
     },
   };
   return new Promise((resolve, reject) => {
-    console.log(url);
     axios
       .post(url, config)
       .then((result) => {
-        console.log(result.data);
         resolve(result.data);
       })
       .catch((e) => {
@@ -93,7 +91,6 @@ export function insertPhoto(data) {
 
 // update data
 export function updateData(data) {
-  console.log("data updated", data);
   let url = data.url;
   const config = {
     header: {

@@ -30,7 +30,6 @@ export const EnrolledCoursesPresentataional = ({
 }) => {
   return (
     <>
-      {/* <PaymentModalC></PaymentModalC> */}
       <Modal
         show={true}
         onHide={handleClose}
