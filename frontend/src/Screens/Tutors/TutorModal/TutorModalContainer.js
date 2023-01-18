@@ -50,6 +50,9 @@ export function TutorModal({
   const [phoneNumber, setPhoneNumber] = useState(
     individualTutor && individualTutor.phoneNumber
   );
+  const [address, setAddress] = useState(
+    individualTutor && individualTutor.address
+  );
   const [loader, setLoader] = useState(false);
   const phoneNumberRegex = /^98\d{8}$/;
   const emailRegex =
@@ -66,6 +69,7 @@ export function TutorModal({
       startDate,
       phoneNumber,
       date: new Date(),
+      address,
     };
 
     if (!emailRegex.test(email)) {
@@ -82,7 +86,8 @@ export function TutorModal({
       age &&
       qualification &&
       startDate &&
-      phoneNumber
+      phoneNumber &&
+      address
     ) {
       let list = tutors;
       setLoader(true);
@@ -120,6 +125,7 @@ export function TutorModal({
     setQualification("");
     setStartDate("");
     setSalary("");
+    setAddress("");
     setShow(false);
   };
 
@@ -132,6 +138,7 @@ export function TutorModal({
       qualification,
       startDate,
       phoneNumber,
+      address,
     };
     if (!emailRegex.test(email)) {
       toast.error("Please enter valid email", {
@@ -147,7 +154,8 @@ export function TutorModal({
       age &&
       qualification &&
       startDate &&
-      phoneNumber
+      phoneNumber &&
+      address
     ) {
       setLoader(true);
       updateData({
@@ -195,7 +203,6 @@ export function TutorModal({
         toast.success("Something went wrong", {
           autoClose: 5000,
         });
-        console.log(e);
       });
   };
 
@@ -226,6 +233,8 @@ export function TutorModal({
       qualification={qualification}
       startDate={startDate}
       loader={loader}
+      address={address}
+      setAddress={setAddress}
     ></TutorModalPresentational>
   );
 }

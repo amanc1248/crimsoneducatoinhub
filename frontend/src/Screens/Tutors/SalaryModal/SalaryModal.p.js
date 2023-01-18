@@ -27,6 +27,7 @@ export const SalaryModalP = ({
   individualTutor,
   chequeNumber,
   setChequeNumber,
+  course,
 }) => {
   return (
     <>
@@ -45,6 +46,26 @@ export const SalaryModalP = ({
             <div>Name: {individualTutor.name}</div>
             <div>Phone Number: {individualTutor.phoneNumber}</div>
             <div>Address: {individualTutor.address}</div>
+            <div>
+              Course Name:{" "}
+              <span style={{ fontWeight: "bold" }}>{course.courseName}</span>{" "}
+            </div>
+            <div>
+              Course Fee: Rs.{" "}
+              <span style={{ fontWeight: "bold" }}>{course.courseFee}</span>{" "}
+            </div>
+            <div>
+              Shift Name:{" "}
+              {course.shifts &&
+                course.shifts.map((shift, index) => {
+                  return (
+                    <span style={{ fontWeight: "bold" }} className="mr-1">
+                      {shift.value}
+                      {index !== shift.length - 1 && ", "}
+                    </span>
+                  );
+                })}
+            </div>
           </div>
           <div>
             <div>Total: {salaryCalculations.totalAmount}</div>

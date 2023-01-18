@@ -183,6 +183,7 @@ export const TutorsContainer = () => {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone Number</th>
+                  <th>Address</th>
                   <th>Age</th>
                   <th>Qualification</th>
                   <th>Start Date</th>
