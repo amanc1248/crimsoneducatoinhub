@@ -13,6 +13,7 @@ import { EnrolledCoursesPresentataional } from "./EnrolledCoursesPresentational"
 import "../../../styles/screens/home.css";
 import EnrolledCourse from "../../../classes/EnrolledCourses.class";
 import { toast } from "react-toastify";
+import { removeDuplicates, removeDuplicatesWithFieldName } from "../../../utils/utils";
 export const EnrolledCoursesModalContainer = ({
   show,
   setShow,
@@ -202,8 +203,10 @@ export const EnrolledCoursesModalContainer = ({
         };
         return obj;
       });
+
+      const thelist = removeDuplicatesWithFieldName(list, list.length,"_id");
       
-      setAllTutors(list)
+      setAllTutors(thelist)
       setTutorLoading(false);
     }).catch((error)=>{
       console.log(error);
