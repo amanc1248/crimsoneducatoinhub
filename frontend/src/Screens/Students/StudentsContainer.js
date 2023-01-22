@@ -106,6 +106,7 @@ export const StudentsContainer = () => {
       userId: localStorage.getItem("userId"),
     })
       .then((result) => {
+        setUnModifiableOrignalList(result);
         setStudents(result);
         setRefresh(false);
         setLoading(false);
