@@ -5,6 +5,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import "../../styles/screens/home.css";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import Table from "react-bootstrap/Table";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 export const PaymentFilterP = ({
   filteringObject,
@@ -97,96 +98,114 @@ export const PaymentFilterP = ({
         </Modal.Footer>
       </Modal>
       {results.length > 0 && (
-        <Table hover size="sm" className="table__list" responsive>
-          <thead>
-            <tr>
-              <th>Tutor Name</th>
-              <th>Course Name</th>
-              <th>Course Fee</th>
-              <th>Salary Amount</th>
-              <th>Salary Percentage</th>
-              <th>Paid Amount</th>
-              <th>Remaining Amount</th>
-              <th>Shifts</th>
-              <th>Final Amounts</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results.map((assignedCourse, index) => {
-              return (
-                <tr className="payments__table__list">
-                  <td>{assignedCourse.tutorName}</td>
-                  <td>{assignedCourse.courseName}</td>
-                  <td>{assignedCourse.courseFee}</td>
-                  <td>Rs: {assignedCourse.salaryAmount}</td>
-                  <td>{assignedCourse.salaryPercentage} %</td>
-                  <td>Rs: {assignedCourse.padeAmount}</td>
-                  <td>Rs: {assignedCourse.remainingAmount}</td>
-                  <td>
-                    {assignedCourse.shifts.map((shift, shiftIndex) => {
-                      return (
-                        <div>
-                          <span>{shift.value}</span>
-                        </div>
-                      );
-                    })}
-                  </td>
-                  <td>
-                    <Table
-                      striped
-                      hover
-                      size="sm"
-                      className="final__amounts__table"
-                      responsive
-                    >
-                      <thead>
-                        <tr>
-                          <th>Month</th>
-                          <th>Amount Collected</th>
-                          <th>Amount to pay</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Object.keys(assignedCourse.month).length > 0
-                          ? Object.keys(assignedCourse.month).map(
-                              (month, monthIndex) => {
-                                let amountCollected = 0;
-                                assignedCourse.month[month].map(
-                                  (studentPayment, studentPaymentIndex) => {
-                                    amountCollected += parseInt(
-                                      studentPayment.amount
+        <div className="students">
+          <div className="students__inside">
+            <Table
+              hover
+              size="sm"
+              className="table__list"
+              id="payments__filter__table"
+              responsive
+            >
+              <thead>
+                <tr>
+                  <th>Tutor Name</th>
+                  <th>Course Name</th>
+                  <th>Course Fee</th>
+                  <th>Salary Amount</th>
+                  <th>Salary Percentage</th>
+                  <th>Paid Amount</th>
+                  <th>Remaining Amount</th>
+                  <th>Shifts</th>
+                  <th>Final Amounts</th>
+                </tr>
+              </thead>
+              <tbody>
+                {results.map((assignedCourse, index) => {
+                  return (
+                    <tr className="payments__table__list">
+                      <td>{assignedCourse.tutorName}</td>
+                      <td>{assignedCourse.courseName}</td>
+                      <td>{assignedCourse.courseFee}</td>
+                      <td>Rs: {assignedCourse.salaryAmount}</td>
+                      <td>{assignedCourse.salaryPercentage} %</td>
+                      <td>Rs: {assignedCourse.padeAmount}</td>
+                      <td>Rs: {assignedCourse.remainingAmount}</td>
+                      <td>
+                        {assignedCourse.shifts.map((shift, shiftIndex) => {
+                          return (
+                            <div>
+                              <span>{shift.value}</span>
+                            </div>
+                          );
+                        })}
+                      </td>
+                      <td>
+                        <Table
+                          striped
+                          hover
+                          size="sm"
+                          className="final__amounts__table"
+                          responsive
+                        >
+                          <thead>
+                            <tr>
+                              <th>Month</th>
+                              <th>Amount Collected</th>
+                              <th>Amount to pay</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {Object.keys(assignedCourse.month).length > 0
+                              ? Object.keys(assignedCourse.month).map(
+                                  (month, monthIndex) => {
+                                    let amountCollected = 0;
+                                    assignedCourse.month[month].map(
+                                      (studentPayment, studentPaymentIndex) => {
+                                        amountCollected += parseInt(
+                                          studentPayment.amount
+                                        );
+                                      }
+                                    );
+                                    return (
+                                      <tr>
+                                        <td>
+                                          <span>{month}</span>
+                                        </td>
+                                        <td>
+                                          <span>Rs: {amountCollected}</span>
+                                        </td>
+                                        <td>
+                                          <span>
+                                            Rs:{" "}
+                                            {(amountCollected *
+                                              assignedCourse.salaryPercentage) /
+                                              100}
+                                          </span>
+                                        </td>
+                                      </tr>
                                     );
                                   }
-                                );
-                                return (
-                                  <tr>
-                                    <td>
-                                      <span>{month}</span>
-                                    </td>
-                                    <td>
-                                      <span>Rs: {amountCollected}</span>
-                                    </td>
-                                    <td>
-                                      <span>
-                                        Rs:{" "}
-                                        {(amountCollected *
-                                          assignedCourse.salaryPercentage) /
-                                          100}
-                                      </span>
-                                    </td>
-                                  </tr>
-                                );
-                              }
-                            )
-                          : "Rs: 0"}
-                      </tbody>
-                    </Table>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+                                )
+                              : "Rs: 0"}
+                          </tbody>
+                        </Table>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
+          <ReactHTMLTableToExcel
+            id="payments__filter__table"
+            className="download-table-xls-button"
+            table="payments__filter__table"
+            filename="tablexls"
+            sheet="tablexls"
+            buttonText="Download as XLS"
+          />
+        </div>
       )}
     </>
   );

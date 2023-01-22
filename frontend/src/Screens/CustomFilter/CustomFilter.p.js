@@ -215,7 +215,8 @@ export const CustomFilterP = ({
       </div>
       {customFilterType === "payments" && <PaymentFilterC></PaymentFilterC>}
       {result.length > 0 ? (
-        <div className="students__inside">
+        <div className="students">
+          <div className="students__inside">
           <Table
             size="sm"
             className="table__list"
@@ -288,6 +289,7 @@ export const CustomFilterP = ({
               })}
             </tbody>
           </Table>
+        </div>
         </div>
       ) : (
         "no data"

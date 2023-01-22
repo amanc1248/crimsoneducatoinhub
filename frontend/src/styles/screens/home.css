@@ -80,7 +80,6 @@
 }
 .table__list{
     background-color: white;
-    /* border-radius: 20px; */
     font-size: small;
     border: 1px solid rgba(0, 0, 0, 0.409);
 }
@@ -289,7 +288,7 @@
   }
   .outer__table__tr{
     /* font-size: 50px; */
-    background-color:yellow;
+    background-color:#1ecbe1;
     border-bottom: 2px solid blue;
     font-weight: bold;
   }
@@ -318,7 +317,7 @@
     font-weight: 400;
   }
   .payments__table__list{
-    background-color:yellow;
+    background-color:#1ecbe1;
     border-bottom: 2px solid blue;
     font-weight: bold;
   }
