@@ -203,9 +203,7 @@ export const EnrolledCoursesModalContainer = ({
         };
         return obj;
       });
-
       const thelist = removeDuplicatesWithFieldName(list, list.length,"_id");
-      
       setAllTutors(thelist)
       setTutorLoading(false);
     }).catch((error)=>{
