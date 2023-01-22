@@ -98,7 +98,6 @@ export const PaymentFilterP = ({
         </Modal.Footer>
       </Modal>
       {results.length > 0 && (
-        <div className="students">
           <div className="students__inside">
             <Table
               hover
@@ -196,7 +195,7 @@ export const PaymentFilterP = ({
                 })}
               </tbody>
             </Table>
-          </div>
+
           <ReactHTMLTableToExcel
             id="payments__filter__table"
             className="download-table-xls-button"
@@ -205,7 +204,7 @@ export const PaymentFilterP = ({
             sheet="tablexls"
             buttonText="Download as XLS"
           />
-        </div>
+          </div>
       )}
     </>
   );
