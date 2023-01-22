@@ -150,13 +150,8 @@ export const CustomFilterP = ({
       ],
     },
   };
-  const handleOnClick = () => {
-    getPaymentsDetails({
-      url: "/api/commonRoute/getPaymentsDetails",
-    });
-  };
   return (
-    <div>
+    <div className="students">
       <div className="customFilter__tabs">
         <div
           className={`individualcustomFilter__tab ${
@@ -215,7 +210,6 @@ export const CustomFilterP = ({
       </div>
       {customFilterType === "payments" && <PaymentFilterC></PaymentFilterC>}
       {result.length > 0 ? (
-        <div className="students">
           <div className="students__inside">
           <Table
             size="sm"
@@ -289,7 +283,6 @@ export const CustomFilterP = ({
               })}
             </tbody>
           </Table>
-        </div>
         </div>
       ) : (
         "no data"
