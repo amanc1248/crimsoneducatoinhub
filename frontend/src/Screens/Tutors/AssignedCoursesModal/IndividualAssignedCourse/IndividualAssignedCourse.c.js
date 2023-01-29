@@ -4,15 +4,27 @@ import { LoaderFallingLines } from "../../../../components/Loader";
 import { SalaryModalC } from "../../SalaryModal/SalaryModal.c";
 // import { PaymentModalC } from "../../PaymentModal/PaymentModal.c";
 import "../../../../styles/screens/home.css";
+import { IndividualAssignedCourseModalC } from "./IndivudualAssignedCourseModal/IndividualAssignedCourseModal.c";
 export const IndividualAssignedCourseC = ({
   course,
   index,
   onHandleCourseDelete,
-  loading,
   deleteLoading,
   individualTutor,
+  allShifts,
+  allCourses
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  // functions
+  const handleOnUpdateClick = () => {
+    setShowUpdateModal(true);
+  };
+
+  const handleOnCancelModal = () => {
+    setShowUpdateModal(false);
+  };
   return (
     <>
       {showModal && (
@@ -22,6 +34,16 @@ export const IndividualAssignedCourseC = ({
           setShowSalaryModal={setShowModal}
           individualTutor={individualTutor}
         ></SalaryModalC>
+      )}
+
+      {showUpdateModal && (
+        <IndividualAssignedCourseModalC
+          course={course}
+          individualTutor={individualTutor}
+          handleOnCancelModal={handleOnCancelModal}
+          allShifts={allShifts}
+          allCourses={allCourses}
+        ></IndividualAssignedCourseModalC>
       )}
 
       <tr key={course._id}>
@@ -86,6 +108,16 @@ export const IndividualAssignedCourseC = ({
               Delete
             </Button>
           )}
+          <Button
+            variant="info"
+            size="sm"
+            className="button__size"
+            onClick={() => {
+              handleOnUpdateClick();
+            }}
+          >
+            Update
+          </Button>
         </td>
       </tr>
     </>

@@ -29,7 +29,6 @@ export const AssignedCoursesPresentational = ({
   calculateSalaryAmount,
   salaryAmount,
   courseFeeLoading,
-  selectedShifts,
   handleSelectedShifts,
 }) => {
   return (
@@ -81,6 +80,8 @@ export const AssignedCoursesPresentational = ({
                       loading={loading}
                       deleteLoading={deleteLoading}
                       individualTutor={individualTutor}
+                      allShifts={allShifts}
+                      allCourses={allCourses}
                     ></IndividualAssignedCourseC>
                   );
                 })}
@@ -160,9 +161,6 @@ export const AssignedCoursesPresentational = ({
                     className="selecting__divs"
                     isMulti
                     options={allShifts}
-                    // value={
-                    //   selectedShifts && allShifts.filter((ug) => selectedShifts.includes(ug.value))
-                    // }
                     onChange={(e) => {
                       handleSelectedShifts(e);
                     }}
@@ -175,7 +173,6 @@ export const AssignedCoursesPresentational = ({
                     className="selecting__divs"
                     options={yearsList}
                     onChange={(e) => {
-                      // year = e.label;
                       assignedCourse.startYear = e.value;
                     }}
                   />
@@ -189,7 +186,6 @@ export const AssignedCoursesPresentational = ({
                     className="selecting__divs"
                     options={monthsList}
                     onChange={(e) => {
-                      // year = e.label;
                       assignedCourse.startMonth = e.value;
                     }}
                   />
