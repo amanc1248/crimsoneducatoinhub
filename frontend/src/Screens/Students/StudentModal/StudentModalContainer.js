@@ -30,6 +30,29 @@ export function StudentModal({
     { label: "Partially Paid", value: "partially paid" },
   ];
 
+  const counsellorNameList = [
+    {
+      label: "Roshan Poudel",
+      value: " Roshan Poudel",
+    },
+    {
+      label: "Biplove Pokhrel",
+      value: "Biplove Pokhrel",
+    },
+    {
+      label: "Santosh Pokhrel",
+      value: "Santosh Pokhrel",
+    },
+    {
+      label: "Karna Giri",
+      value: "Karna Giri",
+    },
+    {
+      label: "Suman Giri",
+      value: "Suman Giri",
+    },
+  ];
+
   //type class lists
   const typeClassList = [
     {
@@ -54,13 +77,13 @@ export function StudentModal({
   const [phoneNumber, setPhoneNumber] = useState(
     individualStudent && individualStudent.phoneNumber
   );
-  const [parentPhoneNumber, setParentPhoneNumber] = useState(
+  var [parentPhoneNumber, setParentPhoneNumber] = useState(
     individualStudent && individualStudent.parentPhoneNumber
   );
   const [loader, setLoader] = useState(false);
 
   const [dob, setDOB] = useState(individualStudent && individualStudent.dob);
-  const [parentsName, setParentsName] = useState(
+  var [parentsName, setParentsName] = useState(
     individualStudent && individualStudent.parentsName
   );
 
@@ -79,28 +102,32 @@ export function StudentModal({
   // 1. on adding course
   // 1. on adding course
   const handleOnClickSubmit = () => {
+    if (!parentsName) {
+      parentsName = "xxxxxx";
+    }
+    if (!parentPhoneNumber) {
+      parentPhoneNumber = "0000000000";
+    }
     const doc = {
       name,
       email,
-
+      parentsName,
       qualification,
       phoneNumber,
       parentPhoneNumber,
       dob,
-      parentsName,
       typeClass,
       address,
       counsellorName,
       date: new Date(),
     };
+
     if (
       (name,
       email,
       dob,
       qualification,
       phoneNumber,
-      parentPhoneNumber,
-      parentsName,
       typeClass,
       address,
       counsellorName)
@@ -247,6 +274,7 @@ export function StudentModal({
       qualification={qualification}
       loader={loader}
       typeClass={typeClass}
+      counsellorNameList={counsellorNameList}
     ></StudentModalPresentational>
   );
 }
