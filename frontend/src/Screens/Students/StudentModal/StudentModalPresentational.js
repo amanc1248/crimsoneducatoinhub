@@ -33,6 +33,7 @@ export function StudentModalPresentational({
   setAddress,
   counsellorName,
   setCounsellorName,
+  counsellorNameList,
 }) {
   return (
     <>
@@ -201,18 +202,16 @@ export function StudentModalPresentational({
               {/* 1. Counsellor Name */}
               <div class="learning__form__group col-lg-6 col-12">
                 <label for="name">Counsellor Name</label>
-                <input
-                  class="form-control"
-                  id="name"
-                  name="name"
-                  rows="4"
-                  cols="50"
+
+                <Select
                   placeholder="Enter Counsellor name"
-                  value={counsellorName}
+                  className="select__learning__module"
+                  options={counsellorNameList}
+                  value={{ label: counsellorName, value: counsellorName }}
                   onChange={(e) => {
-                    setCounsellorName(e.target.value);
+                    setCounsellorName(e.label);
                   }}
-                ></input>
+                />
               </div>
             </div>
           </div>

@@ -32,8 +32,8 @@ const Login = () => {
       url: "/api/commonRoute/verifyToken",
       collectionName: "users",
       token: localStorage.getItem("token"),
-      checkPermission:'read',
-        userId:localStorage.getItem('userId')
+      checkPermission: "read",
+      userId: localStorage.getItem("userId"),
     })
       .then((result) => {
         if (result.login === false) {
@@ -66,6 +66,9 @@ const Login = () => {
         } else if (result.login === true) {
           localStorage.setItem("token", result.token);
           localStorage.setItem("userId", result.result._id);
+          localStorage.setItem("login", result.login);
+          // console.log(result);
+
           navigate("/");
         }
       });

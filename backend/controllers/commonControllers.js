@@ -5,6 +5,9 @@ const { Promise, Schema } = require("mongoose");
 const { db } = require("../database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const tokenExpireIn = {
+  expiresIn: "1h",
+};
 const { convertToObjectIDs } = require("../utils/controllers.utils");
 
 // get number of documents common data controller
@@ -214,7 +217,11 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
           result.hashedPassword
         );
         if (validHashedPassword) {
-          const token = jwt.sign({ _id: result._id }, "secretcode");
+          const token = jwt.sign(
+            { _id: result._id },
+            "secretcode",
+            tokenExpireIn
+          );
           return res.json({
             token: token,
             login: true,
@@ -241,7 +248,6 @@ const loginUserController = asyncHandler(async (req, res, callback) => {
     return callback(err);
   }
 });
-
 
 const verifyToken = asyncHandler(async (req, res, next) => {
   try {

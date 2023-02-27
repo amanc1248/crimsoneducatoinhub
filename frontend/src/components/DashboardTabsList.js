@@ -7,6 +7,7 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { DashboardTab } from "./DashboardTab";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import Diversity1Icon from "@mui/icons-material/Diversity1";
 export const DashboardTabsList = ({ tabIndex, setTabIndex }) => {
   // DATA
   const tabsList = [

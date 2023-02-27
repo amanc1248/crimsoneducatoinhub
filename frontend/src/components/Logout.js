@@ -10,6 +10,8 @@ export const Logout = () => {
     if (logout === true) {
       localStorage.removeItem("token");
       localStorage.removeItem("phoneNumber");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("login");
       navigate("/login");
     }
   };

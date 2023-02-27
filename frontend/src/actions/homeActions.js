@@ -279,6 +279,7 @@ export function getOneModalAllDocuments(data) {
     axios
       .post(
         url,
+        console.log("HELLO Resolve result"),
         {
           collectionName: data.collectionName,
           token: data.token,
@@ -324,7 +325,6 @@ export function getOneModalDocumentsById(data) {
         resolve(result.data);
       })
       .catch((e) => {
-        console.log(e);
         if (e.response.data.error === "UNAUTHORIZED") {
           toast.error(e.response.data.error, { autoClose: 5000 });
           reject(e.response.data.error);
@@ -358,6 +358,7 @@ export function getDocumentByFilter(data) {
       )
       .then((result) => {
         resolve(result.data);
+        console.log("GO");
       })
       .catch((e) => {
         if (e.response.data.error === "UNAUTHORIZED") {
