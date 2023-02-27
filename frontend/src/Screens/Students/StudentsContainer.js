@@ -76,7 +76,7 @@ export const StudentsContainer = () => {
         url: "/api/commonRoute/getData",
         collectionName: "students",
         pageNumber: currentPage,
-        nPerPage: 100,
+        nPerPage: 1000,
         checkPermission: "read",
         userId: localStorage.getItem("userId"),
       })
@@ -101,7 +101,7 @@ export const StudentsContainer = () => {
       url: "/api/commonRoute/getData",
       collectionName: "students",
       pageNumber: currentPage,
-      nPerPage: 100,
+      nPerPage: 1000,
       checkPermission: "read",
       userId: localStorage.getItem("userId"),
     })
