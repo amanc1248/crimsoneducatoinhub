@@ -10,7 +10,7 @@ export function IndividualAssignedCourseModalC({
 }) {
   const selectedShifts = () => {
       const list = course?.shifts && course.shifts.map((shift, index) => ({
-        _id: shift.shiftId,
+        shiftId: shift.shiftId,
         value: shift.value,
         label: shift.value,
       }));
